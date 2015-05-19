@@ -1,9 +1,9 @@
 Package: ExpDE
 Type: Package
-Title: What the package does (short line)
+Title: Basic Algorithm Differential Evolution 
 Version: 1.0
 Date: 2015-05-12
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Author: c(person("Moises", "Botelho", email = "moisesbotelho@ufmg.br", role = c( "aut" , c("cre" )), person("Felipe", "Campelo", email = "fcampelo@ufmg.br",  role = "aut"))
+Maintainer: Campelab <moisesbotelho@ufmg.br>
+Description: Is only a demonstration of algorithm differential evolution
+License: MIT

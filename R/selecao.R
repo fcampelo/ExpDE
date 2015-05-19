@@ -1,8 +1,8 @@
-selecao <- function(U, X, F, G){
+selecao <- function(U, G, X, J){
   
-  sel.vec       <- G <= F
+  sel.vec       <- G <= J
   X[sel.vec, ]  <- U[sel.vec, ]
-  F[sel.vec]    <- G[sel.vec]
+  J[sel.vec]    <- G[sel.vec]
   
-  return(list(X = X, F = F))
+  return(list(X = X, J = J))
 }

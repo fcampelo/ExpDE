@@ -7,7 +7,7 @@
 #'  \it{name} is name of mutation; \it{f} mutation the scaling factor.
 #' @param lower and upper limits of the distribution. Must be finite.
 #' 
-ExpDE <- function(ngen) 
+ExpDE <- function(ngen){ 
     # Differential evolution - a simple and efficient adaptive scheme for global optimization over continuous spaces. 
     # Storn e Price(1995) Rainer Storn e Kenneth Price.
     # Technical report, International Computer Science Institute
@@ -28,7 +28,7 @@ ExpDE <- function(ngen)
     
     #Generation the initial population 
     X <- populacao(popsize, nvar, lim_inf, lim_sup)
-    # F <- myfun(X,lim_inf,lim_sup)
+    J <- myfun(X,lim_inf,lim_sup)
     
     while (t <= ngen){
       #Mutation
@@ -37,12 +37,13 @@ ExpDE <- function(ngen)
       U <- cruzamento(cr, X, M)
       
       # Evaluate U
-      # G <- myfun(U,lim_inf,lim_sup)
+      G <- myfun(U,lim_inf,lim_sup)
       
       #Selection  
-      # next.pop <- selecao(U, X, F, G)
-      # X <- next.pop$X
-      # F <- next.pop$F
+      next.pop <- selecao(U, G, X, J)
+      
+      X <- next.pop$X
+      J <- next.pop$J
       
       #Generation  
       t <- t + 1

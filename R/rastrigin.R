@@ -1,30 +1,20 @@
-rastrigin <- function(X){
-
-
-makeAval <- function (U)
-{
+rastrigin <- function(U){
   n <- length(U);
-  print(U)
   f <- 0;
   r <- 50;
   s <- 50;
 
   for (k in 1:n) {
-    f <- f + (U[k, ] ^ 2 - 10 * cos(2 * pi * U[k, ]));
+    f <- f + (U[k] ^ 2 - 10 * cos(2 * pi * U[k]));
   }
 
   f1 <- 0;
   f2 <- 0;
 
   for (p in 1:n) {
-    f1 <- f1 + max(0, (sin(2 * pi * U[p, ]) + 0.5)); #menor igual
-    f2 <- f2 + abs(cos(2 * pi * U[p], ) + 0.5); #igualdade
+    f1 <- f1 + max(0, (sin(2 * pi * U[p]) + 0.5)); #menor igual
+    f2 <- f2 + abs(cos(2 * pi * U[p]) + 0.5); #igualdade
   }
   out <- f + r * f1 + s * f2;
   return (out);
-  }
-  
-     M <- lapply(X, makeAval)
-   
-   return(matrix(unlist(M), nrow=dim(X)[1], byrow=T))
 }
