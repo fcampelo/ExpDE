@@ -1,4 +1,4 @@
-cruzamento <- function(cr, pop, m) {
+bin <- function(pop, m) {
  #Decision matrix to cross
  delta <- matrix(round(runif(n = dim(pop)[1]*dim(pop)[2],
                                 min = 0, max = 1)), 

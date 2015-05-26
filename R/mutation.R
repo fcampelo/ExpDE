@@ -1,4 +1,4 @@
-mutacao <- function(pop, f){
+rand <- function(pop, f){
   #Matrix indices for mutation
   R <- as.list(
     as.data.frame(sapply(X = rep(dim(pop)[1], dim(pop)[1]),
