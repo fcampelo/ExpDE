@@ -3,28 +3,24 @@
 #' Is a method that optimizes a problem by iteratively trying to 
 #' improve a candidate solution with regard to a given measure of quality
 #' @param popsize size of population.
-#' @param mutName  is name of mutation method name; 
-#' @param mutF is the scaling factor.
-#' @param recName is the type of recombination to be used in the algorithm.
-#' @param selName is the type of selection to be in the algorithm.
-#' @param convType is name of convergence criteria for the algorithm.
-#' @param conNiter is value of convergence criteria for the algorithm.
-#' @param convStab is value of stabilization algorithm.
-#' @param lim_inf is lower limit of the information to be generated.
-#' @param lim_sup is upper limit of the information to be generated.
-#' @param probOpt is other parameters to the algorithm.
-#' @return matrix with result of the optimization.
+#' @param mutpars mutation the parameters list containing:
+#'  name is name of mutation; f mutation the scaling factor.
+#' @param recpars type of recombination to be used in the algorithm.
+#' @param selpars type of selection to be in the algorithm.
+#' @param convcrit convergence criteria for the algorithm containing: 
+#' \code{type} it is the type of convergence criterion; \code{pars} it is the value
+#' the type of convergence criterion. 
+#' @param lower and upper limits of the distribution. Must be finite.
+#' @return matrix with result of the optimization
 #' @keywords de, optimization
 #' @examples
-#'  ExpDE(popsize = 50, mutName ="rand", mutF = 0.3), recName = "bin",
-#'  selName = "standard", convType = "niter", convNiter = 400, probName = "myfun",
-#'  lim_inf = -5.12, lim_sup = 5.12, probOpt = 3)
+#'  ExpDE(popsize = 50, mutpars = list(name = "rand", f = 0.3))
 
 ExpDE <- function(popsize = 30, mutName = c("rand1", "rand2"), mutF = 0.2,
                   recName = c("bin", "exp"), selName = c("standard", "other"),
                   convType = c("niter", "stab"), convNiter = 500, convStab = 5,
                   probName = c("myfun", "other"), lim_inf = -5.12, lim_sup = 5.12,
-                  probOpt = 3){
+                  probOpt = 3)
   
 #ExpDE<-function(popsize = 40, mutpars = list(name = "rand", f = 0.2),
  #               recpars = list(name = "bin"),
