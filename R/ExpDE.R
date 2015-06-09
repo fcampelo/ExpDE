@@ -3,36 +3,34 @@
 #' Is a method that optimizes a problem by iteratively trying to 
 #' improve a candidate solution with regard to a given measure of quality
 #' @param popsize size of population.
-#' @param mutName  is name of mutation method name; 
-#' @param mutF is the scaling factor.
-#' @param recName is the type of recombination to be used in the algorithm.
-#' @param selName is the type of selection to be in the algorithm.
-#' @param convType is name of convergence criteria for the algorithm.
-#' @param conNiter is value of convergence criteria for the algorithm.
-#' @param convStab is value of stabilization algorithm.
-#' @param lim_inf is lower limit of the information to be generated.
-#' @param lim_sup is upper limit of the information to be generated.
-#' @param probOpt is other parameters to the algorithm.
-#' @return matrix with result of the optimization.
+#' @param mutpars  mutation the parameter list containing:
+#' \code{name} is name of mutation; \code{f} mutation the scaling factor.
+#' @param recpars recombination the parameter list containing:  
+#' \code{name} is the type of recombination to be used in the algorithm, ....
+#' @param selpars selection the parameter list containing:
+#' \code{name} is the type of selection to be in the algorithm, ....
+#' @param convcrit convergence criteria for the algorithm containing: 
+#' \code{type} it is the type of convergence criterion; \code{pars} it is the value
+#' the type of convergence criterion; \code{niter} is value of convergence criteria for the algorithm.
+#' \code{stab} is value of stabilization algorithm.
+#' @param probpars problem the parameter list containing:
+#' \code{name} is problem name to be analyzed;  
+#' \code{lim_inf} is lower limit of the information to be generated;
+#' \code{lim_sup} is upper limit of the information to be generated;
+#' \code{opt} other problem parameters.
+#' @return result (value) of the optimization.
 #' @keywords de, optimization
 #' @examples
-#'  ExpDE(popsize = 50, mutName ="rand", mutF = 0.3), recName = "bin",
-#'  selName = "standard", convType = "niter", convNiter = 400, probName = "myfun",
-#'  lim_inf = -5.12, lim_sup = 5.12, probOpt = 3)
-
-ExpDE <- function(popsize = 30, mutName = c("rand1", "rand2"), mutF = 0.2,
-                  recName = c("bin", "exp"), selName = c("standard", "other"),
-                  convType = c("niter", "stab"), convNiter = 500, convStab = 5,
-                  probName = c("myfun", "other"), lim_inf = -5.12, lim_sup = 5.12,
-                  probOpt = 3){
-  
-#ExpDE<-function(popsize = 40, mutpars = list(name = "rand", f = 0.2),
- #               recpars = list(name = "bin"),
-  #              selpars = list(name = "standard"),
-   #             convcrit = list(types = c("niter", "stab"),
-    #                       pars = list(niter = 500, nstab = 5)),
-     #           probpars = list(name = "myfun",
-      #                          lim_inf = -5.12, lim_sup = 5.12, opt = 3)){
+#' ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2), recpars = list(name = "bin"),
+#' selpars = list(name = "standard"), convcrit = list(types = c("niter", "stab"),
+#'pars = list(niter = 500, nstab = 5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt = 0))
+ExpDE<-function(popsize = 40, mutpars = list(name = "rand", f = 0.2),
+                recpars = list(name = "bin"),
+                selpars = list(name = "standard"),
+                convcrit = list(types = c("niter", "stab"),
+                           pars = list(niter = 500, nstab = 5)),
+                probpars = list(name = "rastrigin",
+                                lim_inf = -5.12, lim_sup = 5.12, opt = 3)){
     # Differential evolution - a simple and efficient adaptive scheme for global optimization over continuous spaces. 
     # Storn e Price(1995) Rainer Storn e Kenneth Price.
     # Technical report, International Computer Science Institute
@@ -43,7 +41,7 @@ ExpDE <- function(popsize = 30, mutName = c("rand1", "rand2"), mutF = 0.2,
     
 
     #Generation the initial population 
-    X <- population(popsize, probpars$opt, probpars$lim_inf, probpars$lim_sup)
+    X <- population(popsize, probpars)
     #Evaluate the initial population
     J <- do.call(probpars$name, args = list(X))
   
@@ -52,11 +50,11 @@ ExpDE <- function(popsize = 30, mutName = c("rand1", "rand2"), mutF = 0.2,
       for (t in 1:convcrit$pars$niter){
     #while (t <= ngen){
       #Mutation
-      M <- do.call(mutpars$name, args = list(X, mutpars$f))
+      M <- do.call(mutpars$name, args = list(X, mutpars))
       #Recombination  
       U <- do.call(recpars$name, args = list(X, M))
       # Evaluate U
-      G <- do.call(probpars$name, args = list(U))
+      G <- evaluate(probpars, U)
       #Selection  
       next.pop <- do.call(selpars$name, args = list(U, G, X, J))
       

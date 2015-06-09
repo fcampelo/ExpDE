@@ -4,46 +4,46 @@
 \alias{ExpDE}
 \title{Differential Evolution Algorithm (DE)}
 \usage{
-ExpDE(popsize = 30, mutName = c("rand1", "rand2"), mutF = 0.2,
-  recName = c("bin", "exp"), selName = c("standard", "other"),
-  convType = c("niter", "stab"), convNiter = 500, convStab = 5,
-  probName = c("myfun", "other"), lim_inf = -5.12, lim_sup = 5.12,
-  probOpt = 3)
+ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2),
+  recpars = list(name = "bin"), selpars = list(name = "standard"),
+  convcrit = list(types = c("niter", "stab"), pars = list(niter = 500, nstab =
+  5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt =
+  3))
 }
 \arguments{
 \item{popsize}{size of population.}
 
-\item{mutName}{is name of mutation method name;}
+\item{mutpars}{mutation the parameter list containing:
+\code{name} is name of mutation; \code{f} mutation the scaling factor.}
 
-\item{mutF}{is the scaling factor.}
+\item{recpars}{recombination the parameter list containing:
+\code{name} is the type of recombination to be used in the algorithm, ....}
 
-\item{recName}{is the type of recombination to be used in the algorithm.}
+\item{selpars}{selection the parameter list containing:
+\code{name} is the type of selection to be in the algorithm, ....}
 
-\item{selName}{is the type of selection to be in the algorithm.}
+\item{convcrit}{convergence criteria for the algorithm containing:
+\code{type} it is the type of convergence criterion; \code{pars} it is the value
+the type of convergence criterion; \code{niter} is value of convergence criteria for the algorithm.
+\code{stab} is value of stabilization algorithm.}
 
-\item{convType}{is name of convergence criteria for the algorithm.}
-
-\item{convStab}{is value of stabilization algorithm.}
-
-\item{lim_inf}{is lower limit of the information to be generated.}
-
-\item{lim_sup}{is upper limit of the information to be generated.}
-
-\item{probOpt}{is other parameters to the algorithm.}
-
-\item{conNiter}{is value of convergence criteria for the algorithm.}
+\item{probpars}{problem the parameter list containing:
+\code{name} is problem name to be analyzed;
+\code{lim_inf} is lower limit of the information to be generated;
+\code{lim_sup} is upper limit of the information to be generated;
+\code{opt} other problem parameters.}
 }
 \value{
-matrix with result of the optimization.
+result (value) of the optimization.
 }
 \description{
 Is a method that optimizes a problem by iteratively trying to
 improve a candidate solution with regard to a given measure of quality
 }
 \examples{
-ExpDE(popsize = 50, mutName ="rand", mutF = 0.3), recName = "bin",
- selName = "standard", convType = "niter", convNiter = 400, probName = "myfun",
- lim_inf = -5.12, lim_sup = 5.12, probOpt = 3)
+ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2), recpars = list(name = "bin"),
+selpars = list(name = "standard"), convcrit = list(types = c("niter", "stab"),
+pars = list(niter = 500, nstab = 5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt = 0))
 }
 \keyword{de,}
 \keyword{optimization}

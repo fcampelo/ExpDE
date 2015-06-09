@@ -1,4 +1,4 @@
-myfun <- function (X){
+evaluate <- function (probpars, X){
   
   makefun <- function(pos, myfun, pop){
       x <-  myfun(pop[pos, ])
