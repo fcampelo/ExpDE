@@ -1,2 +1,2 @@
 # ExpDE
-Developing the DE algorithm  re their experimental tests on the recombination process
+Modular DE algorithm for the experimental investigation of the effect of different recombination / mutation / selection operators.
