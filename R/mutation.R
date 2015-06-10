@@ -1,4 +1,4 @@
-mutacao <- function(pop, f){
+rand <- function(pop, mutpars){
   #Matrix indices for mutation
   R <- as.list(
     as.data.frame(sapply(X = rep(dim(pop)[1], dim(pop)[1]),
@@ -11,7 +11,7 @@ mutacao <- function(pop, f){
     x <- POP[pos[1], ] + f * (POP[pos[2], ] - POP[pos[3], ])
   }
   #Applying the mutation for each individual of the public
-  M <- lapply(R, makemut, pop, f)
+  M <- lapply(R, makemut, pop, mutpars$f)
   
   return(matrix(unlist(M), nrow=dim(pop)[1], byrow=T))
 }

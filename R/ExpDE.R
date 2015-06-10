@@ -2,52 +2,66 @@
 #' 
 #' Is a method that optimizes a problem by iteratively trying to 
 #' improve a candidate solution with regard to a given measure of quality
-#' @param popsize number of population.
-#' @param mutpars mutation the parameters list containing:
-#'  \it{name} is name of mutation; \it{f} mutation the scaling factor.
-#' @param lower and upper limits of the distribution. Must be finite.
-#' 
-ExpDE <- function(ngen){ 
+#' @param popsize size of population.
+#' @param mutpars  mutation the parameter list containing:
+#' \code{name} is name of mutation; \code{f} mutation the scaling factor.
+#' @param recpars recombination the parameter list containing:  
+#' \code{name} is the type of recombination to be used in the algorithm, ....
+#' @param selpars selection the parameter list containing:
+#' \code{name} is the type of selection to be in the algorithm, ....
+#' @param convcrit convergence criteria for the algorithm containing: 
+#' \code{type} it is the type of convergence criterion; \code{pars} it is the value
+#' the type of convergence criterion; \code{niter} is value of convergence criteria for the algorithm.
+#' \code{stab} is value of stabilization algorithm.
+#' @param probpars problem the parameter list containing:
+#' \code{name} is problem name to be analyzed;  
+#' \code{lim_inf} is lower limit of the information to be generated;
+#' \code{lim_sup} is upper limit of the information to be generated;
+#' \code{opt} other problem parameters.
+#' @return result (value) of the optimization.
+#' @keywords de, optimization
+#' @examples
+#' ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2), recpars = list(name = "bin"),
+#' selpars = list(name = "standard"), convcrit = list(types = c("niter", "stab"),
+#'pars = list(niter = 500, nstab = 5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt = 0))
+ExpDE<-function(popsize = 40, mutpars = list(name = "rand", f = 0.2),
+                recpars = list(name = "bin"),
+                selpars = list(name = "standard"),
+                convcrit = list(types = c("niter", "stab"),
+                           pars = list(niter = 500, nstab = 5)),
+                probpars = list(name = "rastrigin",
+                                lim_inf = -5.12, lim_sup = 5.12, opt = 3)){
     # Differential evolution - a simple and efficient adaptive scheme for global optimization over continuous spaces. 
     # Storn e Price(1995) Rainer Storn e Kenneth Price.
     # Technical report, International Computer Science Institute
     
     # Federal University of Minas Gerais
     # Department of Electrical Engineering
-    # Moises Botelho and Prof. Felipe Campelo, Ph.D.
+    # Moises Botelho and Felipe Campelo, Ph.D.
     
-    # Parametros do Algortimo         
-    nvar    <- 3                # Numero de variaveis do individuo
-    f       <- 0.2              # Fator de escala da mutacao
-    cr      <- 0.9              # Constante de cruzamento
-    t       <- 1                # Contador de geracoes
-    popsize <- 50
-    lim_inf <- -5.12            # Limite inferior do problema de otimizacao
-    lim_sup <- 5.12             # Limite superior do problema de otimizacao
-    
-    
+
     #Generation the initial population 
-    X <- populacao(popsize, nvar, lim_inf, lim_sup)
-    J <- myfun(X,lim_inf,lim_sup)
-    
-    while (t <= ngen){
+    X <- population(popsize, probpars)
+    #Evaluate the initial population
+    J <- do.call(probpars$name, args = list(X))
+  
+    if(convcrit$types[1] == "niter"){
+      #Generation  
+      for (t in 1:convcrit$pars$niter){
+    #while (t <= ngen){
       #Mutation
-      M <- mutacao(X, f)
+      M <- do.call(mutpars$name, args = list(X, mutpars))
       #Recombination  
-      U <- cruzamento(cr, X, M)
-      
+      U <- do.call(recpars$name, args = list(X, M))
       # Evaluate U
-      G <- myfun(U,lim_inf,lim_sup)
-      
+      G <- evaluate(probpars, U)
       #Selection  
-      next.pop <- selecao(U, G, X, J)
+      next.pop <- do.call(selpars$name, args = list(U, G, X, J))
       
       X <- next.pop$X
       J <- next.pop$J
       
-      #Generation  
-      t <- t + 1
     }
-    
+    }
     return (X)
   }
