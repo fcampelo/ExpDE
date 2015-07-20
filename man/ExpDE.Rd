@@ -2,32 +2,33 @@
 % Please edit documentation in R/ExpDE.R
 \name{ExpDE}
 \alias{ExpDE}
-\title{Differential Evolution Algorithm (DE)}
+\title{Differential Evolution Optimization (DE)}
 \usage{
 ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2),
   recpars = list(name = "bin"), selpars = list(name = "standard"),
   convcrit = list(types = c("niter", "stab"), pars = list(niter = 500, nstab =
-  5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt =
-  3))
+  5)), probpars = list(name = "rastrigin", lim_inf = -5.12, lim_sup = 5.12,
+  opt = 3))
 }
 \arguments{
-\item{popsize}{size of population.}
+\item{popsize}{a number containing the size of population for optimization.}
 
-\item{mutpars}{mutation the parameter list containing:
-\code{name} is name of mutation; \code{f} mutation the scaling factor.}
+\item{mutpars}{a list of mutation parameter containing:
+\code{name} is name of mutation; \code{f} a number with mutation the scaling factor.}
 
-\item{recpars}{recombination the parameter list containing:
-\code{name} is the type of recombination to be used in the algorithm, ....}
+\item{recpars}{a list of recombination parameter containing:
+\code{name} is the type of recombination to be used in the method, ....}
 
-\item{selpars}{selection the parameter list containing:
-\code{name} is the type of selection to be in the algorithm, ....}
+\item{selpars}{a list of selection parameter containing:
+\code{name} is the type of selection to be in the method, ....}
 
-\item{convcrit}{convergence criteria for the algorithm containing:
-\code{type} it is the type of convergence criterion; \code{pars} it is the value
-the type of convergence criterion; \code{niter} is value of convergence criteria for the algorithm.
-\code{stab} is value of stabilization algorithm.}
+\item{convcrit}{a list of convergence criteria for the method containing:
+\code{type} is the type of convergence criterion;
+\code{pars} a list with value the type of convergence criterion containing:
+\code{niter} is value of convergence criteria for the method.
+\code{stab} is value of stabilization for the method.}
 
-\item{probpars}{problem the parameter list containing:
+\item{probpars}{a list problem parameter containing:
 \code{name} is problem name to be analyzed;
 \code{lim_inf} is lower limit of the information to be generated;
 \code{lim_sup} is upper limit of the information to be generated;
@@ -38,12 +39,13 @@ result (value) of the optimization.
 }
 \description{
 Is a method that optimizes a problem by iteratively trying to
-improve a candidate solution with regard to a given measure of quality
+improve a candidate solution with regard to a given measure of
+quality via the Differential Evolution algorithm.
 }
 \examples{
-ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2), recpars = list(name = "bin"),
-selpars = list(name = "standard"), convcrit = list(types = c("niter", "stab"),
-pars = list(niter = 500, nstab = 5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt = 0))
+ExpDE(popsize = 40, mutpars = list(name = 'rand', f = 0.2), recpars = list(name = 'bin'),
+selpars = list(name = 'standard'), convcrit = list(types = c('niter', 'stab'),
+pars = list(niter = 500, nstab = 5)), probpars = list(name = 'myfun', lim_inf = -5.12, lim_sup = 5.12, opt = 0))
 }
 \keyword{de,}
 \keyword{optimization}
