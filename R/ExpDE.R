@@ -22,12 +22,14 @@
 #' @return result (value) of the optimization.
 #' 
 #' @examples
+#' \dontrun{
+#' # TODO: Update example with new syntax and operator parameters: 
 #' ExpDE(popsize = 40, mutpars = list(name = 'rand', f = 0.2), 
 #'    recpars = list(name = 'bin'), selpars = list(name = 'standard'), 
 #'    convcrit = list(types = c('niter', 'stab'), 
 #'    pars = list(niter = 500, nstab = 5)), probpars = list(name = 'myfun', 
 #'    lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2), opt = c(3,3)))
-#'
+#'}
 #' @export
 
 ExpDE <- function(popsize, 
@@ -38,45 +40,54 @@ ExpDE <- function(popsize,
                   convcrit, 
                   probpars)
 {
-    # Differential evolution - a simple and efficient adaptive scheme for global
-    # optimization over continuous spaces.  Storn e Price(1995) Rainer Storn e
-    # Kenneth Price.  Technical report, International Computer Science Institute
-    
-    # Federal University of Minas Gerais Department of Electrical Engineering Moises
-    # Botelho and Felipe Campelo, Ph.D.
-    
-    
+  # Differential evolution - a simple and efficient adaptive scheme for global
+  # optimization over continuous spaces.  Storn e Price(1995) Rainer Storn e
+  # Kenneth Price.  Technical report, International Computer Science Institute
+  
+  # Federal University of Minas Gerais Department of Electrical Engineering Moises
+  # Botelho and Felipe Campelo, Ph.D.
+  
+  
   # Generate initial population
   X <- create_population(popsize, 
                          probpars)
   
   # Evaluate the initial population
-  J <- do.call(probpars$name, 
-               args = list(X))
+  J <- evaluate_population(probpars, 
+                           X)
+  
+  # Prepare for iterative cycle:
+  keep.running  <- TRUE     # stop criteria flag
+  t             <- 0        # counter: iterations
+  nfe           <- popsize  # counter: number of function evaluations
+  
+  
+  # Iterative cycle
+  while(keep.running){
+    t <- t + 1          # Update iteration counter
     
-    # Generation
-    if (convcrit$types[1] == "niter") {
-        
-      iter <- convcrit$pars$niter
-    }
-    else
-    {
-      iter <- convcrit$pars$stab
-    }
-        for (t in 1:iter) {
-            # Mutation  
-            M <- do.call(mutpars$name, args = list(X, mutpars))
-            # Recombination
-            U <- do.call(recpars$name, args = list(X, M))
-            # Evaluate U
-            G <- evaluate(probpars, U)
-            # Selection
-            next.pop <- do.call(selpars$name, args = list(U, G, X, J))
-            
-            X <- next.pop$X
-            J <- next.pop$J
-            
-        }
+    # Mutation  
+    M <- do.call(mutpars$name, 
+                 args = list(X = X, 
+                             mutpars = mutpars))
     
-    return(X)
+    
+    # Recombination
+    U <- do.call(recpars$name, 
+                 args = list(X = X, 
+                             M = M,
+                             recpars = recpars))
+    
+    # Evaluate U
+    G <- evaluate_population(probpars, 
+                             U)
+    # Selection
+    next.pop <- do.call(selpars$name, args = list(U, G, X, J))
+    
+    X <- next.pop$X
+    J <- next.pop$J
+    
+  }
+  
+  return(X)
 } 

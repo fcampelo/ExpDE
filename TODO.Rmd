@@ -6,6 +6,8 @@ output: html_document
 ---
 
 - Error catching in *create_population()* (see file)
-- Change function call procedure (if necessary) to make it compatible with *evaluate_population()*: 
-    - 
+- Change function call procedure (if necessary) to make it compatible with 
+    *evaluate_population()*: the objective function caller receives a single 
+    parameter in the form of a named list: _myfun(probpars = list(...))_
 - Test new function *evaluate_population()*
+- Update example in _ExpDE()_ with new syntax and operator parameters

@@ -1,15 +1,15 @@
 Package: ExpDE
 Type: Package
 Title: Modular Differential Evolution for Experimenting with Operators
-Version: 0.9.0
+Version: 0.9.1
 Date: 2015-05-12
 Author: c(person("Moises", "Botelho", 
     email = "moisesbotelho@ufmg.br", 
-    role = c( "aut", "cre"), 
+    role = "aut"), 
     person("Felipe", "Campelo", 
     email = "fcampelo@ufmg.br",  
-    role = "aut"))
-Maintainer: ORCS Lab <moisesbotelho@ufmg.br>
+    role = c("aut", "cre")))
+Maintainer: Felipe Campelo <fcampelo@ufmg.br>
 Description: Modular implementation of the Differential Evolution algorithm for 
     experimenting with different types of operators.
-License: MIT
+License: GPL-2
