@@ -1,9 +1,15 @@
 Package: ExpDE
 Type: Package
-Title: Basic Algorithm Differential Evolution 
-Version: 1.0
+Title: Modular Differential Evolution for Experimenting with Operators
+Version: 0.9.0
 Date: 2015-05-12
-Author: c(person("Moises", "Botelho", email = "moisesbotelho@ufmg.br", role = c( "aut" , c("cre" )), person("Felipe", "Campelo", email = "fcampelo@ufmg.br",  role = "aut"))
-Maintainer: Campelab <moisesbotelho@ufmg.br>
-Description: Is only a demonstration of algorithm differential evolution
+Author: c(person("Moises", "Botelho", 
+    email = "moisesbotelho@ufmg.br", 
+    role = c( "aut", "cre"), 
+    person("Felipe", "Campelo", 
+    email = "fcampelo@ufmg.br",  
+    role = "aut"))
+Maintainer: ORCS Lab <moisesbotelho@ufmg.br>
+Description: Modular implementation of the Differential Evolution algorithm for 
+    experimenting with different types of operators.
 License: MIT

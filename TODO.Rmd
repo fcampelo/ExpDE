@@ -1,0 +1,11 @@
+---
+title: "TODO"
+author: "Felipe Campelo"
+date: "August 4, 2015"
+output: html_document
+---
+
+- Error catching in *create_population()* (see file)
+- Change function call procedure (if necessary) to make it compatible with *evaluate_population()*: 
+    - 
+- Test new function *evaluate_population()*

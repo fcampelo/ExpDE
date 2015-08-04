@@ -1,0 +1,15 @@
+---
+title: "Changelog"
+author: "Felipe Campelo, Moises Botelho"
+date: "August 4, 2015"
+output: html_document
+---
+
+### 2015-08-04: Felipe  
+- Added _TODO.Rmd_ and _Changelog.Rmd_
+- Changed documentation in _ExpDE()_
+- Changed name from _population()_ to *create_population()*
+- *create_population()* now generates only standardized populations in the $(0,1)$ interval.
+- Changed name from _evaluate()_ to *evaluate_population()*
+- Moved denormalization of the population to *evaluate_population()*
+- Simplified the evaluation procedure by using _apply()_ on the lines of the (denormalized) population.
