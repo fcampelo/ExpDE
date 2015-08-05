@@ -7,27 +7,28 @@
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
 #' mutation. \code{mutation_rand()} understands the following fields in mutpars:
-#'    - f : (fixed) scaling factor for difference vector(s). Accepts numeric 
+#'    - \code{f} : scaling factor for difference vector(s). Accepts numeric 
 #'    vectors of size 1 or \code{nvecs}.
-#'    - nvecs : number of difference vectors to use (defaults to 1). 
-#'        Accepts 1 <= nvecs <= (popsize/2 - 2)
+#'    - \code{nvecs} : number of difference vectors to use (defaults to 1). 
+#'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}
 #'        
 #' @param X population matrix
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
+#' @return Matrix \code{M} containing the mutated population
+
 mutation_rand <- function(X, mutpars){
 
   # Error catching and default value definitions
+  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
+  if (!(mutpars$nvecs %in% 1:(nrow(X)/2 - 2))){
+    stop("mutation_rand() requires integer 1 <= mutpar$nvecs <= (popsize/2 - 2)")
+  }
   if (!("f" %in% names(mutpars))){
     stop("mutation_rand() requires field f in mutpars")
   }
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
-
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  if (!(mutpars$nvecs %in% 1:(nrow(X)/2 - 2))){
-    stop("mutation_rand() requires 1 <= mutpar$nvecs <= (popsize/2 - 2)")
-  }
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
   R <- sapply(X = rep(dim(X)[1], dim(X)[1]),

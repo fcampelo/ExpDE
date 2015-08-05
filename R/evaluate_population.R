@@ -1,21 +1,26 @@
-evaluate_population <- function (probpars, X){
+evaluate_population <- function (probpars, Pop){
   
   # Denormalize population
-  LL <- matrix(rep(lim_inf, nrow(X)),
-               ncol = ncol(X),
-               byrow = TRUE)
-  UL <- matrix(rep(lim_sup, nrow(X)),
-               ncol = ncol(X),
-               byrow = TRUE)
-  X <- LL + X*(UL-LL)
+  Pop <- denormalize_population(probpars, Pop)
   
   # Evaluate each candidate solution
-  Z <- apply(X,
-             1,
-             probpars$name,
-             probpars)
+  Z <- do.call(probpars$name,
+               args = list(Pop))
   
   # Return evaluated values
   return (Z)
   
+}
+
+
+# Denormalize population
+denormalize_population <- function(probpars, Pop){
+  # Denormalize population
+  LL <- matrix(rep(probpars$lim_inf, nrow(Pop)),
+               ncol = ncol(Pop),
+               byrow = TRUE)
+  UL <- matrix(rep(probpars$lim_sup, nrow(Pop)),
+               ncol = ncol(Pop),
+               byrow = TRUE)
+  return(LL + Pop*(UL-LL))
 }

@@ -11,3 +11,6 @@ output: html_document
     parameter in the form of a named list: _myfun(probpars = list(...))_
 - Test new function *evaluate_population()*
 - Update example in _ExpDE()_ with new syntax and operator parameters
+- Each mutation / recombination / selection operator must have its own 
+  individual file, and follow the standard filename *operation_name.R* and
+  standard function name *operation_name()* (e.g., *mutation_rand()*)

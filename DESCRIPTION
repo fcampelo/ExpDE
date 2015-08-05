@@ -1,7 +1,7 @@
 Package: ExpDE
 Type: Package
 Title: Modular Differential Evolution for Experimenting with Operators
-Version: 0.9.1
+Version: 0.9.5
 Date: 2015-05-12
 Author: c(person("Moises", "Botelho", 
     email = "moisesbotelho@ufmg.br", 

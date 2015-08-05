@@ -4,7 +4,8 @@
 #' 
 #' The detailed description comes here...
 #' 
-#' @importFrom ExpDE
+#' @param popsize population size
+#' @param probpars list of named problem parameters (see \code{\link{ExpDE}}).
 #' 
 #' @return A matrix containing the population for the ExpDE
 
@@ -20,6 +21,6 @@ create_population <- function(popsize,      # population size
   # get problem dimension
   prob.dim <- length(probpars$lim_sup)
   
-  return (matrix(runif(n = popsize * probpars$prob.dim), 
+  return (matrix(runif(n = popsize * prob.dim), 
                  nrow = popsize))
 }

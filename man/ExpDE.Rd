@@ -2,51 +2,69 @@
 % Please edit documentation in R/ExpDE.R
 \name{ExpDE}
 \alias{ExpDE}
-\title{Differential Evolution Optimization (DE)}
+\title{Experimental Differential Evolution - ExpDE}
 \usage{
-ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2),
-  recpars = list(name = "bin"), selpars = list(name = "standard"),
-  convcrit = list(types = c("niter", "stab"), pars = list(niter = 500, nstab =
-  5)), probpars = list(name = "rastrigin", lim_inf = -5.12, lim_sup = 5.12,
-  opt = 3))
+ExpDE(popsize, mutpars = list(name = "rand", f = 0.2), recpars = list(name =
+  "bin"), selpars = list(name = "standard"), stopcrit, probpars)
 }
 \arguments{
-\item{popsize}{a number containing the size of population for optimization.}
+\item{popsize}{population size}
 
-\item{mutpars}{a list of mutation parameter containing:
-\code{name} is name of mutation; \code{f} a number with mutation the scaling factor.}
+\item{mutpars}{list of named mutation parameters.
+See \code{Mutation parameters} for details.}
 
-\item{recpars}{a list of recombination parameter containing:
-\code{name} is the type of recombination to be used in the method, ....}
+\item{recpars}{list of named recombination parameters.
+See \code{Recombination parameters} for details.}
 
-\item{selpars}{a list of selection parameter containing:
-\code{name} is the type of selection to be in the method, ....}
+\item{selpars}{list of named selection parameters.
+See \code{Selection parameters} for details.}
 
-\item{convcrit}{a list of convergence criteria for the method containing:
-\code{type} is the type of convergence criterion;
-\code{pars} a list with value the type of convergence criterion containing:
-\code{niter} is value of convergence criteria for the method.
-\code{stab} is value of stabilization for the method.}
+\item{stopcrit}{list of named stop criteria parameters. See
+\code{Stop criteria} for details.}
 
-\item{probpars}{a list problem parameter containing:
-\code{name} is problem name to be analyzed;
-\code{lim_inf} is lower limit of the information to be generated;
-\code{lim_sup} is upper limit of the information to be generated;
-\code{opt} other problem parameters.}
+\item{probpars}{list of named problem parameters.
+   See \code{Problem description} for details.}
 }
 \value{
-result (value) of the optimization.
+A list object containing the final population (sorted by performance)
+, the performance vector, and some run statistics.
 }
 \description{
-Is a method that optimizes a problem by iteratively trying to
+Modular implementation of the Differential Evolution Algorithm
+}
+\details{
+The detailed description comes here...
+"Is a method that optimizes a problem by iteratively trying to
 improve a candidate solution with regard to a given measure of
-quality via the Differential Evolution algorithm.
+quality via the Differential Evolution algorithm."
+}
+\section{Mutation parameters}{
+
+}
+
+\section{Recombination parameters}{
+
+}
+
+\section{Selection parameters}{
+
+}
+
+\section{Stop criteria}{
+
 }
 \examples{
-ExpDE(popsize = 40, mutpars = list(name = 'rand', f = 0.2), recpars = list(name = 'bin'),
-selpars = list(name = 'standard'), convcrit = list(types = c('niter', 'stab'),
-pars = list(niter = 500, nstab = 5)), probpars = list(name = 'myfun', lim_inf = -5.12, lim_sup = 5.12, opt = 0))
+popsize  <- 40
+mutpars  <- list(name = "mutation_rand", f = 0.8)
+recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
+selpars  <- list(name = "selection_standard")
+stopcrit <- list(names = "stop_maxiter", maxiter = 100)
+probpars <- list(name   = "rastrigin",
+                lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2))
+
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }
-\keyword{de,}
-\keyword{optimization}
+\author{
+Felipe Campelo and Moises Botelho
+}
 
