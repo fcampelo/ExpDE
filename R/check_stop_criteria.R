@@ -10,6 +10,9 @@
 #' contained in \code{env} WILL change the original values. DO NOT change 
 #' anything unless you're absolutely sure of what you're doing.
 #' 
+#' @param env environment from which to inherit the variable values. Do not 
+#' change.
+#' 
 #' @return logical flag indicating whether any stop condition has been reached.
 check_stop_criteria <- function(env = parent.frame()){
   

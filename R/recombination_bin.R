@@ -38,7 +38,7 @@ recombination_bin <- function(X, M, recpars) {
   }
   
   # Recombination matrix
-  R <- matrix(round(runif(n = prod(dim(X))))<recpars$cr, 
+  R <- matrix(runif(n = prod(dim(X))) < recpars$cr, 
              nrow = nrow(X))
   
   if (recpars$minchange){

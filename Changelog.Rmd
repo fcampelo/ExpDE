@@ -15,9 +15,7 @@ output: html_document
 - *create_population()* now generates only standardized populations in the 
     $(0,1)$ interval.
 - Changed name from _evaluate()_ to *evaluate_population()*
-- Moved denormalization of the population to *evaluate_population()*
-- Simplified the *evaluate_population()* procedure by using _apply()_ on the 
-    lines of the (denormalized) population.
+- Moved denormalization of the population to *evaluate_population.R*
 - Changed name from _mutation.R_ to *mutation_bin.R*
 - Rewrote *mutation_rand()* to serve as a template for future mutation functions
 - Changed name from _recombination.R_ to *recombination_bin.R*
@@ -26,7 +24,13 @@ output: html_document
 - Changed name from _selection.R_ to *selection_standard.R*
 - Included function *check_stop_criteria()* and corresponding file
 - Corrected output from _ExpDE()_
-- Corrected numerous errors on the recombination, mutation and selection routines
+- Corrected some errors on the recombination, mutation and selection routines
 - Added documentation to functions
 - Included *sphere()* example problem
 - Current version: 0.9.5
+
+
+### 2015-08-10: Felipe  
+- Changed version numbering to reflect development status: 0.0.0.9005 (following 
+  Hadley's advice on version numbering from "R Packages")
+- Other minor changes in DESCRIPTION

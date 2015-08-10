@@ -15,6 +15,7 @@
 #' 
 #' @section Stop criteria:
 #' 
+#' @section Problem description:
 #' 
 #' @param popsize population size
 #' @param mutpars list of named mutation parameters. 
@@ -38,10 +39,11 @@
 #' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
-#' probpars <- list(name   = "rastrigin", 
+#' probpars <- list(name   = "sphere", 
 #'                 lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2))
 #' 
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
 #' @export
 
 ExpDE <- function(popsize, 
@@ -99,15 +101,14 @@ ExpDE <- function(popsize,
     keep.running <- check_stop_criteria()
     
     # Compose next population
-    X <- next.pop$X
-    J <- next.pop$J
-    
+    X <- next.pop$Xsel
+    J <- next.pop$Jsel
   }
   
   X <- X[order(J), ]
   J <- sort(J)
   return(list(X    = denormalize_population(probpars, X),
-              Fx   = sort(J),
+              Fx   = J,
               nfe  = nfe,
               iter = t))
 } 

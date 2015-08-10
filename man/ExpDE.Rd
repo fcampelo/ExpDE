@@ -53,6 +53,10 @@ quality via the Differential Evolution algorithm."
 \section{Stop criteria}{
 
 }
+
+\section{Problem description}{
+
+}
 \examples{
 popsize  <- 40
 mutpars  <- list(name = "mutation_rand", f = 0.8)

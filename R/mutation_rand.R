@@ -31,7 +31,8 @@ mutation_rand <- function(X, mutpars){
                                                mutpars$nvecs)
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- sapply(X = rep(dim(X)[1], dim(X)[1]),
+  R <- sapply(X = rep(nrow(X), 
+                      times = nrow(X)),
               FUN = sample.int,
               size = 1 + 2*mutpars$nvecs,
               replace = FALSE,

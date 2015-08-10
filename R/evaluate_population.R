@@ -3,7 +3,7 @@ evaluate_population <- function (probpars, Pop){
   # Denormalize population
   Pop <- denormalize_population(probpars, Pop)
   
-  # Evaluate each candidate solution
+  # Evaluate candidate solutions
   Z <- do.call(probpars$name,
                args = list(Pop))
   
@@ -11,7 +11,6 @@ evaluate_population <- function (probpars, Pop){
   return (Z)
   
 }
-
 
 # Denormalize population
 denormalize_population <- function(probpars, Pop){
