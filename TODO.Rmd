@@ -14,4 +14,5 @@ output: html_document
 - Each mutation / recombination / selection operator must have its own 
   individual file, and follow the standard filename *operation_name.R* and
   standard function name *operation_name()* (e.g., *mutation_rand()*)
-- Change names of probpars parameters *lim_inf* and *lim_sup* to *xmin*, *xmax* (for uniformity with other projects)
+- Change names of _probpars_ parameters *lim_inf* and *lim_sup* to *xmin*, *xmax* (for uniformity with other projects)
+- Add output fields _Fbest_ and _Xbest_ containing best point returned (for compatibility with other projects)
