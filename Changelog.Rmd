@@ -1,0 +1,36 @@
+---
+title: "Changelog"
+author: "Felipe Campelo"
+date: "August 4, 2015"
+output: html_document
+---
+
+### 2015-08-05: Felipe  
+- Added _TODO.Rmd_ and _Changelog.Rmd_
+- Updated _DESCRIPTION_ file (roles, license, etc.)
+- Downgraded version to 0.9.X  to reflect pre-release (development) status.
+- Changed documentation in _ExpDE()_
+- Updated calls in _ExpDE()_
+- Changed name from _population()_ to *create_population()*
+- *create_population()* now generates only standardized populations in the 
+    $(0,1)$ interval.
+- Changed name from _evaluate()_ to *evaluate_population()*
+- Moved denormalization of the population to *evaluate_population.R*
+- Changed name from _mutation.R_ to *mutation_bin.R*
+- Rewrote *mutation_rand()* to serve as a template for future mutation functions
+- Changed name from _recombination.R_ to *recombination_bin.R*
+- Rewrote *recombination_bin()* to serve as a template for future recombination 
+    functions
+- Changed name from _selection.R_ to *selection_standard.R*
+- Included function *check_stop_criteria()* and corresponding file
+- Corrected output from _ExpDE()_
+- Corrected some errors on the recombination, mutation and selection routines
+- Added documentation to functions
+- Included *sphere()* example problem
+- Current version: 0.9.5
+
+
+### 2015-08-10: Felipe  
+- Changed version numbering to reflect development status: 0.0.0.9005 (following 
+  Hadley's advice on version numbering from "R Packages")
+- Other minor changes in DESCRIPTION

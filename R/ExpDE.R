@@ -1,67 +1,114 @@
-#' Differential Evolution Algorithm (DE)
+#' Experimental Differential Evolution - ExpDE
 #' 
-#' Is a method that optimizes a problem by iteratively trying to 
-#' improve a candidate solution with regard to a given measure of quality
-#' @param popsize size of population.
-#' @param mutpars  mutation the parameter list containing:
-#' \code{name} is name of mutation; \code{f} mutation the scaling factor.
-#' @param recpars recombination the parameter list containing:  
-#' \code{name} is the type of recombination to be used in the algorithm, ....
-#' @param selpars selection the parameter list containing:
-#' \code{name} is the type of selection to be in the algorithm, ....
-#' @param convcrit convergence criteria for the algorithm containing: 
-#' \code{type} it is the type of convergence criterion; \code{pars} it is the value
-#' the type of convergence criterion; \code{niter} is value of convergence criteria for the algorithm.
-#' \code{stab} is value of stabilization algorithm.
-#' @param probpars problem the parameter list containing:
-#' \code{name} is problem name to be analyzed;  
-#' \code{lim_inf} is lower limit of the information to be generated;
-#' \code{lim_sup} is upper limit of the information to be generated;
-#' \code{opt} other problem parameters.
-#' @return result (value) of the optimization.
-#' @keywords de, optimization
+#' Modular implementation of the Differential Evolution Algorithm
+#' 
+#' The detailed description comes here...
+#' "Is a method that optimizes a problem by iteratively trying to 
+#' improve a candidate solution with regard to a given measure of 
+#' quality via the Differential Evolution algorithm."
+#' 
+#' @section Mutation parameters:
+#' 
+#' @section Recombination parameters:
+#' 
+#' @section Selection parameters:
+#' 
+#' @section Stop criteria:
+#' 
+#' @section Problem description:
+#' 
+#' @param popsize population size
+#' @param mutpars list of named mutation parameters. 
+#'    See \code{Mutation parameters} for details.
+#' @param recpars list of named recombination parameters. 
+#'    See \code{Recombination parameters} for details.
+#' @param selpars list of named selection parameters. 
+#'    See \code{Selection parameters} for details.
+#' @param stopcrit list of named stop criteria parameters. See 
+#'    \code{Stop criteria} for details.
+#' @param probpars list of named problem parameters.
+#'    See \code{Problem description} for details.
+#' 
+#' @return A list object containing the final population (sorted by performance)
+#', the performance vector, and some run statistics.
+#' @author Felipe Campelo and Moises Botelho
+#' 
 #' @examples
-#' ExpDE(popsize = 40, mutpars = list(name = "rand", f = 0.2), recpars = list(name = "bin"),
-#' selpars = list(name = "standard"), convcrit = list(types = c("niter", "stab"),
-#'pars = list(niter = 500, nstab = 5)), probpars = list(name = "myfun", lim_inf = -5.12, lim_sup = 5.12, opt = 0))
-ExpDE<-function(popsize = 40, mutpars = list(name = "rand", f = 0.2),
-                recpars = list(name = "bin"),
-                selpars = list(name = "standard"),
-                convcrit = list(types = c("niter", "stab"),
-                           pars = list(niter = 500, nstab = 5)),
-                probpars = list(name = "rastrigin",
-                                lim_inf = -5.12, lim_sup = 5.12, opt = 3)){
-    # Differential evolution - a simple and efficient adaptive scheme for global optimization over continuous spaces. 
-    # Storn e Price(1995) Rainer Storn e Kenneth Price.
-    # Technical report, International Computer Science Institute
-    
-    # Federal University of Minas Gerais
-    # Department of Electrical Engineering
-    # Moises Botelho and Felipe Campelo, Ph.D.
-    
+#' popsize  <- 40
+#' mutpars  <- list(name = "mutation_rand", f = 0.8)
+#' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
+#' selpars  <- list(name = "selection_standard")
+#' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
+#' probpars <- list(name   = "sphere", 
+#'                 lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2))
+#' 
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
+#' @export
 
-    #Generation the initial population 
-    X <- population(popsize, probpars)
-    #Evaluate the initial population
-    J <- do.call(probpars$name, args = list(X))
+ExpDE <- function(popsize, 
+                  mutpars  = list(name = "rand", 
+                                  f = 0.2), 
+                  recpars  = list(name = "bin"), 
+                  selpars  = list(name = "standard"), 
+                  stopcrit, 
+                  probpars)
+{
   
-    if(convcrit$types[1] == "niter"){
-      #Generation  
-      for (t in 1:convcrit$pars$niter){
-    #while (t <= ngen){
-      #Mutation
-      M <- do.call(mutpars$name, args = list(X, mutpars))
-      #Recombination  
-      U <- do.call(recpars$name, args = list(X, M))
-      # Evaluate U
-      G <- evaluate(probpars, U)
-      #Selection  
-      next.pop <- do.call(selpars$name, args = list(U, G, X, J))
-      
-      X <- next.pop$X
-      J <- next.pop$J
-      
-    }
-    }
-    return (X)
+  # Generate initial population
+  X <- create_population(popsize  = popsize, 
+                         probpars = probpars)
+  
+  # Evaluate the initial population
+  J <- evaluate_population(probpars = probpars, 
+                           Pop      = X)
+  
+  # Prepare for iterative cycle:
+  keep.running  <- TRUE     # stop criteria flag
+  t             <- 0        # counter: iterations
+  nfe           <- popsize  # counter: number of function evaluations
+  
+  
+  # Iterative cycle
+  while(keep.running){
+    t <- t + 1          # Update iteration counter
+    
+    # Mutation  
+    M <- do.call(mutpars$name, 
+                 args = list(X       = X, 
+                             mutpars = mutpars))
+    
+    
+    # Recombination
+    U <- do.call(recpars$name, 
+                 args = list(X       = X, 
+                             M       = M,
+                             recpars = recpars))
+    
+    # Evaluate U
+    G <- evaluate_population(probpars = probpars, 
+                             Pop      = U)
+    nfe <- nfe + popsize
+    
+    # Selection
+    next.pop <- do.call(selpars$name, 
+                        args = list(X = X, 
+                                    U = U, 
+                                    J = J, 
+                                    G = G))
+    
+    # Stop criteria
+    keep.running <- check_stop_criteria()
+    
+    # Compose next population
+    X <- next.pop$Xsel
+    J <- next.pop$Jsel
   }
+  
+  X <- X[order(J), ]
+  J <- sort(J)
+  return(list(X    = denormalize_population(probpars, X),
+              Fx   = J,
+              nfe  = nfe,
+              iter = t))
+} 
