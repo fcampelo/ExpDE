@@ -63,7 +63,7 @@ mutpars  <- list(name = "mutation_rand", f = 0.8)
 recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 selpars  <- list(name = "selection_standard")
 stopcrit <- list(names = "stop_maxiter", maxiter = 100)
-probpars <- list(name   = "rastrigin",
+probpars <- list(name   = "sphere",
                 lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2))
 
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)

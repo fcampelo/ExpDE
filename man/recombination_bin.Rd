@@ -20,18 +20,21 @@ Matrix \code{U} containing the recombined population
 \description{
 Implements the "/bin" (binomial) recombination for the ExpDE framework
 }
-\details{
-The details (if any) come here...
-}
 \section{Recombination Parameters}{
 
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_bin()} understands the following fields in
 recpars:
    - \code{cr} : component-wise probability of using the value in \code{M}.
-   Accepts numeric values \code{0 < cr <= 1}.
+   Accepts numeric value \code{0 < cr <= 1}.
    - \code{minchange} : logical flag to force each new candidate solution to
    inherit at least one component from its mutated 'parent'.
    Defaults to TRUE
+}
+
+\section{References}{
+
+K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A
+Practical Approach to Global Optimization", Springer 2005
 }
 

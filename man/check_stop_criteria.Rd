@@ -6,6 +6,10 @@
 \usage{
 check_stop_criteria(env = parent.frame())
 }
+\arguments{
+\item{env}{environment from which to inherit the variable values. Do not
+change.}
+}
 \value{
 logical flag indicating whether any stop condition has been reached.
 }

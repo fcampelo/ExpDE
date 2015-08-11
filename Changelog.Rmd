@@ -34,3 +34,11 @@ output: html_document
 - Changed version numbering to reflect development status: 0.0.0.9005 (following 
   Hadley's advice on version numbering from "R Packages")
 - Other minor changes in DESCRIPTION
+- Reviewed *recombination_exp()*
+- Minor updates to documentation of *recombination_exp()* and 
+  *recombination_bin()*
+
+### 2015-08-10: Felipe  
+- Deleted *recombination_exp()*
+- Added *recombination_onepoint()*
+- Added _*.Rmd_ to _.Rbuildignore_
