@@ -3,19 +3,25 @@
 #' Modular implementation of the Differential Evolution Algorithm
 #' 
 #' The detailed description comes here...
-#' "Is a method that optimizes a problem by iteratively trying to 
-#' improve a candidate solution with regard to a given measure of 
-#' quality via the Differential Evolution algorithm."
 #' 
-#' @section Mutation parameters:
+#' @section Mutation Parameters:
+#' Here comes a description of the \code{mutpars} structure, with a link to the 
+#' vignette (or at least to a list of available operators)
 #' 
 #' @section Recombination parameters:
+#' Here comes a description of the \code{recpars} structure, with a link to the 
+#' vignette (or at least to a list of available operators)
 #' 
 #' @section Selection parameters:
+#' Here comes a description of the \code{selpars} structure, with a link to the 
+#' vignette (or at least to a list of available operators)
 #' 
 #' @section Stop criteria:
+#' Here comes a description of the \code{stopcrit} structure, with a link to the 
+#' vignette (or at least to a list of available criteria)
 #' 
 #' @section Problem description:
+#' Here comes a description of the \code{probpars} structure.
 #' 
 #' @param popsize population size
 #' @param mutpars list of named mutation parameters. 
@@ -40,7 +46,7 @@
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' probpars <- list(name   = "sphere", 
-#'                 lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2))
+#'                 xmin = rep(-5.12,2), xmax = rep(5.12,2))
 #' 
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
@@ -105,10 +111,12 @@ ExpDE <- function(popsize,
     J <- next.pop$Jsel
   }
   
-  X <- X[order(J), ]
+  X <- denormalize_population(probpars, X[order(J), ])
   J <- sort(J)
-  return(list(X    = denormalize_population(probpars, X),
-              Fx   = J,
-              nfe  = nfe,
-              iter = t))
+  return(list(X     = X,
+              Fx    = J,
+              Xbest = X[1,],
+              Fbest = F[1],
+              nfe   = nfe,
+              iter  = t))
 } 

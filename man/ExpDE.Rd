@@ -34,28 +34,34 @@ Modular implementation of the Differential Evolution Algorithm
 }
 \details{
 The detailed description comes here...
-"Is a method that optimizes a problem by iteratively trying to
-improve a candidate solution with regard to a given measure of
-quality via the Differential Evolution algorithm."
 }
-\section{Mutation parameters}{
+\section{Mutation Parameters}{
 
+Here comes a description of the \code{mutpars} structure, with a link to the
+vignette (or at least to a list of available operators)
 }
 
 \section{Recombination parameters}{
 
+Here comes a description of the \code{recpars} structure, with a link to the
+vignette (or at least to a list of available operators)
 }
 
 \section{Selection parameters}{
 
+Here comes a description of the \code{selpars} structure, with a link to the
+vignette (or at least to a list of available operators)
 }
 
 \section{Stop criteria}{
 
+Here comes a description of the \code{stopcrit} structure, with a link to the
+vignette (or at least to a list of available criteria)
 }
 
 \section{Problem description}{
 
+Here comes a description of the \code{probpars} structure.
 }
 \examples{
 popsize  <- 40
@@ -64,7 +70,7 @@ recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 selpars  <- list(name = "selection_standard")
 stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 probpars <- list(name   = "sphere",
-                lim_inf = rep(-5.12,2), lim_sup = rep(5.12,2))
+                xmin = rep(-5.12,2), xmax = rep(5.12,2))
 
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }

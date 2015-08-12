@@ -15,10 +15,10 @@ evaluate_population <- function (probpars, Pop){
 # Denormalize population
 denormalize_population <- function(probpars, Pop){
   # Denormalize population
-  LL <- matrix(rep(probpars$lim_inf, nrow(Pop)),
+  LL <- matrix(rep(probpars$xmin, nrow(Pop)),
                ncol = ncol(Pop),
                byrow = TRUE)
-  UL <- matrix(rep(probpars$lim_sup, nrow(Pop)),
+  UL <- matrix(rep(probpars$xmax, nrow(Pop)),
                ncol = ncol(Pop),
                byrow = TRUE)
   return(LL + Pop*(UL-LL))
