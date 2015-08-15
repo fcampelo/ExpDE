@@ -116,7 +116,7 @@ ExpDE <- function(popsize,
   return(list(X     = X,
               Fx    = J,
               Xbest = X[1,],
-              Fbest = F[1],
+              Fbest = J[1],
               nfe   = nfe,
               iter  = t))
 } 
