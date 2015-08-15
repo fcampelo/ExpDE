@@ -31,12 +31,11 @@ mutation_rand <- function(X, mutpars){
                                                mutpars$nvecs)
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- sapply(X = rep(nrow(X), 
+  R <- lapply(X = rep(nrow(X), 
                       times = nrow(X)),
               FUN = sample.int,
               size = 1 + 2*mutpars$nvecs,
-              replace = FALSE,
-              simplify = FALSE)
+              replace = FALSE)
 
     
   # Auxiliary function: make a single mutation

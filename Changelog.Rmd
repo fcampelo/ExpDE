@@ -43,8 +43,11 @@ output: html_document
 - Added *recombination_onepoint()*
 - Added _*.Rmd_ to _.Rbuildignore_
 
-### 2015-08-11
+### 2015-08-11: Felipe  
 - Changed names of _probpars_ parameters *lim_inf* and *lim_sup* to *xmin*, *xmax* (for uniformity with other projects)
 - Added output fields _Fbest_ and _Xbest_ to *ExpDE()* 
 (for compatibility with other projects)
 - Added placeholders for the documentation sections in *ExpDE()*
+
+### 2015-08-15: Felipe  
+- Fixed minor bug in the return list of *ExpDE()*
