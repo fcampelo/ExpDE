@@ -42,7 +42,7 @@ recombination_exp <- function(X, M, recpars) {
   mut.end    <- mut.start + sample(x    = 1:ncol(X) - 1,
                                    size = nrow(X),
                                    replace = TRUE,
-                                   prob = cr^(1:ncol(X)))
+                                   prob = recpars$cr^(1:ncol(X)))
   
   # Helper function for setting mutation indices: 
   # for each row wrap around the end of the vector, 

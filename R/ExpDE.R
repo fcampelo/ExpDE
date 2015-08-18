@@ -47,7 +47,7 @@
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' probpars <- list(name   = "sphere", 
-#'                 xmin = rep(-5.12,2), xmax = rep(5.12,2))
+#'                 xmin = rep(-5.12,3), xmax = rep(5.12,3))
 #' 
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
