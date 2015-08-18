@@ -25,53 +25,55 @@
 
 recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
 
-  # Error catching and default value definitions
-  if (!("K" %in% names(recpars))){
+  # ========== Error catching and default value definitions
+  if (!("K" %in% names(recpars))) {
     recpars$K <- NULL
   }
   if (!is.null(recpars$K)) {
     if(!(0 < recpars$K & recpars$K < ncol(X))){
       stop("recombination_onepoint() requires 0 < recpars$K < n")
     }
-    if(is.character(all.equal(recpars$K, as.integer(recpars$K)))){
+    if(is.character(all.equal(recpars$K, as.integer(recpars$K)))) {
       stop("recombination_onepoint() requires an integer value for K")
     }
   }
-  if (!identical(dim(X),dim(M))) {
+  if (!identical(dim(X), dim(M))) {
     stop("recombination_exp() requires dim(X) == dim(M)")
   }
+  # ==========
   
-  if(is.null(recpars$K)){
+  # Perform recombination (depending on the value of recpars$K)
+  if(is.null(recpars$K)) {
     # Matrix of cut points
-    cuts <-  matrix(rep(sample.int(n = ncol(X)-1, 
-                                   size = nrow(X), 
+    cuts <-  matrix(rep(sample.int(n       = ncol(X)-1, 
+                                   size    = nrow(X), 
                                    replace = TRUE),
                         times = ncol(X)),
-                    nrow = nrow(X),
-                    byrow=FALSE)
+                    nrow  = nrow(X),
+                    byrow = FALSE)
     
-    # Matrix of inheritance
-    chg <- cuts < matrix(rep(1:ncol(X),
-                              times = nrow(X),
-                              byrow = FALSE),
-                          nrow = nrow(X),
-                          byrow = TRUE)
-  } else{
-    # Matrix of inheritance
+    # Recombination matrix
+    R <- cuts < matrix(rep(1:ncol(X),
+                           times = nrow(X),
+                           byrow = FALSE),
+                       nrow  = nrow(X),
+                       byrow = TRUE)
+  } else {
+    # Recombination matrix
     chgvec <- logical(ncol(X))
     chgvec[1:recpars$K] <- TRUE
-    chg <- matrix(rep(chgvec, times = nrow(X)),
-                  nrow = nrow(X),
-                  byrow = TRUE)
+    R <- matrix(rep(chgvec, times = nrow(X)),
+                nrow  = nrow(X),
+                byrow = TRUE)
   }
   
   # Randomize which population will donate the variables with the lowermost 
   # indexes
   if (runif(1) < 0.5){ 
-     chg <- !chg    
+     R <- !R
 	 }
         
   # Return recombined population
-  return(chg*M + (!chg)*X) 
+  return(R * M + (!R) * X) 
 
 }

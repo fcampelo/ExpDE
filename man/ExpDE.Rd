@@ -64,14 +64,19 @@ vignette (or at least to a list of available criteria)
 Here comes a description of the \code{probpars} structure.
 }
 \examples{
+# DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
 popsize  <- 40
 mutpars  <- list(name = "mutation_rand", f = 0.8)
 recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 selpars  <- list(name = "selection_standard")
 stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 probpars <- list(name   = "sphere",
-                xmin = rep(-5.12,2), xmax = rep(5.12,2))
+                xmin = rep(-5.12,3), xmax = rep(5.12,3))
 
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/1/exp with population 40, F = 0.8 and CR = 0.2
+recpars  <- list(name = "recombination_exp", cr = 0.2)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }
 \author{

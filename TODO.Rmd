@@ -5,6 +5,27 @@ date: "August 4, 2015"
 output: html_document
 ---
 
+## For the current version
 - Error catching in *create_population()* (see file)
 - Document *evaluate_population()*
 - Include recombination alternatives
+- Add flag _record.everything_ to _ExpDE()_ (to return the whole history of the 
+optimization, incl. intermediate populations)
+
+
+## For future versions
+- Maybe use counters (iterations, function evaluations etc.) based on _mutable state_ 
+operations. For instance (form Hadley's Adv. R p.186):
+
+```
+new_counter <- function(n = 0){
+  i <- 0
+  function(n = 0){
+  i <<- i + n
+  i
+  }
+}
+```
+
+- Consider expressing candidate solutions as lists (useful to encapsulate 
+meta-info ) about each vector in the population;

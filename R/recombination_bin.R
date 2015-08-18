@@ -25,7 +25,7 @@
 
 recombination_bin <- function(X, M, recpars) {
 
-  # Error catching and default value definitions
+  # ========== Error catching and default value definitions
   if (!("cr" %in% names(recpars))){
     stop("recombination_bin() requires field cr in recpars")
   }
@@ -38,6 +38,7 @@ recombination_bin <- function(X, M, recpars) {
   if (!("minchange" %in% names(recpars))){
     recpars$minchange <- TRUE
   }
+  # ==========
   
   # Recombination matrix
   R <- matrix(runif(n = prod(dim(X))) < recpars$cr, 
