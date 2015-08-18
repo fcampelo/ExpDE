@@ -19,7 +19,7 @@
 
 mutation_rand <- function(X, mutpars){
 
-  # Error catching and default value definitions
+  # ========== Error catching and default value definitions
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   if (!(mutpars$nvecs %in% 1:(nrow(X)/2 - 2))){
     stop("mutation_rand() requires integer 1 <= mutpar$nvecs <= (popsize/2 - 2)")

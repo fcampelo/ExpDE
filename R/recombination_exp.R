@@ -1,20 +1,17 @@
 #' Exponential recombination for DE
 #' 
-#' Implements the exp recombination (as used in the Simple GA).
+#' Implements the "/exp" (exponential) recombination for the ExpDE framework
 #' 
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
 #' recombination. \code{recombination_exp()} understands the following 
 #' fields in recpars:
-#'    - \code{K} : cut point for crossover. Defaults to NULL.
-#'    Accepts integer value \code{0 < K < n}, where \code{n} is the 
-#'    dimension of the problem; or \code{K = NULL} for randomly choosing a 
-#'    position for each pair of points.
+#'    - \code{cr} : component-wise probability of selection as a cut-point.
+#'    Accepts numeric value \code{0 < cr <= 1}.
 #'
 #' @section References:
-#' Price, Kenneth, Rainer M. Storn, and Jouni A. Lampinen. 
-#' Differential evolution: a practical approach to global optimization. 
-#' Springer Science & Business Media, 2006.
+#' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
+#' Practical Approach to Global Optimization", Springer 2005
 #'
 #' @param X population matrix (original)
 #' @param M population matrix (mutated) 
@@ -23,40 +20,47 @@
 #' 
 #' @return Matrix \code{U} containing the recombined population
 
-recombination_exp <- function(X, M, recpars = list(K = NULL)) {
+recombination_exp <- function(X, M, recpars) {
   
+  # ========== Error catching and default value definitions
   if (!identical(dim(X),dim(M))) {
     stop("recombination_exp() requires dim(X) == dim(M)")
   }
+  if (!("cr" %in% names(recpars))){
+    stop("recombination_exp() requires field cr in recpars")
+  }
+  # ==========
   
-  makeinherits <- function(pos, X, M){
-    # Generates a random number size of the individual dimension
-    j <- sample.int(n = ncol(X), 
-                     size = 1, replace = TRUE)                      
-    I <- X
-    l <- 0
-    
-    repeat
-    {
-      # Child inherits a mutant parameter
-      I[j] <- M[j]
-      
-      # Increment j, modulo ncol(X)
-      j <- (j+1) %% ncol(X)
-      l <- l + 1
-      if (runif(1) > recpars$cr || l == ncol(X))
-        break
-    }
-    
-    # Return recombined Individual
-    return(I) 
-    
+  # Start points for mutation: for each row, a value between 1 and length(x),
+  # uniformly distributed
+  mut.start <- sample.int(n    = ncol(X),
+                          size = nrow(X),
+                          replace = TRUE)
+  
+  # End points for mutation: for each row, a value between mut.start and 
+  # (mut.start + length(x) - 1), exponentially distributed
+  mut.end    <- mut.start + sample(x    = 1:ncol(X) - 1,
+                                   size = nrow(X),
+                                   replace = TRUE,
+                                   prob = cr^(1:ncol(X)))
+  
+  # Helper function for setting mutation indices: 
+  # for each row wrap around the end of the vector, 
+  # e.g., if n = 5, s = 3 and e = 6, returns z = [1, 0, 1, 1, 1] (pos 3,4,5,1)
+  # e.g., if n = 5, s = 1 and e = 1, returns z = [1, 0, 0, 0, 0] (pos 1)
+  setfun <- function(n, s, e) {
+    z<-numeric(n)
+    z[(s - 1):(e - 1) %% n + 1] <- 1
+    z
   }
   
-  U <- lapply(X, 
-              FUN = makeinherits, 
-              X = X, 
-              M = M)
+  # Recombination matrix - using mapply() to apply over multiple indexed objects
+  R <- t(mapply(FUN      = setfun, 
+                n        = rep(ncol(X), nrow(X)),
+                s        = mut.start,
+                e        = mut.end,
+                SIMPLIFY = TRUE))
   
-  return(matrix(data  = unlist(U), nrow = nrow(X), ncol= ncol(X), byrow = T))
+  # Return recombined population
+  return(R*M + (1-R)*X)
 }

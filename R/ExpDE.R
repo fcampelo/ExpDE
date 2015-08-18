@@ -40,6 +40,7 @@
 #' @author Felipe Campelo and Moises Botelho
 #' 
 #' @examples
+#' # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
 #' popsize  <- 40
 #' mutpars  <- list(name = "mutation_rand", f = 0.8)
 #' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
@@ -48,6 +49,10 @@
 #' probpars <- list(name   = "sphere", 
 #'                 xmin = rep(-5.12,2), xmax = rep(5.12,2))
 #' 
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
+#' # DE/rand/1/exp with population 40, F = 0.8 and CR = 0.2
+#' recpars  <- list(name = "recombination_exp", cr = 0.2)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
 #' @export
