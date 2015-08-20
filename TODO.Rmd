@@ -15,7 +15,7 @@ optimization, incl. intermediate populations)
 
 ## For future versions
 - Maybe use counters (iterations, function evaluations etc.) based on _mutable state_ 
-operations. For instance (form Hadley's Adv. R p.186):
+operations. For instance (from Hadley's Adv R p.186):
 
 ```
 new_counter <- function(n = 0){
@@ -28,4 +28,4 @@ new_counter <- function(n = 0){
 ```
 
 - Consider expressing candidate solutions as lists (useful to encapsulate 
-meta-info ) about each vector in the population;
+meta-info about each vector in the population).
