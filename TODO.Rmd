@@ -8,6 +8,10 @@ output: html_document
 ## For the current version
 - Add a repair function to fix out-of-bounds vectors (and improve 
     *recombination_geo()*'s repair)
+- review *recombination_blxAlpha()*
+- update error catching in all functions
+- think about using a standard notation for parameters in all recombination 
+    operators (is it interesting or will it generate more confusion?)
 - Error catching in *create_population()* (see file)
 - Document *evaluate_population()*
 - Include recombination alternatives
