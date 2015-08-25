@@ -23,11 +23,14 @@
 recombination_exp <- function(X, M, recpars) {
   
   # ========== Error catching and default value definitions
-  if (!identical(dim(X),dim(M))) {
+  if (!identical(dim(X), dim(M))) {
     stop("recombination_exp() requires dim(X) == dim(M)")
   }
   if (!("cr" %in% names(recpars))){
     stop("recombination_exp() requires field cr in recpars")
+  }
+  if (!(0 < recpars$cr & recpars$cr <= 1)) {
+    stop("recombination_exp() requires numeric 0 < recpars$cr <= 1")
   }
   # ==========
   

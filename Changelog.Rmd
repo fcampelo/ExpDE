@@ -38,10 +38,12 @@ output: html_document
 - Minor updates to documentation of *recombination_exp()* and 
   *recombination_bin()*
 
+
 ### 2015-08-10: Felipe  
 - Deleted *recombination_exp()*
 - Added *recombination_onepoint()*
 - Added _*.Rmd_ to _.Rbuildignore_
+
 
 ### 2015-08-11: Felipe  
 - Changed names of _probpars_ parameters *lim_inf* and *lim_sup* to *xmin*, *xmax* (for uniformity with other projects)
@@ -49,5 +51,11 @@ output: html_document
 (for compatibility with other projects)
 - Added placeholders for the documentation sections in *ExpDE()*
 
+
 ### 2015-08-15: Felipe  
 - Fixed minor bug in the return list of *ExpDE()*
+
+
+### 2015-08-15: Felipe  
+- Reviewed *recombination_arith()*
+- Reviewed *recombination_geom()*

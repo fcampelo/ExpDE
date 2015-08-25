@@ -6,6 +6,8 @@ output: html_document
 ---
 
 ## For the current version
+- Add a repair function to fix out-of-bounds vectors (and improve 
+    *recombination_geo()*'s repair)
 - Error catching in *create_population()* (see file)
 - Document *evaluate_population()*
 - Include recombination alternatives
@@ -14,8 +16,8 @@ optimization, incl. intermediate populations)
 
 
 ## For future versions
-- Maybe use counters (iterations, function evaluations etc.) based on _mutable state_ 
-operations. For instance (from Hadley's Adv R p.186):
+- Maybe use counters (iterations, function evaluations etc.) based on 
+_mutable state_ operations. For instance (from Hadley's Adv R p.186):
 
 ```
 new_counter <- function(n = 0){

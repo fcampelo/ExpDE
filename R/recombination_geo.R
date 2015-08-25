@@ -4,13 +4,12 @@
 #' 
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
-#' recombination. \code{recombination_geo()} understands the following 
+#' recombination. \code{recombination_exp()} understands the following 
 #' fields in recpars:
-#'    - \code{cr} : component-wise probability of selection as a cut-point.
-#'    Accepts numeric value \code{0 < cr <= 1}.
-#'    - \code{K} : geometric constant. Defaults to NULL.
-#'    Accepts real value \code{0 <= K <= 1}; or \code{K = NULL} for randomly choosing a 
-#'   for each individual of population.
+#'    - \code{alpha} : exponent for geometrical recombination. 
+#'    Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which 
+#'    case a random value is chosen for each recombination). Defaults to 
+#'    \code{alpha = 0.5}.
 #'
 #' @section References:
 #' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
@@ -24,49 +23,47 @@
 #' 
 #' @return Matrix \code{U} containing the recombined population
 
-recombination_geo <- function(X, M, recpars = list(K = NULL)) {
+recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
 
   # ========== Error catching and default value definitions
-  if (!("K" %in% names(recpars))) {
-    recpars$K <- NULL
-    
-    if (!is.null(recpars$K)) {
-      
-      if(!(0 <= recpars$K & recpars$K <= 1)){
-        stop("recombination_geo() requires 0 <= recpars$K <= 1")
-      }
-      
-      if(is.character(all.equal(recpars$K, as.numeric(recpars$K)))) {
-        stop("recombination_geo() requires an numeric value for K")
-      }
-    }
-  }
-  
-  if (!("cr" %in% names(recpars))){
-    stop("recombination_geo() requires field cr in recpars")
-  }
-  
   if (!identical(dim(X), dim(M))) {
     stop("recombination_geo() requires dim(X) == dim(M)")
   }
+  if (!("alpha" %in% names(recpars))){
+    recpars$alpha <- 0.5
+  }
+  if (!is.null(recpars$alpha) && !(0 < recpars$alpha && recpars$alpha <= 1)) {
+    stop("recombination_geo() requires numeric 0 < recpars$alpha <= 1")
+  }
   # ==========
   
-  # Perform recombination (depending on the value of recpars$K)
-  if(is.null(recpars$K)) {
-    # Matrix of recombination multipliers
-    recpars$K <-  matrix(rep(runif(n = nrow(X),
-                                   min = 0, 
-                                   max = 1),
-                             times = ncol(X)),
-                         nrow  = nrow(X),
-                         byrow = FALSE)
-  } 
+  # Repair out-of-bounds vectors
+  X <- t(apply(X, 
+               MARGIN = 1, 
+               FUN = function(x) pmin(1, pmax(0, x))))
+  M <- t(apply(M, 
+               MARGIN = 1, 
+               FUN = function(x) pmin(1, pmax(0, x))))
   
-  # Matrix of recombination rate
-  rate <- matrix(runif(n = prod(dim(X))) < recpars$cr, 
-                 nrow = nrow(X))
   
-  #tive que eliminar os valores negativos que a população M tinha
+  if(is.null(recpars$alpha)){ # use a random value for each recombination
+    alpha <- matrix(rep(runif(nrow(X)),
+                        times = ncol(X)),
+                    ncol = ncol(X),
+                    byrow = FALSE)
+  } else{ # use the given (or default) alpha value for all recombinations
+    alpha <- matrix(rep(recpars$alpha,
+                        prod(dim(X))),
+                    ncol = ncol(X),
+                    byrow = FALSE)
+  }
+  
+  
+  # Randomize which parent will use exponent alpha and which will use 
+  # (1-alpha)
+  inv.alpha <- as.logical(round(runif(nrow(X))))
+  alpha[inv.alpha, ] <- 1 - alpha[inv.alpha, ]
+  
   # Return recombined population
-  return ((X^recpars$K) * (abs(M)^(1-recpars$K)) * rate + X * !rate)
+  return(X^alpha * M^(1 - alpha))
 }
