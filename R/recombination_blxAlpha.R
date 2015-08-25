@@ -74,7 +74,6 @@ recombination_blxAlpha <- function(X, M, recpars = list(K = NULL, cr)) {
   
   # Recombination matrix - using mapply() to apply over multiple indexed objects
   R <- (mapply(FUN      = setfun, 
-                n        = rep(ncol(X), nrow(X)),
                 x        = X,
                 m        = M,
             alpha        = recpars$K, 
