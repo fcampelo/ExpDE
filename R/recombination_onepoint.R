@@ -22,6 +22,8 @@
 #' for details)
 #' 
 #' @return Matrix \code{U} containing the recombined population
+#' 
+#' @export
 
 recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
 
@@ -33,7 +35,7 @@ recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
     if(!(0 < recpars$K & recpars$K < ncol(X))){
       stop("recombination_onepoint() requires 0 < recpars$K < n")
     }
-    if(is.character(all.equal(recpars$K, as.integer(recpars$K)))) {
+    if(!(all(recpars$K == floor(recpars$K)))) {
       stop("recombination_onepoint() requires an integer value for K")
     }
   }

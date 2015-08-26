@@ -12,6 +12,8 @@
 #' @param ... optional parameters (unused)
 #' 
 #' @return Matrix \code{U} containing the recombined population
+#' 
+#' @export
 
 recombination_arith <- function(X, M, ...) {
   

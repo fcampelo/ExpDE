@@ -8,6 +8,8 @@
 #' @param probpars list of named problem parameters (see \code{\link{ExpDE}}).
 #' 
 #' @return A matrix containing the population for the ExpDE
+#' 
+#' @export
 
 create_population <- function(popsize,      # population size
                               probpars)     # list of named problem parameters

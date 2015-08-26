@@ -4,15 +4,14 @@
 \alias{recombination_arith}
 \title{Arithmetic recombination for DE}
 \usage{
-recombination_arith(X, M, recpars = list(K = NULL))
+recombination_arith(X, M, ...)
 }
 \arguments{
 \item{X}{population matrix (original)}
 
 \item{M}{population matrix (mutated)}
 
-\item{recpars}{recombination parameters (see \code{Recombination parameters}
-for details)}
+\item{...}{optional parameters (unused)}
 }
 \value{
 Matrix \code{U} containing the recombined population
@@ -20,18 +19,6 @@ Matrix \code{U} containing the recombined population
 \description{
 Implements the "/arith" (arithmetic) recombination for the ExpDE framework
 }
-\section{Recombination Parameters}{
-
-The \code{recpars} parameter contains all parameters required to define the
-recombination. \code{recombination_arith()} understands the following
-fields in recpars:
-   - \code{cr} : component-wise probability of selection as a cut-point.
-   Accepts numeric value \code{0 < cr <= 1}.
-   - \code{K} : arithmetic constant. Defaults to NULL.
-   Accepts real value \code{0 <= K <= 1}; or \code{K = NULL} for randomly choosing a
-  for each individual of population.
-}
-
 \section{References}{
 
 F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover

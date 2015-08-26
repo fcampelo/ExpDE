@@ -4,7 +4,7 @@
 #' 
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
-#' recombination. \code{recombination_exp()} understands the following 
+#' recombination. \code{recombination_geo()} understands the following 
 #' fields in recpars:
 #'    - \code{alpha} : exponent for geometrical recombination. 
 #'    Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which 
@@ -22,6 +22,8 @@
 #' for details)
 #' 
 #' @return Matrix \code{U} containing the recombined population
+#' 
+#' @export
 
 recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
 
@@ -38,13 +40,8 @@ recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
   # ==========
   
   # Repair out-of-bounds vectors
-  X <- t(apply(X, 
-               MARGIN = 1, 
-               FUN = function(x) pmin(1, pmax(0, x))))
-  M <- t(apply(M, 
-               MARGIN = 1, 
-               FUN = function(x) pmin(1, pmax(0, x))))
-  
+  X <- pmax(0 * X, pmin(0 * X + 1, X))
+  X <- pmax(0 * M, pmin(0 * M + 1, M))
   
   if(is.null(recpars$alpha)){ # use a random value for each recombination
     alpha <- matrix(rep(runif(nrow(X)),

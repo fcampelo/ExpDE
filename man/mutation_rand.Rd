@@ -15,7 +15,7 @@ mutation_rand(X, mutpars)
 Matrix \code{M} containing the mutated population
 }
 \description{
-Implements the "/rand/K" mutation for the ExpDE framework
+Implements the "/rand/nvecs" mutation for the ExpDE framework
 }
 \details{
 The details (if any) come here...

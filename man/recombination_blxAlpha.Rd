@@ -4,7 +4,7 @@
 \alias{recombination_blxAlpha}
 \title{Blend Alpha recombination for DE}
 \usage{
-recombination_blxAlpha(X, M, recpars = list(K = NULL, cr))
+recombination_blxAlpha(X, M, recpars)
 }
 \arguments{
 \item{X}{population matrix (original)}
@@ -18,17 +18,19 @@ for details)}
 Matrix \code{U} containing the recombined population
 }
 \description{
-Implements the "/blxAlpha" (Blend Alpha) recombination for the ExpDE framework
+Implements the "/blxAlpha" (Blend Alpha) recombination for the ExpDE
+framework
 }
 \section{Recombination Parameters}{
 
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_blxAlpha()} understands the following
 fields in recpars:
-   - \code{cr} : component-wise probability of selection as a cut-point.
-   Accepts numeric value \code{0 < cr <= 1}.
-   - \code{K} : blxAlpha constant. Defaults to 0.5.
-   Accepts real value \code{0 <= K <= 1}; or \code{K = NULL} for choosing 0.5 default
+   - \code{alpha} : extrapolation parameter.
+   Accepts real value \code{0 <= alpha <= 0.5}. Since the internal coding of
+   ExpDE standardizes variables to the interval 0 <= x <= 1, the use of high
+   values of \code{alpha} will result in loss of search hability. Lower
+   values (e.g., \code{alpha = 0.05}) tend to be more effective.
 }
 
 \section{References}{

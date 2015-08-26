@@ -59,3 +59,7 @@ output: html_document
 ### 2015-08-15: Felipe  
 - Reviewed *recombination_arith()*
 - Reviewed *recombination_geom()*
+- Reviewed *recombination_blxAlpha()*
+- Minor reviews to other recombination functions
+- Added *utils.R* to gather small useful functions
+- added *@export* tag to operator functions

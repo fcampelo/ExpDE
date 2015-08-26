@@ -19,6 +19,8 @@
 #' for details)
 #' 
 #' @return Matrix \code{U} containing the recombined population
+#' 
+#' @export
 
 recombination_exp <- function(X, M, recpars) {
   
@@ -36,8 +38,8 @@ recombination_exp <- function(X, M, recpars) {
   
   # Start points for mutation: for each row, a value between 1 and length(x),
   # uniformly distributed
-  mut.start <- sample.int(n    = ncol(X),
-                          size = nrow(X),
+  mut.start <- sample.int(n       = ncol(X),
+                          size    = nrow(X),
                           replace = TRUE)
   
   # End points for mutation: for each row, a value between mut.start and 
@@ -65,5 +67,5 @@ recombination_exp <- function(X, M, recpars) {
                 SIMPLIFY = TRUE))
   
   # Return recombined population
-  return(R*M + (1-R)*X)
+  return(R*M + (1 - R)*X)
 }

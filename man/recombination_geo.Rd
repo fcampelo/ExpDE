@@ -4,7 +4,7 @@
 \alias{recombination_geo}
 \title{Geometric recombination for DE}
 \usage{
-recombination_geo(X, M, recpars = list(K = NULL))
+recombination_geo(X, M, recpars = list(alpha = 0.5))
 }
 \arguments{
 \item{X}{population matrix (original)}
@@ -25,11 +25,10 @@ Implements the "/geo" (geometric) recombination for the ExpDE framework
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_geo()} understands the following
 fields in recpars:
-   - \code{cr} : component-wise probability of selection as a cut-point.
-   Accepts numeric value \code{0 < cr <= 1}.
-   - \code{K} : geometric constant. Defaults to NULL.
-   Accepts real value \code{0 <= K <= 1}; or \code{K = NULL} for randomly choosing a
-  for each individual of population.
+   - \code{alpha} : exponent for geometrical recombination.
+   Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which
+   case a random value is chosen for each recombination). Defaults to
+   \code{alpha = 0.5}.
 }
 
 \section{References}{

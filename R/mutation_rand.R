@@ -1,6 +1,6 @@
 #' /rand mutation for DE
 #' 
-#' Implements the "/rand/K" mutation for the ExpDE framework
+#' Implements the "/rand/nvecs" mutation for the ExpDE framework
 #' 
 #' The details (if any) come here...
 #' 
@@ -16,6 +16,8 @@
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
+#' 
+#' @export
 
 mutation_rand <- function(X, mutpars){
 
@@ -29,6 +31,7 @@ mutation_rand <- function(X, mutpars){
   }
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
+  # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
   R <- lapply(X = rep(nrow(X), 
@@ -52,7 +55,7 @@ mutation_rand <- function(X, mutpars){
     return(Xr1 + wdiffsum)
   }
   
-  # Apply mutation for all 
+  # Apply mutation
   M <- lapply(R, 
               FUN = randmut, 
               Pop = X, 

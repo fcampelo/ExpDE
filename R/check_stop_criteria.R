@@ -14,6 +14,7 @@
 #' change.
 #' 
 #' @return logical flag indicating whether any stop condition has been reached.
+#' @export
 check_stop_criteria <- function(env = parent.frame()){
   
   crits <- env$stopcrit$names
