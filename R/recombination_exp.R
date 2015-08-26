@@ -19,22 +19,27 @@
 #' for details)
 #' 
 #' @return Matrix \code{U} containing the recombined population
+#' 
+#' @export
 
 recombination_exp <- function(X, M, recpars) {
   
   # ========== Error catching and default value definitions
-  if (!identical(dim(X),dim(M))) {
+  if (!identical(dim(X), dim(M))) {
     stop("recombination_exp() requires dim(X) == dim(M)")
   }
   if (!("cr" %in% names(recpars))){
     stop("recombination_exp() requires field cr in recpars")
   }
+  if (!(0 < recpars$cr & recpars$cr <= 1)) {
+    stop("recombination_exp() requires numeric 0 < recpars$cr <= 1")
+  }
   # ==========
   
   # Start points for mutation: for each row, a value between 1 and length(x),
   # uniformly distributed
-  mut.start <- sample.int(n    = ncol(X),
-                          size = nrow(X),
+  mut.start <- sample.int(n       = ncol(X),
+                          size    = nrow(X),
                           replace = TRUE)
   
   # End points for mutation: for each row, a value between mut.start and 
@@ -62,5 +67,5 @@ recombination_exp <- function(X, M, recpars) {
                 SIMPLIFY = TRUE))
   
   # Return recombined population
-  return(R*M + (1-R)*X)
+  return(R*M + (1 - R)*X)
 }
