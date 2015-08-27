@@ -39,20 +39,20 @@ recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
   }
   # ==========
   
-  # Repair out-of-bounds vectors
-  X <- pmax(0 * X, pmin(0 * X + 1, X))
-  X <- pmax(0 * M, pmin(0 * M + 1, M))
+  # Get all values to the interval [.25, .75] before performing the recombination
+  # (the resulting recombined matrix must be later restored to the original 
+  # range)
+  mins <- pmin(X, M)
+  maxs <- pmax(X, M)
+  X <- 0.25 + 0.5*(X - mins) / (maxs - mins)
+  M <- 0.25 + 0.5*(M - mins) / (maxs - mins)
   
   if(is.null(recpars$alpha)){ # use a random value for each recombination
     alpha <- matrix(rep(runif(nrow(X)),
                         times = ncol(X)),
-                    ncol = ncol(X),
-                    byrow = FALSE)
+                    ncol = ncol(X))
   } else{ # use the given (or default) alpha value for all recombinations
-    alpha <- matrix(rep(recpars$alpha,
-                        prod(dim(X))),
-                    ncol = ncol(X),
-                    byrow = FALSE)
+    alpha <- recpars$alpha + 0*X
   }
   
   
@@ -61,6 +61,7 @@ recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
   inv.alpha <- as.logical(round(runif(nrow(X))))
   alpha[inv.alpha, ] <- 1 - alpha[inv.alpha, ]
   
-  # Return recombined population
-  return(X^alpha * M^(1 - alpha))
+  # Build recombined population and return it to the original range
+  U <- X^alpha * M^(1 - alpha)
+  return(mins + (U - 0.25) * (maxs - mins) / 0.5)
 }
