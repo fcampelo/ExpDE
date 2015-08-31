@@ -38,13 +38,11 @@ recombination_simBinary <- function(X, M, recpars) {
 
   # ==========
   p <- randM(X);
+  #Define beta parameters
   beta <- rep((p<=0.5) * (2 * p) ^ (1 / (recpars$eta + 1)) + 
                (p > 0.5) * (2 * (1 - p)) ^ (1 / (recpars$eta + 1)), 1 ,ncol(X));
   
-  betaM <- matrix(rep(beta, times = ncol(X)), nrow = nrow(X))
-  
-  
-  dir = sign(0.5 - runif(1));
+  dir <- sign(0.5 - runif(1));
   
   # Return recombined population
   return(0.5 * ((1 + dir * beta) * X + (1 - dir * beta) * M ))
