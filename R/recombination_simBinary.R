@@ -6,8 +6,8 @@
 #' The \code{recpars} parameter contains all parameters required to define the 
 #' recombination. \code{recombination_simBinary()} understands the following field in 
 #' recpars:
-#'    - \code{eta} : component-wise probability of using the value in \code{M}.
-#'    Accepts numeric value \code{0 < cr <= 1}.
+#'    - \code{eta} : component-wise probability.
+#'    Accepts numeric value \code{ eta > 0}.
 #'    
 #'
 #' @section References:
@@ -29,15 +29,14 @@ recombination_simBinary <- function(X, M, recpars) {
   if (!("eta" %in% names(recpars))){
     stop("recombination_simBinary() requires field eta in recpars")
   }
-  if (!(0 <= recpars$eta)) {
-    stop("recombination_simBinary() requires numeric 0 <= recpars$eta")
+  if (! (recpars$eta > 0)) {
+    stop("recombination_simBinary() requires numeric  recpars$eta > 0")
   }
   if (!identical(dim(X),dim(M))) {
     stop("recombination_simBinary() requires dim(X) == dim(M)")
   }
 
   # ==========
- 
   p <- randM(X);
   beta <- rep((p<=0.5) * (2 * p) ^ (1 / (recpars$eta + 1)) + 
                (p > 0.5) * (2 * (1 - p)) ^ (1 / (recpars$eta + 1)), 1 ,ncol(X));
@@ -45,8 +44,8 @@ recombination_simBinary <- function(X, M, recpars) {
   betaM <- matrix(rep(beta, times = ncol(X)), nrow = nrow(X))
   
   
-  dir = sign(0.5-runif(1));
+  dir = sign(0.5 - runif(1));
   
   # Return recombined population
-  return(0.5*( (1+dir*beta)*X + (1-dir*beta)*M ))
+  return(0.5 * ((1 + dir * beta) * X + (1 - dir * beta) * M ))
 }
