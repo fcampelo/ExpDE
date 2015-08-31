@@ -22,6 +22,8 @@
 #' for details)
 #' 
 #' @return Matrix \code{U} containing the recombined population
+#' 
+#' @export
 
 recombination_bin <- function(X, M, recpars) {
 
@@ -41,11 +43,10 @@ recombination_bin <- function(X, M, recpars) {
   # ==========
   
   # Recombination matrix
-  R <- matrix(runif(n = prod(dim(X))) < recpars$cr, 
-             nrow = nrow(X))
+  R <- randM(X) < recpars$cr
   
   if (recpars$minchange){
-    indx    <- which(rowSums(R)==0)
+    indx    <- which(rowSums(R) == 0)
     cor.mat <- cbind(indx, 
                      sample.int(n       = ncol(X),
                                 size    = length(indx), 
@@ -54,5 +55,5 @@ recombination_bin <- function(X, M, recpars) {
   }
   
   # Return recombined population
-  return(R*M + (1-R)*X)
+  return(R*M + (1 - R)*X)
 }

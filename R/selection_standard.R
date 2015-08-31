@@ -12,6 +12,9 @@
 #' 
 #' @return list object containing the selected population (\code{Xsel}) and 
 #' its corresponding performance values (\code{Jsel}).
+#' 
+#' @export
+
 selection_standard <- function(X, U, J, G){
   
   sel.vec       <- (G <= J)

@@ -23,7 +23,7 @@ See \code{Selection parameters} for details.}
 \code{Stop criteria} for details.}
 
 \item{probpars}{list of named problem parameters.
-   See \code{Problem description} for details.}
+   See \code{Problem Description} for details.}
 }
 \value{
 A list object containing the final population (sorted by performance)
@@ -71,12 +71,16 @@ recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 selpars  <- list(name = "selection_standard")
 stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 probpars <- list(name   = "sphere",
-                xmin = rep(-5.12,3), xmax = rep(5.12,3))
-
+                xmin = rep(-5.12,4), xmax = rep(5.12,4))
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 
-# DE/rand/1/exp with population 40, F = 0.8 and CR = 0.2
+# DE/rand/1/exp
 recpars  <- list(name = "recombination_exp", cr = 0.2)
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/2/blxAlpha
+recpars  <- list(name = "recombination_blxAlpha", alpha = 0.01)
+mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }
 \author{
