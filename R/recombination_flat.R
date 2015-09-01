@@ -2,22 +2,17 @@
 #' 
 #' Implements the "/flat" (Flat) recombination for the ExpDE 
 #' framework
-#' 
-#' @section Recombination Parameters:
-#' Does not require parameters
-#'    
 #'
 #' @section References: 
 #' Picek, S.; Jakobovic, D.; Golub, M., "On the recombination operator 
 #' in the real-coded genetic algorithms," CEC'2013, pp.3103-3110, 2013\cr
-#' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
-#' operator for real-coded genetic algorithms: an experimental study", 
-#' International Journal of Intelligent Systems 18(3) 309-338, 2003.
+#' F. Herrera, M. Lozano, J.L. Verdegay, "Tackling Real-Coded Genetic 
+#' Algorithms: Operators and Tools for Behavioural Analysis", 
+#' Artificial Intelligence Review 12 265-319, 1998.
 #'
 #' @param X population matrix (original)
 #' @param M population matrix (mutated) 
-#' @param recpars recombination parameters (see \code{Recombination parameters} 
-#' for details)
+#' @param ... optional parameters (unused)
 #' 
 #' @return Matrix \code{U} containing the recombined population
 #' 
