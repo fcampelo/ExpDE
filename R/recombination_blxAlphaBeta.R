@@ -6,16 +6,17 @@
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
 #' recombination. \code{recombination_blxAlpha()} understands the following 
-#' fields in recpars:
-#'    - \code{alpha} : extrapolation parameter.
-#'    Accepts real value \code{0 <= alpha <= 0.75}. Since the internal coding of
-#'    ExpDE standardizes variables to the interval 0 <= x <= 1. This parameter 
-#'    increases the interval in which the individual is generated.     
-#'    
-#'    - \code{beta} : extrapolation parameter.
-#'    Accepts real value \code{0 <= alpha <= 0.25}. Since the internal coding of
-#'    ExpDE standardizes variables to the interval 0 <= x <= 1, the use of high
-#'    values of \code{alpha} reduces the interval at which the individual is generated.
+#' fields in \code{recpars}:
+#' \itemize{
+#'    \item \code{alpha} : extrapolation parameter for 'best' parent vector.\cr
+#'    Accepts real value \code{0 <= alpha <= 0.5}.
+#'    \item \code{beta} : extrapolation parameter for 'worst' parent vector.\cr
+#'    Accepts real value \code{0 <= beta <= 0.5}. 
+#' }
+#' 
+#'  @section Warning:
+#'  This recombination operator evaluates the candidate solutions in \code{M}, 
+#'  which adds an extra \code{popsize} evaluations per iteration.
 #'
 #' @section References:
 #' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
@@ -32,6 +33,9 @@
 #' @export
 
 recombination_blxAlphaBeta <- function(X, M, recpars, ...) {
+  
+  # Get access to variables in the calling environment
+  env <- parent.frame()
 
   # ========== Error catching and default value definitions
   if (!("alpha" %in% names(recpars))){
@@ -41,49 +45,55 @@ recombination_blxAlphaBeta <- function(X, M, recpars, ...) {
     stop("recombination_blxAlphaBeta() requires field beta in recpars")
   }
   if(!is.numeric(recpars$alpha)){
-    stop("recombination_blxAlphaBeta() requires a numeric rectpars$alpha")
+    stop("recombination_blxAlphaBeta() requires a numeric recpars$alpha")
   }
-  
   if(!is.numeric(recpars$beta)){
-    stop("recombination_blxAlphaBeta() requires a numeric rectpars$beta")
+    stop("recombination_blxAlphaBeta() requires a numeric recpars$beta")
   }
-  if(!(0 <= recpars$alpha & recpars$alpha <= 0.75)){
-    stop("recombination_blxAlphaBeta() requires 0 <= recpars$alpha <= 0.75")
+  if(!(0 <= recpars$alpha & recpars$alpha <= 0.5)){
+    stop("recombination_blxAlphaBeta() requires 0 <= recpars$alpha <= 0.5")
   }
-  if(!(0 <= recpars$beta & recpars$beta <= 0.25)){
-    stop("recombination_blxAlphaBeta() requires 0 <= recpars$beta <= 0.25")
+  if(!(0 <= recpars$beta & recpars$beta <= 0.5)){
+    stop("recombination_blxAlphaBeta() requires 0 <= recpars$beta <= 0.5")
   }
   if (!identical(dim(X), dim(M))) {
     stop("recombination_blxAphaBeta() requires dim(X) == dim(M)")
   }
+  if (!all(c("J", "probpars", "nfe") %in% names(env))){
+    stop("recombination_blxAphaBeta() requires calling environment to contain 
+         variables J, nfe and probpars")
+  }
   # ==========
   
-  #Evaluate of the M population solutions
-  popMAval <- evaluate_population(probpars, M)
-
+  # Performance values of the current population (X)
+  f.X <- env$J
+    
+  #Evaluate population M
+  f.M <- evaluate_population(probpars = env$probpars, 
+                             Pop      = M)
   
-  #Evaluate of the X population solutions
-  popXAval <- matrix(evaluate_population(probpars, X), ncol = ncol(X), nrow = nrow(X))
+  # Update NFE counter in calling environment
+  env$nfe <- env$nfe + nrow(M)
   
-
-  #Get index of element in vector
-  index <-popXAval <= popMAval
- 
-  #Obs: FALTA INCREMENTAR A NFE (AVALIÇÃO DE FUNÇÃO)
+  # Get best parent indicator matrix
+  X.is.best <- matrix(rep(f.X <= f.M,
+                          times = ncol(X)),
+                      ncol = ncol(X),
+                      byrow = FALSE)
   
+  # Get infimum and supremum values, and interval lengths
   Cmin <- pmin(X, M)
   Cmax <- pmax(X, M)
   I    <- Cmax - Cmin
   
-  C1 <- X * index + M * !index
+  # Get 'best' and 'worst' parents
+  C1 <- X * X.is.best + M * !X.is.best
+  C2 <- M * X.is.best + X * !X.is.best
   
-  C2 <- M * index + X * !index
-  
-  S <- (Cmin == C1) * recpars$alpha + (Cmin == C2) * recpars$beta
- 
+  S <- (C1 <= C2)
  
   # Return recombined population 
-  return (Cmin - S * I + (1 + recpars$alpha
-                         + recpars$beta) * randM(X) * I)
-  
+  return(pmin(C1, C2) - 
+           I * (recpars$alpha *S + recpars$beta * !S) + 
+           randM(X) * (abs(C1 - C2) + I * (recpars$alpha + recpars$beta)))
 }
