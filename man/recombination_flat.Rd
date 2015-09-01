@@ -11,8 +11,7 @@ recombination_flat(X, M, ...)
 
 \item{M}{population matrix (mutated)}
 
-\item{recpars}{recombination parameters (see \code{Recombination parameters}
-for details)}
+\item{...}{optional parameters (unused)}
 }
 \value{
 Matrix \code{U} containing the recombined population
@@ -21,15 +20,12 @@ Matrix \code{U} containing the recombined population
 Implements the "/flat" (Flat) recombination for the ExpDE
 framework
 }
-\section{Recombination Parameters}{
-
-Does not require parameters
-}
-
 \section{References}{
 
 Picek, S.; Jakobovic, D.; Golub, M., "On the recombination operator
-in the real-coded genetic algorithms," in Evolutionary Computation (CEC),
-2013 IEEE Congress on , vol., no., pp.3103-3110, 20-23 June 2013
+in the real-coded genetic algorithms," CEC'2013, pp.3103-3110, 2013\cr
+F. Herrera, M. Lozano, J.L. Verdegay, "Tackling Real-Coded Genetic
+Algorithms: Operators and Tools for Behavioural Analysis",
+Artificial Intelligence Review 12 265-319, 1998.
 }
 

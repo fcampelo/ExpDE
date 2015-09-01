@@ -23,10 +23,14 @@ The details (if any) come here...
 \section{Mutation Parameters}{
 
 The \code{mutpars} parameter contains all parameters required to define the
-mutation. \code{mutation_rand()} understands the following fields in mutpars:
-   - \code{f} : scaling factor for difference vector(s). Accepts numeric
-   vectors of size 1 or \code{nvecs}.
-   - \code{nvecs} : number of difference vectors to use (defaults to 1).
-       Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}
+mutation. \code{mutation_rand()} understands the following fields in
+\code{mutpars}:
+\itemize{
+   \item \code{f} : scaling factor for difference vector(s).\cr
+   Accepts numeric vectors of size 1 or \code{nvecs}.
+   \item \code{nvecs} : number of difference vectors to use.\cr
+       Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
+       Defaults to 1.
+}
 }
 

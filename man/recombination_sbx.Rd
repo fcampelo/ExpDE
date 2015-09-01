@@ -24,9 +24,11 @@ Implements the "/sbx" (Simulated Binary) recombination for the ExpDE framework
 
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_sbx()} understands the following field in
-recpars:
-   - \code{eta} : component-wise probability.
+\code{recpars}:
+\itemize{
+   \item \code{eta} : spread factor.\cr
    Accepts numeric value \code{eta > 0}.
+ }
 }
 
 \section{References}{

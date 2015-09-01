@@ -5,11 +5,13 @@
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
 #' recombination. \code{recombination_geo()} understands the following 
-#' fields in recpars:
-#'    - \code{alpha} : exponent for geometrical recombination. 
+#' fields in \code{recpars}:
+#' \itemize{
+#'    \item \code{alpha} : exponent for geometrical recombination.\cr
 #'    Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which 
-#'    case a random value is chosen for each recombination). Defaults to 
-#'    \code{alpha = 0.5}.
+#'    case a random value is chosen for each recombination).\cr
+#'    Defaults to \code{alpha = 0.5}.
+#'}
 #'
 #' @section References:
 #' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover

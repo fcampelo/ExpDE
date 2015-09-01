@@ -25,12 +25,13 @@ framework
 
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_blxAlpha()} understands the following
-fields in recpars:
-   - \code{alpha} : extrapolation parameter for 'best' parent vector.
+fields in \code{recpars}:
+\itemize{
+   \item \code{alpha} : extrapolation parameter for 'best' parent vector.\cr
    Accepts real value \code{0 <= alpha <= 0.5}.
-
-   - \code{beta} : extrapolation parameter for 'worst' parent vector.
+   \item \code{beta} : extrapolation parameter for 'worst' parent vector.\cr
    Accepts real value \code{0 <= beta <= 0.5}.
+}
 }
 
 \section{Warning}{

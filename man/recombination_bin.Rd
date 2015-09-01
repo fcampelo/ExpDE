@@ -24,12 +24,16 @@ Implements the "/bin" (binomial) recombination for the ExpDE framework
 
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_bin()} understands the following fields in
-recpars:
-   - \code{cr} : component-wise probability of using the value in \code{M}.
-   Accepts numeric value \code{0 < cr <= 1}.
-   - \code{minchange} : logical flag to force each new candidate solution to
-   inherit at least one component from its mutated 'parent'.
-   Defaults to TRUE
+\code{recpars}:
+\itemize{
+   \item \code{cr} : component-wise probability of using the value in
+                     \code{M}.\cr
+                     Accepts numeric value \code{0 < cr <= 1}.
+   \item \code{minchange} : logical flag to force each new candidate solution
+                            to inherit at least one component from its
+                            mutated 'parent'.\cr
+                            Defaults to TRUE
+}
 }
 
 \section{References}{
