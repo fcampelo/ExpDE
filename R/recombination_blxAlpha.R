@@ -6,12 +6,11 @@
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
 #' recombination. \code{recombination_blxAlpha()} understands the following 
-#' fields in recpars:
-#'    - \code{alpha} : extrapolation parameter.
-#'    Accepts real value \code{0 <= alpha <= 0.5}. Since the internal coding of
-#'    ExpDE standardizes variables to the interval 0 <= x <= 1, the use of high
-#'    values of \code{alpha} will result in loss of search hability. Lower 
-#'    values (e.g., \code{alpha = 0.05}) tend to be more effective.
+#' fields in \code{recpars}:
+#' \itemize{
+#'    \item \code{alpha} : extrapolation parameter.\cr
+#'    Accepts real value \code{0 <= alpha <= 0.5}.
+#' }
 #'
 #' @section References:
 #' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover

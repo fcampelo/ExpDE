@@ -33,6 +33,7 @@ stop_maxiter <- function(env = parent.frame(n = 2)){
   return(env$t >= env$stopcrit$maxiter)
 }
 
+# Stop criterion: maximum number of objective function calls
 stop_maxeval <- function(env = parent.frame(n = 2)){
   return(env$nfe >= env$stopcrit$maxevals)
 }

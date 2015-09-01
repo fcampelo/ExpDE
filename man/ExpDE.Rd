@@ -4,8 +4,9 @@
 \alias{ExpDE}
 \title{Experimental Differential Evolution - ExpDE}
 \usage{
-ExpDE(popsize, mutpars = list(name = "rand", f = 0.2), recpars = list(name =
-  "bin"), selpars = list(name = "standard"), stopcrit, probpars)
+ExpDE(popsize, mutpars = list(name = "mutation_rand", f = 0.2),
+  recpars = list(name = "recombination_bin", cr = 0.8, nvecs = 1),
+  selpars = list(name = "standard"), stopcrit, probpars)
 }
 \arguments{
 \item{popsize}{population size}
@@ -79,8 +80,22 @@ recpars  <- list(name = "recombination_exp", cr = 0.2)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 
 # DE/rand/2/blxAlpha
-recpars  <- list(name = "recombination_blxAlpha", alpha = 0.01)
+recpars  <- list(name = "recombination_blxAlpha", alpha = 0.1)
 mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/2/blxAlphaBeta
+recpars <- list(name = "recombination_blxAlphaBeta", alpha = 0.05, beta = 0.2)
+stopcrit <- list(names = "stop_maxeval", maxevals = 100*popsize)
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/1/sbx
+recpars  <- list(name = "recombination_sbx", eta = 10)
+mutpars$nvecs <- 1
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/1/flat
+recpars  <- list(name = "recombination_flat")
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }
 \author{

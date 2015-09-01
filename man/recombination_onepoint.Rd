@@ -24,11 +24,14 @@ Implements the one-point recombination (as used in the Simple GA).
 
 The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_onepoint()} understands the following
-fields in recpars:
-   - \code{K} : cut point for crossover. Defaults to NULL.
+fields in \code{recpars}:
+\itemize{
+   \item \code{K} : cut point for crossover.\cr
    Accepts integer value \code{0 < K < n}, where \code{n} is the
    dimension of the problem; or \code{K = NULL} for randomly choosing a
-   position for each pair of points.
+   position for each pair of points.\cr
+   Defaults to \code{NULL}.
+}
 }
 
 \section{References}{
