@@ -59,6 +59,20 @@
 #' mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
+#' # DE/rand/2/blxAlphaBeta
+#' recpars  <- list(name = "recombination_blxAlphaBeta", alpha = 0.075, beta = 0.025)
+#' mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars) 
+#' 
+#' # DE/rand/2/simBinary
+#' recpars  <- list(name = "recombination_simBinary", eta = 0.01)
+#' mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
+#' # DE/rand/2/flat
+#' recpars  <- list(name = "recombination_flat")
+#' mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' @export
 
 ExpDE <- function(popsize,
