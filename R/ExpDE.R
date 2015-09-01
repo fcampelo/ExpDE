@@ -64,8 +64,8 @@
 #' stopcrit <- list(names = "stop_maxeval", maxevals = 100*popsize)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars) 
 #' 
-#' # DE/rand/1/simBinary
-#' recpars  <- list(name = "recombination_simBinary", eta = 1)
+#' # DE/rand/1/sbx
+#' recpars  <- list(name = "recombination_sbx", eta = 10)
 #' mutpars$nvecs <- 1
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 

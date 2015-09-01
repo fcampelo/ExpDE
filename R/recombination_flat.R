@@ -9,8 +9,10 @@
 #'
 #' @section References: 
 #' Picek, S.; Jakobovic, D.; Golub, M., "On the recombination operator 
-#' in the real-coded genetic algorithms," in Evolutionary Computation (CEC),
-#' 2013 IEEE Congress on , vol., no., pp.3103-3110, 20-23 June 2013
+#' in the real-coded genetic algorithms," CEC'2013, pp.3103-3110, 2013\cr
+#' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
+#' operator for real-coded genetic algorithms: an experimental study", 
+#' International Journal of Intelligent Systems 18(3) 309-338, 2003.
 #'
 #' @param X population matrix (original)
 #' @param M population matrix (mutated) 
