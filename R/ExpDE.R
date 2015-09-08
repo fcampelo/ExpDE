@@ -46,7 +46,7 @@
 #' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
-#' probpars <- list(name   = "sphere",
+#' probpars <- list(name  = "sphere",
 #'                 xmin = rep(-5.12,4), xmax = rep(5.12,4))
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #'
@@ -73,16 +73,18 @@
 #' recpars  <- list(name = "recombination_flat")
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #'
-#' # DE/rand/1/hx
-#' recpars  <- list(name = "recombination_hx")
+#' # DE/rand/2/wright
+#' recpars       <- list(name = "recombination_wright")
+#' mutpars$nvecs <- 2
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
-#' # DE/rand/1/lbgax
-#' recpars  <- list(name = "recombination_lbgax")
+#' # DE/rand/2/lbga
+#' recpars  <- list(name = "recombination_lbga")
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
 #' # DE/rand/1/linear
-#' recpars  <- list(name = "recombination_linear")
+#' recpars       <- list(name = "recombination_linear")
+#' mutpars$nvecs <- 1
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' @export
 
