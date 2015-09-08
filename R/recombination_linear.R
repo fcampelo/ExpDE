@@ -1,8 +1,11 @@
 #' Linear recombination for DE
 #' 
-#' Implements the "/linear" recombination for the ExpDE 
-#' framework
+#' Implements the "/linear" recombination for the ExpDE framework
 #'
+#' @section Warning:
+#' This recombination operator evaluates intermediate candidate solutions, 
+#' which adds an extra \code{3*popsize} evaluations per iteration.
+#' 
 #' @section References:
 #' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
 #' operator for real-coded genetic algorithms: an experimental study", 
@@ -27,7 +30,7 @@ recombination_linear <- function(X, M, ...) {
   if (!identical(dim(X), dim(M))) {
     stop("recombination_linear() requires dim(X) == dim(M)")
   }
-  if (all(c("J", "probpars", "nfe") %in% names(env))){
+  if (!all(c("J", "probpars", "nfe") %in% names(env))){
     stop("recombination_linear() requires calling environment to contain 
          variables J, nfe and probpars")
   }
@@ -36,24 +39,24 @@ recombination_linear <- function(X, M, ...) {
   # Generate trial offspring 
   H1 <- (0.5 * X) + (0.5 * M)
   H2 <- (1.5 * X) - (0.5 * M)
-  H3 <- (0.5 * X) + (1.5 * M)
+  H3 <- -(0.5 * X) + (1.5 * M)
   
   # Evaluate trial offspring
   f1 <- evaluate_population(probpars = env$probpars, 
-                           Pop      = H1)
+                            Pop      = H1)
   
   f2 <- evaluate_population(probpars = env$probpars, 
-                               Pop      = H2)
+                            Pop      = H2)
   
   f3 <- evaluate_population(probpars = env$probpars, 
                             Pop      = H3)
   
-  env$nfe <- env$nfe + 3 * nrow(M)
+  env$nfe <- env$nfe + 3 * nrow(X)
   
   # Perform recombination
   fbest <- pmin(f1, f2, f3)
   
-  Pop.trialx <- matrix(rep(x = 0, times = nrow(X) * ncol(X)), ncol = ncol(X))
+  Pop.trialx <- X
   Pop.trialx[f1==fbest, ] <- H1[f1==fbest, ]
   Pop.trialx[f2==fbest, ] <- H2[f2==fbest, ]
   Pop.trialx[f3==fbest, ] <- H3[f3==fbest, ]
