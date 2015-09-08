@@ -72,6 +72,18 @@
 #' # DE/rand/1/flat
 #' recpars  <- list(name = "recombination_flat")
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#'
+#' # DE/rand/1/hx
+#' recpars  <- list(name = "recombination_hx")
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
+#' # DE/rand/1/lbgax
+#' recpars  <- list(name = "recombination_lbgax")
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
+#' # DE/rand/1/linear
+#' recpars  <- list(name = "recombination_linear")
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' @export
 
 ExpDE <- function(popsize,
