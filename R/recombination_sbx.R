@@ -52,6 +52,8 @@ recombination_sbx <- function(X, M, recpars) {
   beta <- S * ((2 * R) ^ mexp) + (!S) * ((2 * (1 - R)) ^ mexp)
   
   # Return recombined population
-  dir  <- sign(0.5 - runif(1))
+  dir  <- sign(0.5 - matrix(rep(runif(nrow(X)),
+                                times = ncol(X)),
+                            ncol = ncol(X)))
   return(0.5 * ((1 + dir * beta) * X + (1 - dir * beta) * M ))
 }
