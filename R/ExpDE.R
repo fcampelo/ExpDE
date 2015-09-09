@@ -22,6 +22,12 @@
 #'
 #' @section Problem description:
 #' Here comes a description of the \code{probpars} structure.
+#' 
+#' @section Random Seed:
+#' The \code{seed} argument receives the desired seed for the PRNG. This value 
+#' can be set for reproducibility purposes. The value of this parameter defaults 
+#' to NULL, in which case the seed is arbitrarily set using 
+#' \code{as.numeric(Sys.time())}.
 #'
 #' @param popsize population size
 #' @param mutpars list of named mutation parameters.
@@ -30,10 +36,12 @@
 #'    See \code{Recombination parameters} for details.
 #' @param selpars list of named selection parameters.
 #'    See \code{Selection parameters} for details.
-#' @param stopcrit list of named stop criteria parameters. See
-#'    \code{Stop criteria} for details.
+#' @param stopcrit list of named stop criteria parameters. 
+#'    See \code{Stop criteria} for details.
 #' @param probpars list of named problem parameters.
 #'    See \code{Problem Description} for details.
+#' @param seed seed for the random number generator. 
+#'    See \code{Random Seed} for details.
 #'
 #' @return A list object containing the final population (sorted by performance)
 #', the performance vector, and some run statistics.
@@ -96,9 +104,20 @@ ExpDE <- function(popsize,
                                   nvecs = 1),
                   selpars  = list(name = "standard"),
                   stopcrit,
-                  probpars)
+                  probpars,
+                  seed = NULL)
 {
-
+  # ========== Error catching and default value definitions
+  # Check seed
+  stopifnot(is.null(seed) || seed > 0,
+            is.null(seed) || is.numeric(seed),
+            is.null(seed) || seed == floor(seed))
+  
+  if (is.null(seed)) {seed <- as.numeric(Sys.time())}
+  set.seed(seed)
+  
+  # ==========
+  
   # Generate initial population
   X <- create_population(popsize  = popsize,
                          probpars = probpars)
