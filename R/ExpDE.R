@@ -94,6 +94,16 @@
 #' recpars       <- list(name = "recombination_linear")
 #' mutpars$nvecs <- 1
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#'
+#'# DE/rand/1/mmax
+#' recpars       <- list(name = "recombination_mmax")
+#' mutpars$nvecs <- 1
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' 
+#' # DE/rand/1/pbest
+#' recpars       <- list(name = "recombination_pbest", maxiter = 1000, cr = 0.5)
+#' mutpars$nvecs <- 1
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' @export
 
 ExpDE <- function(popsize,
