@@ -10,18 +10,20 @@
 #'    \item \code{cr} : component-wise probability of using the value in 
 #'                      \code{M}.\cr
 #'                      Accepts numeric value \code{0 < cr <= 1}.
-#'    \item \code{maxiter} : cut point for crossover.\cr
-#'    Accepts integer value \code{maxiter > 0}
 #'}
+#'
+#' @section Warning:
+#' This routine will search for the iterations counter (\code{t}), the maximum 
+#' number of iterations (\code{stopcrit$maxiter}), and the performance vector 
+#' of population \code{X} (\code{J}) in the parent environment (using 
+#' \code{parent.frame()}. These variables must be defined for 
+#' \code{recombination_pbest()} to work. 
 #'
 #' @section References:
 #' S.M. Islam, S. Das, S. Ghosh, S. Roy, P.N. Suganthan, "An Adaptive 
 #' Differential Evolution Algorithm With Novel Mutation and Crossover 
 #' Strategies for Global Numerical Optimization", IEEE. Trans. Systems, Man
-#' and Cybernetics - Part B 42(2), 482-500, 2012\cr
-#' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
-#' operator for real-coded genetic algorithms: an experimental study", 
-#' International Journal of Intelligent Systems 18(3) 309-338, 2003.
+#' and Cybernetics - Part B 42(2), 482-500, 2012
 #'
 #' @param X population matrix (original)
 #' @param M population matrix (mutated) 
@@ -32,51 +34,50 @@
 #' 
 #' @export
 
-recombination_pbest <- function(X, M, recpars = list(K = NULL)) {
+recombination_pbest <- function(X, M, recpars) {
 
-  # ========== Error catching and default value definitions
-  
-  # Get access to variables in the calling environment
+  # Get access to the variables in the calling environment
   env <- parent.frame()
   
+  # ========== Error catching and default value definitions
   if (!("cr" %in% names(recpars))){
     stop("recombination_pbest() requires field cr in recpars")
   }
   if (!(0 < recpars$cr & recpars$cr <= 1)) {
     stop("recombination_pbest() requires numeric 0 < recpars$cr <= 1")
   }
-  if (!("maxiter" %in% names(recpars))) {
-    recpars$maxiter <- 100
-  }
-  if(!(all(recpars$maxiter == floor(recpars$maxiter)))) {
-      stop("recombination_pbest() requires an integer value for maxiter")
-  }
-  if( recpars$maxiter < 1){
-    stop("recombination_pbest() maxiter value must be am integer greater than 0")
-  }
-    
-  if (!identical(dim(X), dim(M))) {
+  if (!identical(dim(X),dim(M))) {
     stop("recombination_pbest() requires dim(X) == dim(M)")
   }
+  if(!all(c("t", "stopcrit", "J") %in% names(env))){
+    stop("recombination_pbest() requires variables t, stopcrit and J to be 
+          defined in the calling environment")
+  }
+  if(!any(names(env$stopcrit) == "maxiter")){
+    stop("recombination_pbest() requires stopcrit$maxiter to be defined 
+         in the calling environment")
+  }
+
   # ==========
   
-  # Calculate p-number: number of top-performing vectors to form the
-  # recombination pool
-  #p = ceil(0.5*np*(1 - (Pop.iter-1)/input.recpar(2)));
+  # Extract relevant values from the parent environment
+  G    <- env$t
+  Gmax <- env$stopcrit$maxiter
+  J    <- env$J
   
-  p <- ceiling(0.5 * nrow(X) * (1 - (env$t - 1)/recpars$maxiter))
+  # Sort X by performance (i.e., in ascending order of J)
+  X <- X[order(J), ]
   
-  # Assemble recombination pool indices
-  indx <- sort.int(env$J, index.return=TRUE)$ix
-  indx <- indx[1:p] 
-  indx <-indx[sample.int(n = p, size = nrow(X), replace = TRUE)] 
+  # Draw recombination partners from the p-best vectors
+  # p = ceiling(0.5 * popsize * (1 - (t - 1)/maxiter))
+  Indx <- sample.int(ceiling(0.5 * nrow(X) * (1 - (G - 1)/Gmax)), 
+                     size    = nrow(X), 
+                     replace = TRUE)
   
-  # Matrix of inheritance
-  chg <- randM(X) <= recpars$cr
+  # Assemble recombination partner matrix
+  Xcross <- X[Indx, ]
   
-  # Perform recombination
-  return(chg * M + (!chg) * X[indx,])
+  # Perform binomial recombination with the selected partners
+  return(recombination_bin(Xcross, M, recpars))
   
-  
-
 }

@@ -93,17 +93,19 @@
 #' # DE/rand/1/linear
 #' recpars       <- list(name = "recombination_linear")
 #' mutpars$nvecs <- 1
-#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' seed          <- 1234
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed)
 #'
 #'# DE/rand/1/mmax
-#' recpars       <- list(name = "recombination_mmax")
-#' mutpars$nvecs <- 1
+#' recpars  <- list(name = "recombination_mmax")
+#' stopcrit <- list(names = "stop_maxeval", maxevals = 4040) 
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
 #' # DE/rand/1/pbest
-#' recpars       <- list(name = "recombination_pbest", maxiter = 1000, cr = 0.5)
-#' mutpars$nvecs <- 1
+#' recpars <- list(name = "recombination_pbest", cr = 0.5)
+#' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#'
 #' @export
 
 ExpDE <- function(popsize,
@@ -144,7 +146,11 @@ ExpDE <- function(popsize,
 
   # Iterative cycle
   while(keep.running){
-    t <- t + 1          # Update iteration counter
+    # Update iteration counter
+    t <- t + 1          
+    
+    # Reset candidate vector performance values
+    G <- NA * J
 
     # Mutation
     M <- do.call(mutpars$name,
@@ -158,10 +164,13 @@ ExpDE <- function(popsize,
                              M       = M,
                              recpars = recpars))
 
-    # Evaluate U
-    G <- evaluate_population(probpars = probpars,
-                             Pop      = U)
-    nfe <- nfe + popsize
+    # Evaluate U 
+    # Some recombination operators evaluate the 'offspring' solutions, so only
+    # the 'unevaluated' ones need to be dealt with here.
+    toeval <- is.na(G)
+    G[toeval] <- evaluate_population(probpars = probpars,
+                                     Pop      = U[toeval, ])
+    nfe <- nfe + sum(toeval)
 
     # Selection
     next.pop <- do.call(selpars$name,

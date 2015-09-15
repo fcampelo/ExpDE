@@ -1,6 +1,7 @@
 #' /sbx recombination for DE
 #' 
-#' Implements the "/sbx" (Simulated Binary) recombination for the ExpDE framework
+#' Implements the "/sbx" (Simulated Binary) recombination for the ExpDE 
+#' framework
 #' 
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 

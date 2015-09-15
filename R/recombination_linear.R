@@ -3,8 +3,10 @@
 #' Implements the "/linear" recombination for the ExpDE framework
 #'
 #' @section Warning:
-#' This recombination operator evaluates intermediate candidate solutions, 
-#' which adds an extra \code{3*popsize} evaluations per iteration.
+#' This recombination operator evaluates \code{3*popsize} candidate solutions 
+#' per iteration of the algorithm. The value of the \code{nfe} counter and the 
+#' vector of performance values \code{G} are updated in the calling environment.
+#' 
 #' 
 #' @section References:
 #' F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
@@ -55,6 +57,11 @@ recombination_linear <- function(X, M, ...) {
   
   # Perform recombination
   fbest <- pmin(f1, f2, f3)
+  
+  # Update performance vector in calling environment
+  env$G[f1 == fbest] <- f1[f1 == fbest]
+  env$G[f2 == fbest] <- f2[f2 == fbest]
+  env$G[f3 == fbest] <- f3[f3 == fbest]
   
   Pop.trialx <- X
   Pop.trialx[f1==fbest, ] <- H1[f1==fbest, ]
