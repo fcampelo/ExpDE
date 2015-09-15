@@ -6,7 +6,7 @@
 \usage{
 ExpDE(popsize, mutpars = list(name = "mutation_rand", f = 0.2),
   recpars = list(name = "recombination_bin", cr = 0.8, nvecs = 1),
-  selpars = list(name = "standard"), stopcrit, probpars)
+  selpars = list(name = "standard"), stopcrit, probpars, seed = NULL)
 }
 \arguments{
 \item{popsize}{population size}
@@ -20,11 +20,14 @@ See \code{Recombination parameters} for details.}
 \item{selpars}{list of named selection parameters.
 See \code{Selection parameters} for details.}
 
-\item{stopcrit}{list of named stop criteria parameters. See
-\code{Stop criteria} for details.}
+\item{stopcrit}{list of named stop criteria parameters.
+See \code{Stop criteria} for details.}
 
 \item{probpars}{list of named problem parameters.
-   See \code{Problem Description} for details.}
+See \code{Problem Description} for details.}
+
+\item{seed}{seed for the random number generator.
+   See \code{Random Seed} for details.}
 }
 \value{
 A list object containing the final population (sorted by performance)
@@ -63,6 +66,14 @@ vignette (or at least to a list of available criteria)
 \section{Problem description}{
 
 Here comes a description of the \code{probpars} structure.
+}
+
+\section{Random Seed}{
+
+The \code{seed} argument receives the desired seed for the PRNG. This value
+can be set for reproducibility purposes. The value of this parameter defaults
+to NULL, in which case the seed is arbitrarily set using
+\code{as.numeric(Sys.time())}.
 }
 \examples{
 # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
@@ -110,6 +121,17 @@ ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 # DE/rand/1/linear
 recpars       <- list(name = "recombination_linear")
 mutpars$nvecs <- 1
+seed          <- 1234
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed)
+
+# DE/rand/1/mmax
+recpars  <- list(name = "recombination_mmax")
+stopcrit <- list(names = "stop_maxeval", maxevals = 4040)
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/1/pbest
+recpars <- list(name = "recombination_pbest", cr = 0.5)
+stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }
 \author{

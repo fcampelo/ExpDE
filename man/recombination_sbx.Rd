@@ -18,7 +18,8 @@ for details)}
 Matrix \code{U} containing the recombined population
 }
 \description{
-Implements the "/sbx" (Simulated Binary) recombination for the ExpDE framework
+Implements the "/sbx" (Simulated Binary) recombination for the ExpDE
+framework
 }
 \section{Recombination Parameters}{
 
