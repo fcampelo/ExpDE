@@ -21,8 +21,9 @@ Implements the "/linear" recombination for the ExpDE framework
 }
 \section{Warning}{
 
-This recombination operator evaluates intermediate candidate solutions,
-which adds an extra \code{3*popsize} evaluations per iteration.
+This recombination operator evaluates \code{3*popsize} candidate solutions
+per iteration of the algorithm. The value of the \code{nfe} counter and the
+vector of performance values \code{G} are updated in the calling environment.
 }
 
 \section{References}{

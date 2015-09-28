@@ -22,6 +22,12 @@
 #'
 #' @section Problem description:
 #' Here comes a description of the \code{probpars} structure.
+#' 
+#' @section Random Seed:
+#' The \code{seed} argument receives the desired seed for the PRNG. This value 
+#' can be set for reproducibility purposes. The value of this parameter defaults 
+#' to NULL, in which case the seed is arbitrarily set using 
+#' \code{as.numeric(Sys.time())}.
 #'
 #' @param popsize population size
 #' @param mutpars list of named mutation parameters.
@@ -30,10 +36,12 @@
 #'    See \code{Recombination parameters} for details.
 #' @param selpars list of named selection parameters.
 #'    See \code{Selection parameters} for details.
-#' @param stopcrit list of named stop criteria parameters. See
-#'    \code{Stop criteria} for details.
+#' @param stopcrit list of named stop criteria parameters. 
+#'    See \code{Stop criteria} for details.
 #' @param probpars list of named problem parameters.
 #'    See \code{Problem Description} for details.
+#' @param seed seed for the random number generator. 
+#'    See \code{Random Seed} for details.
 #'
 #' @return A list object containing the final population (sorted by performance)
 #', the performance vector, and some run statistics.
@@ -85,17 +93,19 @@
 #' # DE/rand/1/linear
 #' recpars       <- list(name = "recombination_linear")
 #' mutpars$nvecs <- 1
-#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' seed          <- 1234
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed)
 #'
 #'# DE/rand/1/mmax
-#' recpars       <- list(name = "recombination_mmax")
-#' mutpars$nvecs <- 1
+#' recpars  <- list(name = "recombination_mmax")
+#' stopcrit <- list(names = "stop_maxeval", maxevals = 4040) 
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
 #' # DE/rand/1/pbest
-#' recpars       <- list(name = "recombination_pbest", maxiter = 1000, cr = 0.5)
-#' mutpars$nvecs <- 1
+#' recpars <- list(name = "recombination_pbest", cr = 0.5)
+#' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#'
 #' @export
 
 ExpDE <- function(popsize,
@@ -106,9 +116,20 @@ ExpDE <- function(popsize,
                                   nvecs = 1),
                   selpars  = list(name = "standard"),
                   stopcrit,
-                  probpars)
+                  probpars,
+                  seed = NULL)
 {
-
+  # ========== Error catching and default value definitions
+  # Check seed
+  stopifnot(is.null(seed) || seed > 0,
+            is.null(seed) || is.numeric(seed),
+            is.null(seed) || seed == floor(seed))
+  
+  if (is.null(seed)) {seed <- as.numeric(Sys.time())}
+  set.seed(seed)
+  
+  # ==========
+  
   # Generate initial population
   X <- create_population(popsize  = popsize,
                          probpars = probpars)
@@ -125,7 +146,11 @@ ExpDE <- function(popsize,
 
   # Iterative cycle
   while(keep.running){
-    t <- t + 1          # Update iteration counter
+    # Update iteration counter
+    t <- t + 1          
+    
+    # Reset candidate vector performance values
+    G <- NA * J
 
     # Mutation
     M <- do.call(mutpars$name,
@@ -139,10 +164,13 @@ ExpDE <- function(popsize,
                              M       = M,
                              recpars = recpars))
 
-    # Evaluate U
-    G <- evaluate_population(probpars = probpars,
-                             Pop      = U)
-    nfe <- nfe + popsize
+    # Evaluate U 
+    # Some recombination operators evaluate the 'offspring' solutions, so only
+    # the 'unevaluated' ones need to be dealt with here.
+    toeval <- is.na(G)
+    G[toeval] <- evaluate_population(probpars = probpars,
+                                     Pop      = U[toeval, ])
+    nfe <- nfe + sum(toeval)
 
     # Selection
     next.pop <- do.call(selpars$name,
