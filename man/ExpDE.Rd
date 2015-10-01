@@ -133,8 +133,13 @@ ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 recpars <- list(name = "recombination_pbest", cr = 0.5)
 stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
+# DE/rand/1/npoint
+recpars  <- list(name = "recombination_npoint", N = 2)
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 }
 \author{
-Felipe Campelo and Moises Botelho
+Felipe Campelo (\email{fcampelo@ufmg.br}) and Moises Botelho
+        (\email{moisesufop@gmail.com})
 }
 

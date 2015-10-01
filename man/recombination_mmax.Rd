@@ -50,6 +50,6 @@ operator for real-coded genetic algorithms: an experimental study",
 International Journal of Intelligent Systems 18(3):309-338, 2003.\cr
 F Herrera, M. Lozano,  J.L. Verdegay, "Tuning fuzzy logic controllers by
 genetic algorithms.", International Journal of Approximate Reasoning
-12(3):299–315, 1995. \cr
+12(3):299-315, 1995. \cr
 }
 
