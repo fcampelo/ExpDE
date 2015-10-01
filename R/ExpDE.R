@@ -45,7 +45,8 @@
 #'
 #' @return A list object containing the final population (sorted by performance)
 #', the performance vector, and some run statistics.
-#' @author Felipe Campelo and Moises Botelho
+#' @author Felipe Campelo (\email{fcampelo@@ufmg.br}) and Moises Botelho 
+#'         (\email{moisesufop@@gmail.com})
 #'
 #' @examples
 #' # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
@@ -106,6 +107,10 @@
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #'
+#' # DE/rand/1/npoint
+#' recpars  <- list(name = "recombination_npoint", N = 2)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+
 #' @export
 
 ExpDE <- function(popsize,

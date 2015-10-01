@@ -4,7 +4,7 @@
 \alias{recombination_blxAlphaBeta}
 \title{Blend Alpha Beta recombination for DE}
 \usage{
-recombination_blxAlphaBeta(X, M, recpars, ...)
+recombination_blxAlphaBeta(X, M, recpars)
 }
 \arguments{
 \item{X}{population matrix (original)}
