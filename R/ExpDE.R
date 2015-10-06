@@ -110,6 +110,10 @@
 #' # DE/rand/1/npoint
 #' recpars  <- list(name = "recombination_npoint", N = 2)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#'
+#' # DE/rand/1/eig
+#' recpars  <- list(name = "recombination_eig", cr = 0.5, minchange = TRUE)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 
 #' @export
 
