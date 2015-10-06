@@ -17,9 +17,10 @@
 #' }
 #'
 #' @section References:
-#' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
-#' Practical Approach to Global Optimization", Springer 2005
-#' 
+#' Guo e Yang(2015) Shu-Mei Guo e Chin-Chang Yang. Enhancing differential evolution utilizing
+#' eigenvector-based crossover operator. Evolutionary Computation, IEEE Transactions
+#' on, 19(1):31–49 
+#'
 #' @param X population matrix (original)
 #' @param M population matrix (mutated) 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
