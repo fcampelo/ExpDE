@@ -1,6 +1,7 @@
 #' n-point recombination for DE
 #' 
-#' Implements the n-point recombination (as used in the Simple GA).
+#' Implements the "/npoint" (n-point) recombination for the ExpDE (as used in 
+#' the Simple GA).
 #' 
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
@@ -15,10 +16,9 @@
 #'}
 #'
 #' @section References:
-#' Eshelman et al.(1989) Larry J. Eshelman, Richard A. Caruana, e J. David Schaffer. Biases in
-#' the crossover landscape. Em Proceedings of the Third International Conference on Genetic
-#' Algorithms, páginas 10–19, San Francisco, CA, USA. Morgan Kaufmann Publishers Inc.
-#' ISBN 1-55860-006-3
+#' L.J. Eshelman, R.A. Caruana, J.D. Schaffer (1989), "Biases in the crossover 
+#' landscape. In: Proceedings of the Third International Conference on Genetic 
+#' Algorithms, pp. 10-19, San Francisco, CA, USA.
 #'
 #' @param X population matrix (original)
 #' @param M population matrix (mutated) 
@@ -30,7 +30,7 @@
 #' @export
 
 recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
-
+  
   # ========== Error catching and default value definitions
   if (!("N" %in% names(recpars))) {
     recpars$N <- NULL
@@ -48,40 +48,50 @@ recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
   }
   # ==========
   
-  
+  # Define the number of cut points for each recombination pair.
   if (is.null(recpars$N)) {
-    recpars$N <- sample.int(n = ncol(X)-1, size = 1)  
+    recpars$N <- sample.int(n       = ncol(X) - 1, 
+                            size    = nrow(X),
+                            replace = TRUE)  
+  } else {
+    recpars$N <- rep(x = recpars$N, 
+                     times = nrow(X))
   }
- 
-    
-  # Generating random points
-    cuts <-  sort(sample.int(n = ncol(X)-1, size = recpars$N, replace = FALSE))
   
-  # vector index of the individual
-    indexs <- rep(1:ncol(X))        
-     
   
-    setfun <- function(ind, n) {
-      z <- ind < n
-    }
-    
-    # Recombination list - using lapply() to apply over multiple indexed objects
-    mcut <- lapply(X = cuts, FUN = setfun, n = indexs)
-    mcut <- matrix(data = unlist(mcut), ncol = ncol(X))  
+  # Generate random cut points
+  cutlist <-  lapply(recpars$N, 
+                     FUN = function(x,n){
+                       sort(sample.int(n       = n,
+                                       size    = x,
+                                       replace = FALSE))
+                     },
+                     n = ncol(X) - 1)
   
-    # Recombination Matrix
-    R <- as.logical(apply(X = mcut, MARGIN = 2, FUN = sum))
-    R <- matrix(rep(R, times = nrow(X)),
-                nrow  = nrow(X),
+  makemask <- function(cuts, x){
+    m <- matrix(1:ncol(x),
+                nrow  = length(cuts),
+                ncol  = ncol(x),
                 byrow = TRUE)
-   
+    m <- colSums(m > matrix(cuts,
+                            nrow  = nrow(m),
+                            ncol  = ncol(m),
+                            byrow = FALSE))
+    return(m %% 2 == 0)
+  }
+  
+  # Assemble recombination matrix
+  R <- t(vapply(X   = cutlist,
+                FUN = makemask,
+                FUN.VALUE = logical(ncol(X)),
+                x = X))
+  
   # Randomize which population will donate the variables with the lowermost 
   # indexes
   if (runif(1) < 0.5){ 
-     R <- !R
-	 }
-        
+    R <- !R
+  }
+  
   # Return recombined population
-  return(R * M + (!R) * X) 
-
+  return(R * M + (!R) * X)
 }

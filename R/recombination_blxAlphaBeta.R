@@ -32,7 +32,7 @@
 #' 
 #' @export
 
-recombination_blxAlphaBeta <- function(X, M, recpars, ...) {
+recombination_blxAlphaBeta <- function(X, M, recpars) {
   
   # Get access to variables in the calling environment
   env <- parent.frame()

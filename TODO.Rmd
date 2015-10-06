@@ -1,7 +1,7 @@
 ---
 title: "TODO"
 author: "Felipe Campelo"
-date: "August 4, 2015"
+date: "October 2nd, 2015"
 output: html_document
 ---
 
@@ -12,28 +12,14 @@ output: html_document
     operators (is it interesting or will it generate more confusion?)
 - Error catching in *create_population()* (see file)
 - Document *evaluate_population()*
-- Include recombination alternatives
+- Include more recombination alternatives
 - Add flag _record.everything_ to _ExpDE()_ (to return the whole history of the 
 optimization, incl. intermediate populations)
-- Add option to define the seed for the PRNG (for reproducibility)
 - Add option to regulate the verbosity of the method.
 - Add 'offspringnumber' option to the recombination routines (to simplify reuse, 
     e.g., for RCGAs or other extensions)
 
 
 ## For future versions
-- Maybe use counters (iterations, function evaluations etc.) such as 
-    (from Hadley's Adv R p.186):
-
-```
-new_counter <- function(n = 0){
-  i <- 0
-  function(n = 0){
-  i <<- i + n
-  i
-  }
-}
-```
-
 - Consider expressing candidate solutions as lists (useful to encapsulate 
 meta-info about each vector in the population).
