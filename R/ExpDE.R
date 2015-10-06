@@ -56,7 +56,7 @@
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' probpars <- list(name  = "sphere",
-#'                 xmin = rep(-5.12,4), xmax = rep(5.12,4))
+#'                 xmin = rep(-5.12,10), xmax = rep(5.12,10))
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #'
 #' # DE/rand/1/exp
@@ -109,6 +109,12 @@
 #'
 #' # DE/rand/1/npoint
 #' recpars  <- list(name = "recombination_npoint", N = 2)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#'
+#' # DE/rand/1/eigen (with /bin recombination as base operator)
+#' recpars  <- list(name = "recombination_eigen", 
+#'                  othername = "recombination_bin", 
+#'                  cr = 0.5, minchange = TRUE)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 
 #' @export
