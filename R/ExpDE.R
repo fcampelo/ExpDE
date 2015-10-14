@@ -42,6 +42,8 @@
 #'    See \code{Problem Description} for details.
 #' @param seed seed for the random number generator. 
 #'    See \code{Random Seed} for details.
+#' @param showpars parameters that regulate the echoing of progress indicators
+#'    See \code{Showpars} for details.
 #'
 #' @return A list object containing the final population (sorted by performance)
 #', the performance vector, and some run statistics.
@@ -57,7 +59,9 @@
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' probpars <- list(name  = "sphere",
 #'                 xmin = rep(-5.12,10), xmax = rep(5.12,10))
-#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' seed <- NULL
+#' showpars <- list(show.iters = "numbers", showevery = 1)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
 #'
 #' # DE/rand/1/exp
 #' recpars  <- list(name = "recombination_exp", cr = 0.2)
@@ -128,7 +132,8 @@ ExpDE <- function(popsize,
                   selpars  = list(name = "standard"),
                   stopcrit,
                   probpars,
-                  seed = NULL)
+                  seed = NULL,
+                  showpars = list(show.iters = "none"))
 {
   # ========== Error catching and default value definitions
   # Check seed
@@ -196,6 +201,9 @@ ExpDE <- function(popsize,
     # Compose next population
     X <- next.pop$Xsel
     J <- next.pop$Jsel
+    
+    # Echo progress
+    print_progress()
   }
 
   X <- denormalize_population(probpars, X[order(J), ])

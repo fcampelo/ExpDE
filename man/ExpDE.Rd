@@ -6,7 +6,8 @@
 \usage{
 ExpDE(popsize, mutpars = list(name = "mutation_rand", f = 0.2),
   recpars = list(name = "recombination_bin", cr = 0.8, nvecs = 1),
-  selpars = list(name = "standard"), stopcrit, probpars, seed = NULL)
+  selpars = list(name = "standard"), stopcrit, probpars, seed = NULL,
+  showpars = list(show.iters = "none"))
 }
 \arguments{
 \item{popsize}{population size}
@@ -27,7 +28,10 @@ See \code{Stop criteria} for details.}
 See \code{Problem Description} for details.}
 
 \item{seed}{seed for the random number generator.
-   See \code{Random Seed} for details.}
+See \code{Random Seed} for details.}
+
+\item{showpars}{parameters that regulate the echoing of progress indicators
+   See \code{Showpars} for details.}
 }
 \value{
 A list object containing the final population (sorted by performance)
@@ -84,7 +88,9 @@ selpars  <- list(name = "selection_standard")
 stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 probpars <- list(name  = "sphere",
                 xmin = rep(-5.12,10), xmax = rep(5.12,10))
-ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+seed <- NULL
+showpars <- list(show.iters = "numbers", showevery = 1)
+ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
 
 # DE/rand/1/exp
 recpars  <- list(name = "recombination_exp", cr = 0.2)
