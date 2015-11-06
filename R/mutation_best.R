@@ -1,4 +1,4 @@
-#' /rand mutation for DE
+#' /best mutation for DE
 #' 
 #' Implements the "/best/nvecs" mutation for the ExpDE framework
 #' 
@@ -41,27 +41,27 @@ mutation_best <- function(X, mutpars){
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- lapply(X = rep(nrow(X), 
-                      times = nrow(X)),
-              FUN = sample.int,
-              size = 1 + 2*mutpars$nvecs,
+  R <- lapply(X       = rep(nrow(X), 
+                            times = nrow(X)),
+              FUN     = sample.int,
+              size    = 2*mutpars$nvecs,
               replace = FALSE)
 
     
   # Auxiliary function: make a single mutation
-  randmut <- function(pos, Pop, f, Best){
-    diffs <- matrix(pos[-1],
-                    ncol=2,
-                    byrow=TRUE)
+  bestmut <- function(pos, Pop, f, x.best){
+    diffs <- matrix(pos,
+                    ncol  = 2,
+                    byrow = TRUE)
     if (nrow(diffs) == 1) {
       wdiffsum <- f*(Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
       wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
-    return(Best + wdiffsum)
+    return(x.best + wdiffsum)
   }
   #individual best
-  best <- X[which.min(env$J), ]
+  x.best <- X[which.min(env$J), ]
 
   #use only one base vector if there is more than one "best"
   if(!is.vector(best)){
@@ -70,12 +70,12 @@ mutation_best <- function(X, mutpars){
 
   # Apply mutation
   M <- lapply(R, 
-              FUN = randmut, 
-              Pop = X, 
-              f = mutpars$f,
-              Best = best)
+              FUN    = bestmut, 
+              Pop    = X, 
+              f      = mutpars$f,
+              x.best = x.best)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 
-                byrow = T))
+                byrow = TRUE))
 }
