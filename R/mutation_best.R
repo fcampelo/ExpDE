@@ -61,11 +61,11 @@ mutation_best <- function(X, mutpars){
     return(x.best + wdiffsum)
   }
   #individual best
-  x.best <- X[which.min(env$J), ]
+  x.best <- X[env$J==min(env$J), ]
 
   #use only one base vector if there is more than one "best"
-  if(!is.vector(best)){
-    best <- best[sample.int(nrow(best), size = 1), ]
+  if(is.matrix(x.best)){
+    x.best <- x.best[sample.int(nrow(x.best), size = 1), ]
   }
 
   # Apply mutation
