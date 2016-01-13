@@ -179,6 +179,11 @@ ExpDE <- function(popsize,
                  args = list(X       = X,
                              M       = M,
                              recpars = recpars))
+    
+    # Repair U
+    U <- matrix(pmax(0, pmin(U, 1)), 
+                byrow = FALSE, 
+                nrow  = nrow(U))
 
     # Evaluate U 
     # Some recombination operators evaluate the 'offspring' solutions, so only
