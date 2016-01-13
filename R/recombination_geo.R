@@ -46,8 +46,9 @@ recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
   # range)
   mins <- pmin(X, M)
   maxs <- pmax(X, M)
-  X <- 0.25 + 0.5*(X - mins) / (maxs - mins)
-  M <- 0.25 + 0.5*(M - mins) / (maxs - mins)
+  eps <- 1e-15
+  X <- 0.25 + 0.5*(X - mins) / (maxs - mins + eps)
+  M <- 0.25 + 0.5*(M - mins) / (maxs - mins + eps)
   
   if(is.null(recpars$alpha)){ # use a random value for each recombination
     alpha <- matrix(rep(runif(nrow(X)),
