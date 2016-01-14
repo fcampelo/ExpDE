@@ -10,14 +10,23 @@
 #' contained in \code{env} WILL change the original values. DO NOT change 
 #' anything unless you're absolutely sure of what you're doing.
 #' 
-#' @param env environment from which to inherit the variable values. Do not 
-#' change.
-#' 
 #' @return logical flag indicating whether any stop condition has been reached.
 #' @export
-check_stop_criteria <- function(env = parent.frame()){
+check_stop_criteria <- function(){
+  
+  env   <- parent.frame()
+  
+  # ========== Error catching and default value definitions
+  stopifnot(any("stopcrit" == names(env)),
+            any("names" == names(env$stopcrit)))
   
   crits <- env$stopcrit$names
+  
+  stopifnot(!any("stop_maxiter" == crits) || any("maxiter" == names(env$stopcrit)),
+            !any("stop_maxeval" == crits) || any("maxevals" == names(env$stopcrit)))
+  
+  # ==========
+  
   keep.running <- TRUE
   
   for (crit in crits){

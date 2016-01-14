@@ -61,9 +61,10 @@ recombination_lbga <- function(X, M, ...) {
   C2 <- M * X.is.best + X * !X.is.best
   
   # Set recombination parameters.
+  eps <- 1e-15
   Lambda <- (C2 - C1) / matrix(rep(sqrt(rowSums((C1 - C2) ^ 2)), ncol(X)),
                                ncol = ncol(X),
-                               byrow = FALSE)
+                               byrow = FALSE) + eps
   
   
   mr <- matrix(runif(nrow(X) * 16), 

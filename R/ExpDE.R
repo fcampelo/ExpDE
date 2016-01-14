@@ -42,6 +42,8 @@
 #'    See \code{Problem Description} for details.
 #' @param seed seed for the random number generator. 
 #'    See \code{Random Seed} for details.
+#' @param showpars parameters that regulate the echoing of progress indicators
+#'    See \code{Showpars} for details.
 #'
 #' @return A list object containing the final population (sorted by performance)
 #', the performance vector, and some run statistics.
@@ -50,14 +52,16 @@
 #'
 #' @examples
 #' # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
-#' popsize  <- 40
-#' mutpars  <- list(name = "mutation_rand", f = 0.8)
+#' popsize  <- 100
+#' mutpars  <- list(name = "mutation_best", f = 0.8)
 #' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' probpars <- list(name  = "sphere",
 #'                 xmin = rep(-5.12,10), xmax = rep(5.12,10))
-#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
+#' seed <- NULL
+#' showpars <- list(show.iters = "numbers", showevery = 1)
+#' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
 #'
 #' # DE/rand/1/exp
 #' recpars  <- list(name = "recombination_exp", cr = 0.2)
@@ -128,7 +132,8 @@ ExpDE <- function(popsize,
                   selpars  = list(name = "standard"),
                   stopcrit,
                   probpars,
-                  seed = NULL)
+                  seed = NULL,
+                  showpars = list(show.iters = "none"))
 {
   # ========== Error catching and default value definitions
   # Check seed
@@ -174,6 +179,11 @@ ExpDE <- function(popsize,
                  args = list(X       = X,
                              M       = M,
                              recpars = recpars))
+    
+    # Repair U
+    U <- matrix(pmax(0, pmin(U, 1)), 
+                byrow = FALSE, 
+                nrow  = nrow(U))
 
     # Evaluate U 
     # Some recombination operators evaluate the 'offspring' solutions, so only
@@ -196,6 +206,9 @@ ExpDE <- function(popsize,
     # Compose next population
     X <- next.pop$Xsel
     J <- next.pop$Jsel
+    
+    # Echo progress
+    print_progress()
   }
 
   X <- denormalize_population(probpars, X[order(J), ])
