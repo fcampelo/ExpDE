@@ -62,7 +62,7 @@ recombination_lbga <- function(X, M, ...) {
   
   # Set recombination parameters.
   eps <- 1e-15
-  Lambda <- (C2 - C1) / matrix(rep(sqrt(rowSums((C1 - C2) ^ 2)) + eps, ncol(X)),
+  Lambda <- (C2 - C1) / matrix(rep(sqrt(rowSums((C1 - C2) ^ 2))+ eps, ncol(X)),
                                ncol = ncol(X),
                                byrow = FALSE)
   
