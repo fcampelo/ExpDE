@@ -94,6 +94,6 @@ recombination_blxAlphaBeta <- function(X, M, recpars) {
  
   # Return recombined population 
   return(pmin(C1, C2) - 
-           I * (recpars$alpha *S + recpars$beta * !S) + 
-           randM(X) * (abs(C1 - C2) + I * (recpars$alpha + recpars$beta)))
+           I * (recpars$alpha * S + recpars$beta * !S) + 
+           randM(X) * (I * ( 1 + recpars$alpha + recpars$beta)))
 }

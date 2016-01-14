@@ -1,6 +1,6 @@
 #' Min Max Arithmetical recombination for DE
 #' 
-#' Implements the "/mmax" (mim-max-arithmetical) recombination for the ExpDE 
+#' Implements the "/mmax" (min-max-arithmetical) recombination for the ExpDE 
 #' framework
 #'
 #' @section Warning:
