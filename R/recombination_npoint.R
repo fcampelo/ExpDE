@@ -9,9 +9,9 @@
 #' fields in \code{recpars}:
 #' \itemize{
 #'    \item \code{N} : cut number points for crossover.\cr
-#'    Accepts integer value \code{0 < N < n}, where \code{n} is the 
-#'    dimension of the problem; or \code{N = NULL} for randomly choosing a 
-#'    number of cut points.\cr
+#'    Accepts integer value \code{0 <= N < n}, where \code{n} is the 
+#'    dimension of the problem; Use \code{N = 0} or \code{N = NULL} for randomly 
+#'    choosing a number of cut points.\cr
 #'    Defaults to \code{NULL}.
 #'}
 #'
@@ -36,8 +36,8 @@ recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
     recpars$N <- NULL
   }
   if (!is.null(recpars$N)) {
-    if(!(0 < recpars$N & recpars$N < ncol(X))){
-      stop("recombination_npoint() requires 0 < recpars$N < n")
+    if(!(0 <= recpars$N & recpars$N < ncol(X))){
+      stop("recombination_npoint() requires 0 <= recpars$N < n")
     }
     if(!(all(recpars$N == floor(recpars$N)))) {
       stop("recombination_npoint() requires an integer value for N")
@@ -49,7 +49,7 @@ recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
   # ========== 
   
   # Define the number of cut points for each recombination pair.
-  if (is.null(recpars$N)) {
+  if (is.null(recpars$N) || recpars$N == 0) {
     recpars$N <- sample.int(n       = ncol(X) - 1, 
                             size    = nrow(X),
                             replace = TRUE)  
