@@ -46,7 +46,7 @@ recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
   if (!identical(dim(X), dim(M))) {
     stop("recombination_npoint() requires dim(X) == dim(M)")
   }
-  # ==========
+  # ========== 
   
   # Define the number of cut points for each recombination pair.
   if (is.null(recpars$N)) {

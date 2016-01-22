@@ -45,7 +45,7 @@ recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
   if (!identical(dim(X), dim(M))) {
     stop("recombination_exp() requires dim(X) == dim(M)")
   }
-  # ==========
+  # ========== 
   
   # Perform recombination (depending on the value of recpars$K)
   if(is.null(recpars$K)) {
