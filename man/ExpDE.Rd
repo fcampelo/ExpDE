@@ -81,7 +81,7 @@ to NULL, in which case the seed is arbitrarily set using
 }
 \examples{
 # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
-popsize  <- 40
+popsize  <- 100
 mutpars  <- list(name = "mutation_rand", f = 0.8)
 recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 selpars  <- list(name = "selection_standard")

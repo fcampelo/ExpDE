@@ -3,6 +3,7 @@
 export(ExpDE)
 export(check_stop_criteria)
 export(create_population)
+export(mutation_best)
 export(mutation_rand)
 export(recombination_arith)
 export(recombination_bin)

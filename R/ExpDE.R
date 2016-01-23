@@ -53,7 +53,7 @@
 #' @examples
 #' # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
 #' popsize  <- 100
-#' mutpars  <- list(name = "mutation_best", f = 0.8)
+#' mutpars  <- list(name = "mutation_rand", f = 0.8)
 #' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
 #' selpars  <- list(name = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)

@@ -8,9 +8,9 @@
 #' fields in \code{recpars}:
 #' \itemize{
 #'    \item \code{K} : cut point for crossover.\cr
-#'    Accepts integer value \code{0 < K < n}, where \code{n} is the 
-#'    dimension of the problem; or \code{K = NULL} for randomly choosing a 
-#'    position for each pair of points.\cr
+#'    Accepts integer value \code{0 <= K < n}, where \code{n} is the 
+#'    dimension of the problem; Use \code{K = 0} or \code{K = NULL} for randomly 
+#'    choosing a position for each pair of points.\cr
 #'    Defaults to \code{NULL}.
 #'}
 #'
@@ -35,8 +35,8 @@ recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
     recpars$K <- NULL
   }
   if (!is.null(recpars$K)) {
-    if(!(0 < recpars$K & recpars$K < ncol(X))){
-      stop("recombination_onepoint() requires 0 < recpars$K < n")
+    if(!(0 <= recpars$K & recpars$K < ncol(X))){
+      stop("recombination_onepoint() requires 0 <= recpars$K < n")
     }
     if(!(all(recpars$K == floor(recpars$K)))) {
       stop("recombination_onepoint() requires an integer value for K")
@@ -45,10 +45,10 @@ recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
   if (!identical(dim(X), dim(M))) {
     stop("recombination_exp() requires dim(X) == dim(M)")
   }
-  # ==========
+  # ========== 
   
   # Perform recombination (depending on the value of recpars$K)
-  if(is.null(recpars$K)) {
+  if(is.null(recpars$K) || recpars$K == 0) {
     # Matrix of cut points
     cuts <-  matrix(rep(sample.int(n       = ncol(X)-1, 
                                    size    = nrow(X), 

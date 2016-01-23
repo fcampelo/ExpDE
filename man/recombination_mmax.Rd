@@ -18,7 +18,7 @@ for details)}
 Matrix \code{U} containing the recombined population
 }
 \description{
-Implements the "/mmax" (mim-max-arithmetical) recombination for the ExpDE
+Implements the "/mmax" (min-max-arithmetical) recombination for the ExpDE
 framework
 }
 \section{Warning}{
