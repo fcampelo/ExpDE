@@ -70,6 +70,9 @@ vignette (or at least to a list of available criteria)
 \section{Problem description}{
 
 Here comes a description of the \code{probpars} structure.
+Reminder: the objective function routine must receive a matrix of row vectors
+to be evaluated in the form of an input parameter named either "x" or "X" or
+"Pop" (any one of the three is allowed).
 }
 
 \section{Random Seed}{

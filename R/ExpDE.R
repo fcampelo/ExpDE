@@ -22,6 +22,9 @@
 #'
 #' @section Problem description:
 #' Here comes a description of the \code{probpars} structure.
+#' Reminder: the objective function routine must receive a matrix of row vectors 
+#' to be evaluated in the form of an input parameter named either "x" or "X" or 
+#' "Pop" (any one of the three is allowed).
 #' 
 #' @section Random Seed:
 #' The \code{seed} argument receives the desired seed for the PRNG. This value 
