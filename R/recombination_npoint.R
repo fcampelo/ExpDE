@@ -11,7 +11,7 @@
 #'    \item \code{N} : cut number points for crossover.\cr
 #'    Accepts integer value \code{0 <= N < n}, where \code{n} is the 
 #'    dimension of the problem; Use \code{N = 0} or \code{N = NULL} for randomly 
-#'    choosing the number of cut points.\cr
+#'    choosing a number of cut points.\cr
 #'    Defaults to \code{NULL}.
 #'}
 #'

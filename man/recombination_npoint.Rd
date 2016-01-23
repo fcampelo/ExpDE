@@ -28,9 +28,9 @@ recombination. \code{recombination_npoint()} understands the following
 fields in \code{recpars}:
 \itemize{
    \item \code{N} : cut number points for crossover.\cr
-   Accepts integer value \code{0 < N < n}, where \code{n} is the
-   dimension of the problem; or \code{N = NULL} for randomly choosing a
-   number of cut points.\cr
+   Accepts integer value \code{0 <= N < n}, where \code{n} is the
+   dimension of the problem; Use \code{N = 0} or \code{N = NULL} for randomly
+   choosing a number of cut points.\cr
    Defaults to \code{NULL}.
 }
 }

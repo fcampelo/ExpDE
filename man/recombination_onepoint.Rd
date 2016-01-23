@@ -27,9 +27,9 @@ recombination. \code{recombination_onepoint()} understands the following
 fields in \code{recpars}:
 \itemize{
    \item \code{K} : cut point for crossover.\cr
-   Accepts integer value \code{0 < K < n}, where \code{n} is the
-   dimension of the problem; or \code{K = NULL} for randomly choosing a
-   position for each pair of points.\cr
+   Accepts integer value \code{0 <= K < n}, where \code{n} is the
+   dimension of the problem; Use \code{K = 0} or \code{K = NULL} for randomly
+   choosing a position for each pair of points.\cr
    Defaults to \code{NULL}.
 }
 }
