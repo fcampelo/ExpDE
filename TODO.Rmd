@@ -1,25 +1,15 @@
 ---
 title: "TODO"
 author: "Felipe Campelo"
-date: "October 2nd, 2015"
+date: "March 22, 2016"
 output: html_document
 ---
 
-## For the current version
-- Add a repair function to fix out-of-bounds vectors (and improve 
-    *recombination_geo()*'s and *recombination_blxAlpha()*'s repair)
-- think about using a standard notation for parameters in all recombination 
-    operators (is it interesting or will it generate more confusion?)
-- Error catching in *create_population()* (see file)
-- Document *evaluate_population()*
-- Include more recombination alternatives
 - Add flag _record.everything_ to _ExpDE()_ (to return the whole history of the 
 optimization, incl. intermediate populations)
-- Add option to regulate the verbosity of the method.
-- Add 'offspringnumber' option to the recombination routines (to simplify reuse, 
-    e.g., for RCGAs or other extensions)
-
-
-## For future versions
 - Consider expressing candidate solutions as lists (useful to encapsulate 
 meta-info about each vector in the population).
+- Add 'offspringnumber' option to the recombination routines (to simplify reuse, 
+    e.g., for RCGAs or other extensions)
+- think about using a standard notation for parameters in all recombination 
+    operators (is it interesting or will it generate more confusion?)

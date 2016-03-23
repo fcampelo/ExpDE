@@ -2,8 +2,6 @@
 #' 
 #' Implements the standard selection (greedy) for the ExpDE framework
 #' 
-#' The details (if any) come here...
-#' 
 #'        
 #' @param X population matrix (original)
 #' @param U population matrix (recombined) 
