@@ -2,8 +2,6 @@
 #' 
 #' Implements different stop criteria for the ExpDE framework
 #' 
-#' The details (if any) come here...
-#' 
 #' @section Warning:
 #' This routine accesses the parent environment used in the main function 
 #' \code{ExpDE()}, which means that changes made in the variables 
@@ -12,6 +10,7 @@
 #' 
 #' @return logical flag indicating whether any stop condition has been reached.
 #' @export
+#' 
 check_stop_criteria <- function(){
   
   env   <- parent.frame()

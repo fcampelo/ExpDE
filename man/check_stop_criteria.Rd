@@ -12,9 +12,6 @@ logical flag indicating whether any stop condition has been reached.
 \description{
 Implements different stop criteria for the ExpDE framework
 }
-\details{
-The details (if any) come here...
-}
 \section{Warning}{
 
 This routine accesses the parent environment used in the main function
