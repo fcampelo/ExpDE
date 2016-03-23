@@ -17,6 +17,6 @@ create_population <- function(popsize,      # population size
   # get problem dimension
   prob.dim <- length(probpars$xmax)
   
-  return (matrix(runif(n = popsize * prob.dim), 
+  return (matrix(stats::runif(n = popsize * prob.dim), 
                  nrow = popsize))
 }

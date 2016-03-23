@@ -67,7 +67,7 @@ recombination_lbga <- function(X, M, ...) {
                                byrow = FALSE)
   
   
-  mr <- matrix(runif(nrow(X) * 16), 
+  mr <- matrix(stats::runif(nrow(X) * 16), 
                ncol = 16) <= 1 / 16
   
   ms <- matrix(rep((2^-(0:15)), 

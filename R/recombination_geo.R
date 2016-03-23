@@ -51,7 +51,7 @@ recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
   M <- 0.25 + 0.5*(M - mins) / (maxs - mins + eps)
   
   if(is.null(recpars$alpha)){ # use a random value for each recombination
-    alpha <- matrix(rep(runif(nrow(X)),
+    alpha <- matrix(rep(stats::runif(nrow(X)),
                         times = ncol(X)),
                     ncol = ncol(X))
   } else{ # use the given (or default) alpha value for all recombinations
@@ -61,7 +61,7 @@ recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
   
   # Randomize which parent will use exponent alpha and which will use 
   # (1-alpha)
-  inv.alpha <- as.logical(round(runif(nrow(X))))
+  inv.alpha <- as.logical(round(stats::runif(nrow(X))))
   alpha[inv.alpha, ] <- 1 - alpha[inv.alpha, ]
   
   # Build recombined population and return it to the original range
