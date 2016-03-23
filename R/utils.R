@@ -1,7 +1,7 @@
 # Generate an matrix of uniformly distributed values in the interval (0,1) with
 # the same dimension as M
 randM <- function(M) {
-  matrix(runif(prod(dim(M))), 
+  matrix(stats::runif(prod(dim(M))), 
          ncol = ncol(M))
 }
 

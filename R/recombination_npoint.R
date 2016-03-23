@@ -88,7 +88,7 @@ recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
   
   # Randomize which population will donate the variables with the lowermost 
   # indexes
-  if (runif(1) < 0.5){ 
+  if (stats::runif(1) < 0.5){ 
     R <- !R
   }
   

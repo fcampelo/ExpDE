@@ -23,7 +23,7 @@ recombination_arith <- function(X, M, ...) {
   }
   # ==========
   
-  lambda <- matrix(rep(runif(nrow(X)),
+  lambda <- matrix(rep(stats::runif(nrow(X)),
                        ncol(X)),
                    ncol = ncol(X),
                    byrow = FALSE)

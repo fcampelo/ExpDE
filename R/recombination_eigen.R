@@ -45,7 +45,7 @@ recombination_eigen <- function(X, M, recpars) {
   # ==========
   
   # Calculate eigenvectors of the covariance matrix of X
-  Q <- eigen(cov(X))$vectors
+  Q <- eigen(stats::cov(X))$vectors
 
   # Project vectors in X and M onto basis Q
   Xq <- t(sapply(1:(2*nrow(X)), 
