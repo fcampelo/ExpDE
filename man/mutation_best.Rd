@@ -17,9 +17,6 @@ Matrix \code{M} containing the mutated population
 \description{
 Implements the "/best/nvecs" mutation for the ExpDE framework
 }
-\details{
-The details (if any) come here...
-}
 \section{Mutation Parameters}{
 
 The \code{mutpars} parameter contains all parameters required to define the
@@ -32,5 +29,11 @@ mutation. \code{mutation_best()} understands the following fields in
        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
        Defaults to 1.
 }
+}
+
+\section{References}{
+
+K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A
+Practical Approach to Global Optimization", Springer 2005
 }
 

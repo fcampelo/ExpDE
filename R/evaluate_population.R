@@ -1,3 +1,15 @@
+#' Evaluate DE population
+#' 
+#' Evaluates the DE population on a given objective function.
+#'
+#' @param probpars problem parameters (see \code{\link{ExpDE}} for details).
+#' @param Pop population matrix (each row is a candidate solution, normalized 
+#' to the [0, 1] interval,)
+#' 
+#' @return numeric vector (with length \code{nrow(Pop)}) containing the function 
+#' values of each point in the population.
+#' 
+#' @export
 evaluate_population <- function (probpars, Pop){
   
   # Denormalize population

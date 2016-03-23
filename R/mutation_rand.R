@@ -2,8 +2,6 @@
 #' 
 #' Implements the "/rand/nvecs" mutation for the ExpDE framework
 #' 
-#' The details (if any) come here...
-#' 
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
 #' mutation. \code{mutation_rand()} understands the following fields in 
@@ -20,6 +18,10 @@
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
+#' 
+#' @section References:
+#' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
+#' Practical Approach to Global Optimization", Springer 2005
 #' 
 #' @export
 

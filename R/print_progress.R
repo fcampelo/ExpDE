@@ -21,7 +21,8 @@
 #'                           number
 #' }
 #'
-#'
+#' @export
+#' 
 print_progress <- function(){
   
   # Get access to the variables in the calling environment

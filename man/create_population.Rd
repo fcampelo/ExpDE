@@ -15,9 +15,6 @@ create_population(popsize, probpars)
 A matrix containing the population for the ExpDE
 }
 \description{
-Create new population for the ExpDE framework
-}
-\details{
-The detailed description comes here...
+Creates a new population for the ExpDE framework
 }
 

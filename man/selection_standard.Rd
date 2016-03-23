@@ -22,7 +22,4 @@ its corresponding performance values (\code{Jsel}).
 \description{
 Implements the standard selection (greedy) for the ExpDE framework
 }
-\details{
-The details (if any) come here...
-}
 
