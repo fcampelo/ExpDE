@@ -1,0 +1,10 @@
+## Resubmission
+This is a resubmission
+
+## Test environments
+* local: OS X 10.11.4 (El Capitan), R 3.2.2, x86_64-apple-darwin14.5.0 (64-bit)
+* travis-ci: Ubuntu 12.04 LTS Server Edition 64 bit and OS X Mavericks
+* win-builder (devel and release)
+
+## R CMD check results
+There were no ERRORs, WARNINGs or NOTEs.
