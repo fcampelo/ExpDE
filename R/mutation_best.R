@@ -18,6 +18,7 @@
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
+#' @author Felipe Campelo (\email{fcampelo@@ufmg.br})
 #' 
 #' @section References:
 #' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
@@ -46,7 +47,7 @@ mutation_best <- function(X, mutpars){
   R <- lapply(X       = rep(nrow(X), 
                             times = nrow(X)),
               FUN     = sample.int,
-              size    = 2*mutpars$nvecs,
+              size    = 2 * mutpars$nvecs,
               replace = FALSE)
 
     
@@ -56,14 +57,14 @@ mutation_best <- function(X, mutpars){
                     ncol  = 2,
                     byrow = TRUE)
     if (nrow(diffs) == 1) {
-      wdiffsum <- f*(Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
+      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
       wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
     return(x.best + wdiffsum)
   }
   #individual best
-  x.best <- X[env$J==min(env$J), ]
+  x.best <- X[env$J == min(env$J), ]
 
   #use only one base vector if there is more than one "best"
   if(is.matrix(x.best)){

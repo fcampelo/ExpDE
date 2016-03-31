@@ -18,6 +18,7 @@
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
+#' @author Felipe Campelo (\email{fcampelo@@ufmg.br})
 #' 
 #' @section References:
 #' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
@@ -40,10 +41,10 @@ mutation_rand <- function(X, mutpars){
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- lapply(X = rep(nrow(X), 
-                      times = nrow(X)),
-              FUN = sample.int,
-              size = 1 + 2*mutpars$nvecs,
+  R <- lapply(X       = rep(nrow(X), 
+                            times = nrow(X)),
+              FUN     = sample.int,
+              size    = 1 + 2 * mutpars$nvecs,
               replace = FALSE)
 
     
@@ -51,10 +52,10 @@ mutation_rand <- function(X, mutpars){
   randmut <- function(pos, Pop, f){
     Xr1   <- Pop[pos[1], ]
     diffs <- matrix(pos[-1],
-                    ncol=2,
-                    byrow=TRUE)
+                    ncol  = 2,
+                    byrow = TRUE)
     if (nrow(diffs) == 1) {
-      wdiffsum <- f*(Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
+      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
       wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
@@ -65,9 +66,9 @@ mutation_rand <- function(X, mutpars){
   M <- lapply(R, 
               FUN = randmut, 
               Pop = X, 
-              f = mutpars$f)
+              f   = mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 
-                byrow = T))
+                byrow = TRUE))
 }
