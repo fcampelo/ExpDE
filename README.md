@@ -44,6 +44,7 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 ### Mutation
 - Rand (*mutation_rand*)
 - Best (*mutation_best*)
+- Weighted global intermediate (*mutation_wgi*)
 
 ### Selection
 - Standard DE (*selection_standard*)
