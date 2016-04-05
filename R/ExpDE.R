@@ -16,8 +16,11 @@
 #' current version accepts the following options:
 #' 
 #' \itemize{
-#'    \item \code{\link{mutation_rand}}
 #'    \item \code{\link{mutation_best}}
+#'    \item \code{\link{mutation_rand}}
+#'    \item \code{\link{mutation_none}}
+#'    \item \code{\link{mutation_wgi}}
+#'    
 #' }
 #' 
 #' \code{mutpars} receives a list object with name field \code{mutpars$name} 
@@ -46,6 +49,7 @@
 #'    \item \code{\link{recombination_linear}}
 #'    \item \code{\link{recombination_mmax}}
 #'    \item \code{\link{recombination_npoint}}
+#'    \item \code{\link{recombination_none}}
 #'    \item \code{\link{recombination_onepoint}}
 #'    \item \code{\link{recombination_pbest}}
 #'    \item \code{\link{recombination_sbx}}
