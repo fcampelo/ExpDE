@@ -18,7 +18,9 @@
 #' \itemize{
 #'    \item \code{\link{mutation_best}}
 #'    \item \code{\link{mutation_rand}}
+#'    \item \code{\link{mutation_mean}}
 #'    \item \code{\link{mutation_none}}
+#'    \item \code{\link{mutation_current_to_pbest}}
 #'    \item \code{\link{mutation_wgi}}
 #'    
 #' }
@@ -159,6 +161,7 @@
 #' showpars <- list(show.iters = "numbers", showevery = 1)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
 #'
+#'
 #' # DE/rand/2/blxAlpha
 #' recpars  <- list(name = "recombination_blxAlpha", alpha = 0.1)
 #' mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
@@ -180,7 +183,8 @@
 #' @references 
 #' F. Campelo, M. Botelho, "Experimental Investigation of Recombination 
 #' Operators for Differential Evolution", Genetic and Evolutionary 
-#' Computation Conference, Denver/CO, July 2016 (Accepted).
+#' Computation Conference, July 20-24, 2016, Denver/CO. 
+#' DOI: 10.1145/2908812.2908852
 #' @export
 
 ExpDE <- function(popsize,

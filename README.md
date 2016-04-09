@@ -25,6 +25,7 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 
 ### Differential mutation
 - Best (*mutation_best*)
+- Current-to-pbest (*mutation_current_to_pbest*)
 - Mean (*mutation_mean*)
 - Rand (*mutation_rand*)
 - Weighted global intermediate (*mutation_wgi*)

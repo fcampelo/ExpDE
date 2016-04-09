@@ -42,51 +42,44 @@ mutation_current_to_pbest <- function(X, mutpars){
   if (!("f" %in% names(mutpars))){
     stop("mutation_current_to_pbest() requires field f in mutpars")
   }
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
+  if (!is.numeric(mutpars$f)){
+    stop("mutation_current_to_pbest() requires field f to be numeric")
+  }
   
-  
-  # STOPPED HERE =====
-  if (!is.numeric(mutpars$p) || p <= 0){
+  if (!is.numeric(mutpars$p) || mutpars$p <= 0){
     stop("mutation_current_to_pbest() requires parameter p to be either integer or a numeric value between 0 and 1")
   }
-  if (mutpars$p)
+
+  if (mutpars$p > 0 && mutpars$p < 1) mutpars$p <- ceiling(mutpars$p * nrow(X))
   # ==========
   
-  # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- lapply(X       = rep(nrow(X), 
+  # Indices to the p-best vectors
+  ibest <- order(env$J)[1:mutpars$p]
+  
+  # Matrix indices for mutation (x_{pbest}, x_{r1}, x_{r2})
+  R <- mapply(FUN     = function(x, i, ibest) {c(sample.int(ibest, 1), i, 
+                                                 sample.int(x, 2, replace = FALSE))},
+              x       = rep(nrow(X), 
                             times = nrow(X)),
-              FUN     = sample.int,
-              size    = 2 * mutpars$nvecs,
-              replace = FALSE)
+              i       = 1:nrow(X),
+              MoreArgs = list(ibest),
+              SIMPLIFY = FALSE)
 
     
   # Auxiliary function: make a single mutation
-  bestmut <- function(pos, Pop, f, x.best){
+  pbestmut <- function(pos, Pop, f){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
-    if (nrow(diffs) == 1) {
-      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
-    } else {
-      wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
-    }
-    return(x.best + wdiffsum)
-  }
-  #individual best
-  x.best <- X[env$J == min(env$J), ]
-
-  #use only one base vector if there is more than one "best"
-  if(is.matrix(x.best)){
-    x.best <- x.best[sample.int(nrow(x.best), size = 1), ]
+    return(Pop[pos[2], ] + 
+             colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])))
   }
 
   # Apply mutation
   M <- lapply(R, 
-              FUN    = bestmut, 
+              FUN    = pbestmut, 
               Pop    = X, 
-              f      = mutpars$f,
-              x.best = x.best)
+              f      = mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

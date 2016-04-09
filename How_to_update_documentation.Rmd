@@ -1,0 +1,10 @@
+---
+title: "How_to_update_documentation"
+author: "Felipe Campelo"
+---
+
+After adding a new operator variant, update the following files:
+
+- README.md
+- ExpDE.R
+- recombination\_operators.R OR mutation\_operators.R
