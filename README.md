@@ -23,6 +23,15 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 
 ## Available Operators
 
+### Differential mutation
+- Best (*mutation_best*)
+- Mean (*mutation_mean*)
+- Rand (*mutation_rand*)
+- Weighted global intermediate (*mutation_wgi*)
+
+It is also possible to run the algorithm without using any differential mutation operator (*mutation_none*). Run `mutation_operators()` for a list of available 
+variants.
+
 ### Recombination
 - Arithmetic (*recombination_arith*)
 - Binomial (*recombination_bin*)
@@ -41,13 +50,12 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 - SBX (*recombination_sbx*)
 - Wright (*recombination_wright*)   
 
-### Mutation
-- Rand (*mutation_rand*)
-- Best (*mutation_best*)
-- Weighted global intermediate (*mutation_wgi*)
+It is also possible to run the algorithm without using any recombination operator (*recombination_none*). Run `recombination_operators()` for a list of available 
+variants.
 
 ### Selection
 - Standard DE (*selection_standard*)
+
 
 ### Stop criteria
 - Maximum number of iterations (*stop_maxiter*)
@@ -56,14 +64,15 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 ## Example: DE/best/1/sbx on the shifted sphere problem for N = 10
 ```R
 popsize  <- 200
-recpars  <- list(name = "recombination_sbx", eta = 10)
 mutpars  <- list(name = "mutation_best", f = 0.6, nvecs = 1)
+recpars  <- list(name = "recombination_sbx", eta = 10)
 selpars  <- list(name = "selection_standard")
 stopcrit <- list(names = "stop_maxeval", maxevals = 100000)
 probpars <- list(name  = "sphere", xmin = rep(2, 10), xmax = rep(20, 10))
-seed <- 1234
+seed     <- 1234
 showpars <- list(show.iters = "numbers", showevery = 10)
-out <- ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
+out      <- ExpDE(popsize, mutpars, recpars, selpars, 
+                  stopcrit, probpars, seed, showpars)
 ```
 
 If you find any bugs or has any suggestions for improvement, please feel free to [contact me](fcampelo@ufmg.br).

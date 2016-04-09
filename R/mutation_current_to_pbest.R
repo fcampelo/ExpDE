@@ -1,24 +1,24 @@
-#' /best mutation for DE
+#' /current-to-pbest mutation for DE
 #' 
-#' Implements the "/best/nvecs" mutation for the ExpDE framework
+#' Implements the "/current-to-pbest" mutation for the ExpDE framework
 #' 
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
-#' mutation. \code{mutation_best()} understands the following fields in 
+#' mutation. \code{mutation_current_to_pbest()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
 #'    \item \code{f} : scaling factor for difference vector(s).\cr
 #'    Accepts numeric vectors of size 1 or \code{nvecs}.
-#'    \item \code{nvecs} : number of difference vectors to use.\cr 
-#'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
-#'        Defaults to 1.
+#'    \item \code{p} : either the number of "best" vectors to use (if given as a 
+#'    positive integer) or the proportion of the population to use as "best"
+#'    vectors (if 0 < p < 1).
 #' }
 #' 
 #' @section Warning:
 #' This routine will search for the performance vector 
 #' of population \code{X} (\code{J}) in the parent environment (using 
 #' \code{parent.frame()}. This variable must be defined for 
-#' \code{mutation_best()} to work. 
+#' \code{mutation_current_to_pbest()} to work. 
 #' 
 #' @param X population matrix
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
@@ -27,26 +27,30 @@
 #' @author Felipe Campelo (\email{fcampelo@@ufmg.br})
 #' 
 #' @section References:
-#' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
-#' Practical Approach to Global Optimization", Springer 2005
+#' J. Zhang, A.C. Sanderson, 
+#' "JADE: Adaptive differential evolution with optional external archive". 
+#' IEEE Transactions on Evolutionary Computation 13:945-958, 2009
 #' 
 #' @export
 
-mutation_best <- function(X, mutpars){
+mutation_current_to_pbest <- function(X, mutpars){
 
   # Get access to variables in the calling environment
   env <- parent.frame()
   
   # ========== Error catching and default value definitions
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  if (!(mutpars$nvecs %in% 1:(nrow(X)/2 - 2))){
-    stop("mutation_best() requires integer 1 <= mutpar$nvecs <= (popsize/2 - 2)")
-  }
   if (!("f" %in% names(mutpars))){
-    stop("mutation_best() requires field f in mutpars")
+    stop("mutation_current_to_pbest() requires field f in mutpars")
   }
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
+  
+  
+  # STOPPED HERE =====
+  if (!is.numeric(mutpars$p) || p <= 0){
+    stop("mutation_current_to_pbest() requires parameter p to be either integer or a numeric value between 0 and 1")
+  }
+  if (mutpars$p)
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)

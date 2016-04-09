@@ -40,10 +40,10 @@ mutation_wgi <- function(X, mutpars){
   
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   if (!(mutpars$nvecs %in% 1:(nrow(X)/2 - 2))){
-    stop("mutation_rand() requires integer 1 <= mutpar$nvecs <= (popsize/2 - 2)")
+    stop("mutation_wgi() requires integer 1 <= mutpar$nvecs <= (popsize/2 - 2)")
   }
   if (!("f" %in% names(mutpars))){
-    stop("mutation_rand() requires field f in mutpars")
+    stop("mutation_wgi() requires field f in mutpars")
   }
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)

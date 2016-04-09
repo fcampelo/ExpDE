@@ -7,7 +7,9 @@
 #' @export
 
 mutation_operators <- function(){
-  c("best", 
+  c("best",
+    "current-to-pbest",
+    "mean",
     "none",
     "rand",
     "wgi")
