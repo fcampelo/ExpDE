@@ -34,12 +34,13 @@ mutation_mean <- function(X, mutpars){
   env <- parent.frame()
   
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  if (!(mutpars$nvecs %in% 1:(nrow(X)/2 - 2))){
-    stop("mutation_mean() requires integer 1 <= mutpar$nvecs <= (popsize/2 - 2)")
-  }
-  if (!("f" %in% names(mutpars))){
-    stop("mutation_mean() requires field f in mutpars")
-  }
+ 
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          assertthat::is.count(mutpars$nvecs),
+                          mutpars$nvecs < (nrow(X)/2 - 2),
+                          assertthat::has_name(mutpars, "f"),
+                          is.numeric(mutpars$f))
+  
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
   # ==========

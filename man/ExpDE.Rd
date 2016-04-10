@@ -83,11 +83,9 @@ options:
 \itemize{
    \item \code{\link{recombination_arith}}   
    \item \code{\link{recombination_bin}}
-   \item \code{\link{recombination_blxAlpha}}
    \item \code{\link{recombination_blxAlphaBeta}}
    \item \code{\link{recombination_eigen}}
    \item \code{\link{recombination_exp}}
-   \item \code{\link{recombination_flat}}
    \item \code{\link{recombination_geo}}
    \item \code{\link{recombination_lbga}}
    \item \code{\link{recombination_linear}}
@@ -193,9 +191,9 @@ showpars <- list(show.iters = "numbers", showevery = 1)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
 
 
-# DE/rand/2/blxAlpha
-recpars  <- list(name = "recombination_blxAlpha", alpha = 0.1)
-mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
+# DE/wgi/1/blxAlpha
+recpars  <- list(name = "recombination_blxAlphaBeta", alpha = 0.1, beta = 0.1)
+mutpars  <- list(name = "mutation_wgi", f = 0.8)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 
 # DE/best/1/sbx

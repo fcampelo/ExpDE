@@ -40,25 +40,15 @@ recombination_pbest <- function(X, M, recpars) {
   env <- parent.frame()
   
   # ========== Error catching and default value definitions
-  if (!("cr" %in% names(recpars))){
-    stop("recombination_pbest() requires field cr in recpars")
-  }
-  if (!(0 < recpars$cr & recpars$cr <= 1)) {
-    stop("recombination_pbest() requires numeric 0 < recpars$cr <= 1")
-  }
-  if (!identical(dim(X),dim(M))) {
-    stop("recombination_pbest() requires dim(X) == dim(M)")
-  }
-  if(!all(c("t", "stopcrit", "J") %in% names(env))){
-    stop("recombination_pbest() requires variables t, stopcrit and J to be 
-          defined in the calling environment")
-  }
-  if(!any(names(env$stopcrit) == "maxiter")){
-    stop("recombination_pbest() requires stopcrit$maxiter to be defined 
-         in the calling environment")
-  }
-
-  # ==========
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          assertthat::has_name(recpars, "cr"),
+                          is_within(recpars$cr, 0, 1),
+                          all(assertthat::has_name(env, 
+                                                   c("t", "stopcrit", "J"))),
+                          assertthat::has_name(env$stopcrit, "maxiter"))
+    # ==========
   
   # Extract relevant values from the parent environment
   G    <- env$t

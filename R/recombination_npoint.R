@@ -32,20 +32,11 @@
 recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
   
   # ========== Error catching and default value definitions
-  if (!("N" %in% names(recpars))) {
-    recpars$N <- NULL
-  }
-  if (!is.null(recpars$N)) {
-    if(!(0 <= recpars$N & recpars$N < ncol(X))){
-      stop("recombination_npoint() requires 0 <= recpars$N < n")
-    }
-    if(!(all(recpars$N == floor(recpars$N)))) {
-      stop("recombination_npoint() requires an integer value for N")
-    }
-  }
-  if (!identical(dim(X), dim(M))) {
-    stop("recombination_npoint() requires dim(X) == dim(M)")
-  }
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          is.null(recpars$N) || 
+                            (assertthat::is.count(recpars$N) && is_within(recpars$N, 0, ncol(X) - 1)))
   # ========== 
   
   # Define the number of cut points for each recombination pair.

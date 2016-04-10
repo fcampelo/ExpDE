@@ -9,8 +9,7 @@
 #' \itemize{
 #'    \item \code{alpha} : exponent for geometrical recombination.\cr
 #'    Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which 
-#'    case a random value is chosen for each recombination).\cr
-#'    Defaults to \code{alpha = 0.5}.
+#'    case a random value is chosen for each recombination).
 #'}
 #'
 #' @section References:
@@ -27,18 +26,14 @@
 #' 
 #' @export
 
-recombination_geo <- function(X, M, recpars = list(alpha = 0.5)) {
+recombination_geo <- function(X, M, recpars) {
 
   # ========== Error catching and default value definitions
-  if (!identical(dim(X), dim(M))) {
-    stop("recombination_geo() requires dim(X) == dim(M)")
-  }
-  if (!("alpha" %in% names(recpars))){
-    recpars$alpha <- 0.5
-  }
-  if (!is.null(recpars$alpha) && !(0 < recpars$alpha && recpars$alpha <= 1)) {
-    stop("recombination_geo() requires numeric 0 < recpars$alpha <= 1")
-  }
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          assertthat::has_name(recpars, "alpha"),
+                          is.null(recpars$alpha) || is_within(recpars$alpha, 0, 1))
   # ==========
   
   # Get all values to the interval [.25, .75] before performing the recombination

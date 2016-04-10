@@ -39,16 +39,17 @@ mutation_current_to_pbest <- function(X, mutpars){
   env <- parent.frame()
   
   # ========== Error catching and default value definitions
-  if (!("f" %in% names(mutpars))){
-    stop("mutation_current_to_pbest() requires field f in mutpars")
-  }
-  if (!is.numeric(mutpars$f)){
-    stop("mutation_current_to_pbest() requires field f to be numeric")
-  }
   
-  if (!is.numeric(mutpars$p) || mutpars$p <= 0){
-    stop("mutation_current_to_pbest() requires parameter p to be either integer or a numeric value between 0 and 1")
-  }
+  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
+  
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          assertthat::has_name(mutpars, "f"),
+                          is.numeric(mutpars$f),
+                          is.numeric(mutpars$p), 
+                          mutpars$p > 0, mutpars$p < nrow(X))
+  
+  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
+                                               mutpars$nvecs)
 
   if (mutpars$p > 0 && mutpars$p < 1) mutpars$p <- ceiling(mutpars$p * nrow(X))
   # ==========

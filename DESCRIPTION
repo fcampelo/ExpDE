@@ -1,17 +1,18 @@
-Package: ExpDE
-Type: Package
-Title: Modular Differential Evolution for Experimenting with Operators
-Version: 0.1.2.9006
-Depends: R (>= 3.2.0)
-Date: 2016-04-09
-Url: http://github.com/fcampelo/ExpDE
-Authors@R: c(
-            person("Felipe", "Campelo", email = "fcampelo@ufmg.br", 
-                    role = c("aut", "cre")),
-            person("Moises", "Botelho", email = "moisesbotelho@ufmg.br", 
-                    role = "aut"))
-Maintainer: Felipe Campelo <fcampelo@ufmg.br>
-Description: Modular implementation of the Differential Evolution algorithm for
+Package:      ExpDE
+Type:         Package
+Title:        Modular Differential Evolution for Experimenting with Operators
+Version:      0.1.2.9007
+Depends:      R (>= 3.2.0)
+Imports:      assertthat (>= 0.1)
+Date:         2016-04-09
+Url:          http://github.com/fcampelo/ExpDE
+Authors@R:    c(
+                person("Felipe", "Campelo", email = "fcampelo@ufmg.br", 
+                       role = c("aut", "cre")),
+                person("Moises", "Botelho", email = "moisesbotelho@ufmg.br", 
+                       role = "aut"))
+Maintainer:   Felipe Campelo <fcampelo@ufmg.br>
+Description:  Modular implementation of the Differential Evolution algorithm for
     experimenting with different types of operators.
-License: GPL-2
-RoxygenNote: 5.0.1
+License:      GPL-2
+RoxygenNote:  5.0.1

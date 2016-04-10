@@ -1,10 +1,11 @@
 ---
 title: "TODO"
 author: "Felipe Campelo"
-date: "March 22, 2016"
+date: "April 9 2016"
 output: html_document
 ---
 
+- check error message for is_within() (see, for instance, recombination\_onepoint)  
 - Add flag _record.everything_ to _ExpDE()_ (to return the whole history of the 
 optimization, incl. intermediate populations)
 - Consider expressing candidate solutions as lists (useful to encapsulate 

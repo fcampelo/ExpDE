@@ -12,6 +12,14 @@
 #' @export
 evaluate_population <- function (probpars, Pop){
   
+  # ========== Error catching and default value definitions
+  assertthat::assert_that(is.matrix(Pop), is.numeric(Pop),
+                          all(assertthat::has_name(probpars, c("name", 
+                                                               "xmin", 
+                                                               "xmax"))),
+                          all(probpars$xmin < probpars$xmax))
+  # ========== 
+  
   # Denormalize population
   Pop <- denormalize_population(probpars, Pop)
   
