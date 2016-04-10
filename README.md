@@ -36,11 +36,9 @@ variants.
 ### Recombination
 - Arithmetic (*recombination_arith*)
 - Binomial (*recombination_bin*)
-- BLX-&alpha; (*recombination_blxAlpha*)
-- BLX-&alpha;-&beta; (*recombination_blxAlphaBeta*)
+- BLX-&alpha;-&beta; (*recombination_blxAlphaBeta* - includes special cases *blxAlpha* and *Flat*)
 - Eigenvector-based (*recombination_eigen*)
 - Exponential (*recombination_exp*)
-- Flat (*recombination_flat*)
 - Geometric (*recombination_geo*)
 - Linear BGA (*recombination_lbga*)
 - Linear (*recombination_linear*)
