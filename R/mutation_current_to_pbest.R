@@ -46,7 +46,7 @@ mutation_current_to_pbest <- function(X, mutpars){
                           assertthat::has_name(mutpars, "f"),
                           is.numeric(mutpars$f),
                           is.numeric(mutpars$p), 
-                          mutpars$p > 0, mutpars$p < nrow(X))
+                          is_within(mutpars$p, 0, nrow(X), strict = TRUE))
   
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)

@@ -32,8 +32,7 @@ recombination_exp <- function(X, M, recpars) {
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
                           assertthat::has_name(recpars, "cr"),
-                          is.numeric(recpars$cr),
-                          0 < recpars$cr, recpars$cr <= 1)
+                          is_within(recpars$cr, 0, 1))
   # ==========
   
   # Start points for mutation: for each row, a value between 1 and length(x),
