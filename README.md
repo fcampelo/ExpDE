@@ -24,41 +24,41 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 ## Available Operators
 
 ### Differential mutation
-- Best (*mutation_best*)
-- Current-to-pbest (*mutation_current_to_pbest*)
-- Mean (*mutation_mean*)
-- Rand (*mutation_rand*)
-- Weighted global intermediate (*mutation_wgi*)
+- Best (`mutation_best`)
+- Current-to-pbest (`mutation_current_to_pbest` - includes special case `current-to-best`)
+- Mean (`mutation_mean`)
+- Rand (`mutation_rand`)
+- Weighted global intermediate (`mutation_wgi`)
 
-It is also possible to run the algorithm without using any differential mutation operator (*mutation_none*). Run `mutation_operators()` for a list of available 
+It is also possible to run the algorithm without using any differential mutation operator (`mutation_none`). Run `mutation_operators()` for a list of available 
 variants.
 
 ### Recombination
-- Arithmetic (*recombination_arith*)
-- Binomial (*recombination_bin*)
-- BLX-&alpha;-&beta; (*recombination_blxAlphaBeta* - includes special cases *blxAlpha* and *Flat*)
-- Eigenvector-based (*recombination_eigen*)
-- Exponential (*recombination_exp*)
-- Geometric (*recombination_geo*)
-- Linear BGA (*recombination_lbga*)
-- Linear (*recombination_linear*)
-- M-max (*recombination_mmax*)
-- N-point (*recombination_npoint*)
-- One-point (*recombination_onepoint*)
-- pbest (*recombination_pbest*)
-- SBX (*recombination_sbx*)
-- Wright (*recombination_wright*)   
+- Arithmetic (`recombination_arith`)
+- Binomial (`recombination_bin`)
+- BLX-&alpha;-&beta; (`recombination_blxAlphaBeta` - includes special cases `blxAlpha` and `Flat`)
+- Eigenvector-based (`recombination_eigen`)
+- Exponential (`recombination_exp`)
+- Geometric (`recombination_geo`)
+- Linear BGA (`recombination_lbga`)
+- Linear (`recombination_linear`)
+- M-max (`recombination_mmax`)
+- N-point (`recombination_npoint`)
+- One-point (`recombination_onepoint`)
+- pbest (`recombination_pbest`)
+- SBX (`recombination_sbx`)
+- Wright (`recombination_wright`)   
 
-It is also possible to run the algorithm without using any recombination operator (*recombination_none*). Run `recombination_operators()` for a list of available 
+It is also possible to run the algorithm without using any recombination operator (`recombination_none`). Run `recombination_operators()` for a list of available 
 variants.
 
 ### Selection
-- Standard DE (*selection_standard*)
+- Standard DE (`selection_standard`)
 
 
 ### Stop criteria
-- Maximum number of iterations (*stop_maxiter*)
-- Maximum number of function evaluations (*stop_maxeval*)
+- Maximum number of iterations (`stop_maxiter`)
+- Maximum number of function evaluations (`stop_maxeval`)
 
 ## Example: DE/best/1/sbx on the shifted sphere problem for N = 10
 ```R

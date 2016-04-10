@@ -10,11 +10,9 @@
 recombination_operators <- function(){
   c("arith", 
   "bin",
-  "blxAlpha",
   "blxAlphaBeta",
   "eigen",
   "exp",
-  "flat",
   "geo",
   "lbga",
   "linear",

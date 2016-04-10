@@ -2,6 +2,13 @@
 #' 
 #' Implements the "/current-to-pbest" mutation for the ExpDE framework
 #' 
+#' This routine also implements one special case: 
+#' \itemize{
+#'  \item current-to-best mutation (\code{current_to_best}), by setting 
+#'    \code{mutpars$p = 1}); 
+#'  \item Flat recombination (\code{flat}), by setting 
+#'    \code{recpars$alpha = recpars$beta = 0})
+#' }
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
 #' mutation. \code{mutation_current_to_pbest()} understands the following fields in 
@@ -51,7 +58,9 @@ mutation_current_to_pbest <- function(X, mutpars){
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
 
-  if (mutpars$p > 0 && mutpars$p < 1) mutpars$p <- ceiling(mutpars$p * nrow(X))
+  if (is_within(mutpars$p, 0, 1, strict = TRUE)){
+    mutpars$p <- ceiling(mutpars$p * nrow(X))
+  }
   # ==========
   
   # Indices to the p-best vectors

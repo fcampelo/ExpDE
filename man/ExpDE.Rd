@@ -60,7 +60,8 @@ current version accepts the following options:
    \item \code{\link{mutation_rand}}
    \item \code{\link{mutation_mean}}
    \item \code{\link{mutation_none}}
-   \item \code{\link{mutation_current_to_pbest}}
+   \item \code{\link{mutation_current_to_pbest}} (incl. special case
+         \code{current-to-best})
    \item \code{\link{mutation_wgi}}
    
 }
@@ -83,7 +84,8 @@ options:
 \itemize{
    \item \code{\link{recombination_arith}}   
    \item \code{\link{recombination_bin}}
-   \item \code{\link{recombination_blxAlphaBeta}}
+   \item \code{\link{recombination_blxAlphaBeta}} (incl. special cases 
+         \code{blxAlpha} and \code{flat})
    \item \code{\link{recombination_eigen}}
    \item \code{\link{recombination_exp}}
    \item \code{\link{recombination_geo}}

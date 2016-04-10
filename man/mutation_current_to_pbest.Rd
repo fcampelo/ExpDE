@@ -17,6 +17,15 @@ Matrix \code{M} containing the mutated population
 \description{
 Implements the "/current-to-pbest" mutation for the ExpDE framework
 }
+\details{
+This routine also implements one special case: 
+\itemize{
+ \item current-to-best mutation (\code{current_to_best}), by setting 
+   \code{mutpars$p = 1}); 
+ \item Flat recombination (\code{flat}), by setting 
+   \code{recpars$alpha = recpars$beta = 0})
+}
+}
 \section{Mutation Parameters}{
 
 The \code{mutpars} parameter contains all parameters required to define the 
