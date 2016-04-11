@@ -1,5 +1,6 @@
 # ExpDE
 [![Build Status](https://travis-ci.org/fcampelo/ExpDE.png?branch=master)](https://travis-ci.org/fcampelo/ExpDE) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ExpDE)](http://cran.r-project.org/package=ExpDE)
+[![CRAN Downloads](http://cranlogs.r-pkg.org/badges/ExpDE)](http://cran.rstudio.com/web/packages/ExpDE/index.html)
 
 ExpDE is a modular implementation of the Differential Evolution metaheuristic, which aims at providing a platform for the experimental investigation of the effect of different recombination / mutation / selection operators.
 
