@@ -5,6 +5,8 @@ date: "April 9 2016"
 output: html_document
 ---
 
+- add standard alpha and beta values to BLX-alpha-beta
+- Document new mutation operators (like in the paper)
 - check error message for is_within() (see, for instance, recombination\_onepoint)  
 - Add flag _record.everything_ to _ExpDE()_ (to return the whole history of the 
 optimization, incl. intermediate populations)
