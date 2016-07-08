@@ -29,7 +29,7 @@ evaluate_population <- function (probpars, Pop){
   input_args <- names(formals(get(probpars$name)))
   if("x" %in% input_args){
     myargs$x <- Pop
-  } else if ("x" %in% input_args){
+  } else if ("X" %in% input_args){
     myargs$X <- Pop
   } else if ("Pop" %in% input_args){
     myargs$Pop <- Pop
