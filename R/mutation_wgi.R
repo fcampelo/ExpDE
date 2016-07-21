@@ -10,7 +10,7 @@
 #' mutation. \code{mutation_wgi()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
-#'    \item \code{f} : scaling factor for difference vector(s).\cr
+#'    \item \code{phi} : scaling factor for difference vector(s).\cr
 #'    Accepts numeric vectors of size 1 or \code{nvecs}.
 #'    \item \code{nvecs} : number of difference vectors to use.\cr 
 #'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
@@ -32,7 +32,7 @@
 #' @export
 
 mutation_wgi <- function(X, mutpars){
-
+  
   # ========== Error catching and default value definitions
   
   # Get access to variables in the calling environment
@@ -43,11 +43,11 @@ mutation_wgi <- function(X, mutpars){
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           assertthat::is.count(mutpars$nvecs),
                           mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f))
-
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
+                          assertthat::has_name(mutpars, "phi"),
+                          is.numeric(mutpars$phi))
+  
+  if (length(mutpars$phi) == 1) mutpars$phi <- rep(mutpars$phi, 
+                                                   mutpars$nvecs)
   # ==========
   
   # Set weights
@@ -65,17 +65,17 @@ mutation_wgi <- function(X, mutpars){
               FUN     = sample.int,
               size    = 2 * mutpars$nvecs,
               replace = FALSE)
-
-    
+  
+  
   # Auxiliary function: make a single mutation
-  wgimut <- function(pos, Pop, x.basis, f){
+  wgimut <- function(pos, Pop, x.basis, phi){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
     if (nrow(diffs) == 1) {
-      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
+      wdiffsum <- phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
-      wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
+      wdiffsum <- colSums(phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
     return(x.basis + wdiffsum)
   }
@@ -85,7 +85,7 @@ mutation_wgi <- function(X, mutpars){
               FUN     = wgimut, 
               Pop     = X, 
               x.basis = x.basis,
-              f       = mutpars$f)
+              phi     = mutpars$phi)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

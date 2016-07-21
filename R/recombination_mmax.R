@@ -13,12 +13,12 @@
 #' recombination. \code{recombination_pbest()} understands the following 
 #' fields in \code{recpars}:
 #' \itemize{
-#'    \item \code{lambda} : Recombination multiplier.\cr
-#'                          Optional. Defaults to \code{NULL}
-#'                          Accepts numeric value \code{0 < lambda < 1} or 
-#'                          \code{NULL} (in which case a random value is 
-#'                          independently used for each variable of each 
-#'                          recombination pair).
+#'    \item \code{rho} : Recombination multiplier.\cr
+#'                       Optional. Defaults to \code{NULL}
+#'                       Accepts numeric value \code{0 < rho < 1} or 
+#'                       \code{NULL} (in which case a random value is 
+#'                       independently used for each variable of each 
+#'                       recombination pair).
 #'}
 #' 
 #' @section References:
@@ -38,7 +38,7 @@
 #' 
 #' @export
 
-recombination_mmax <- function(X, M, recpars = list(lambda = NULL)) {
+recombination_mmax <- function(X, M, recpars = list(rho = NULL)) {
   
   # Get access to variables in the calling environment
   env <- parent.frame()
@@ -48,23 +48,23 @@ recombination_mmax <- function(X, M, recpars = list(lambda = NULL)) {
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
-                          is.null(recpars$lambda) || is_within(recpars$lambda, 0, 1),
+                          is.null(recpars$rho) || is_within(recpars$rho, 0, 1),
                           all(assertthat::has_name(env, 
                                                    c("probpars", "nfe"))))
   # ==========
   
-  # Define lambda factors
-  if(is.null(recpars$lambda)) {
-    lambda <- randM(X)
+  # Define rho factors
+  if(is.null(recpars$rho)) {
+    rho <- randM(X)
   } else {
-    lambda <- matrix(recpars$lambda, 
-                     nrow = nrow(X),
-                     ncol = ncol(X))
+    rho <- matrix(recpars$rho, 
+                  nrow = nrow(X),
+                  ncol = ncol(X))
   } 
   
   # Generate trial offspring
-  H1 <- lambda * X + (1 - lambda) * M
-  H2 <- (1 - lambda) * X + lambda * M
+  H1 <- rho * X + (1 - rho) * M
+  H2 <- (1 - rho) * X + rho * M
   H3 <- pmin(X, M)
   H4 <- pmax(X, M)
   
@@ -101,4 +101,4 @@ recombination_mmax <- function(X, M, recpars = list(lambda = NULL)) {
   
   # Return population
   return (Pop.trialx)
-  }
+}

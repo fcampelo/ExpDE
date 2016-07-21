@@ -7,8 +7,8 @@
 #' recombination. \code{recombination_bin()} understands the following fields in 
 #' \code{recpars}:
 #' \itemize{
-#'    \item \code{cr} : component-wise probability of using the value in 
-#'                      \code{M}.\cr
+#'    \item \code{rho} : component-wise probability of using the value in 
+#'                       \code{M}.\cr
 #'                      Accepts numeric value \code{0 < cr <= 1}.
 #'    \item \code{minchange} : logical flag to force each new candidate solution 
 #'                             to inherit at least one component from its 
@@ -37,14 +37,14 @@ recombination_bin <- function(X, M, recpars) {
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "cr"),
-                          is.numeric(recpars$cr),
-                          is_within(recpars$cr, 0, 1),
+                          assertthat::has_name(recpars, "rho"),
+                          is.numeric(recpars$rho),
+                          is_within(recpars$rho, 0, 1),
                           assertthat::is.flag(recpars$minchange))
   # ==========
   
   # Recombination matrix
-  R <- randM(X) < recpars$cr
+  R <- randM(X) < recpars$rho
   
   if (recpars$minchange){
     indx    <- which(rowSums(R) == 0)
@@ -52,9 +52,9 @@ recombination_bin <- function(X, M, recpars) {
                      sample.int(n       = ncol(X),
                                 size    = length(indx), 
                                 replace = TRUE))
-    R[cor.mat[,1],cor.mat[,2]] <- TRUE
+    R[cor.mat[, 1], cor.mat[, 2]] <- TRUE
   }
   
   # Return recombined population
-  return(R*M + (1 - R)*X)
+  return(R * M + (1 - R) * X)
 }

@@ -32,7 +32,7 @@ The \code{mutpars} parameter contains all parameters required to define the
 mutation. \code{mutation_current_to_pbest()} understands the following fields in 
 \code{mutpars}:
 \itemize{
-   \item \code{f} : scaling factor for difference vector(s).\cr
+   \item \code{phi} : scaling factor for difference vector(s).\cr
    Accepts numeric vectors of size 1 or \code{nvecs}.
    \item \code{p} : either the number of "best" vectors to use (if given as a 
    positive integer) or the proportion of the population to use as "best"

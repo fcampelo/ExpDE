@@ -7,7 +7,7 @@
 #' mutation. \code{mutation_best()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
-#'    \item \code{f} : scaling factor for difference vector(s).\cr
+#'    \item \code{phi} : scaling factor for difference vector(s).\cr
 #'    Accepts numeric vectors of size 1 or \code{nvecs}.
 #'    \item \code{nvecs} : number of difference vectors to use.\cr 
 #'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
@@ -33,7 +33,7 @@
 #' @export
 
 mutation_best <- function(X, mutpars){
-
+  
   # Get access to variables in the calling environment
   env <- parent.frame()
   
@@ -43,11 +43,11 @@ mutation_best <- function(X, mutpars){
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           assertthat::is.count(mutpars$nvecs),
                           mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f))
+                          assertthat::has_name(mutpars, "phi"),
+                          is.numeric(mutpars$phi))
   
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
+  if (length(mutpars$phi) == 1) mutpars$phi <- rep(mutpars$phi, 
+                                                   mutpars$nvecs)
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
@@ -56,33 +56,33 @@ mutation_best <- function(X, mutpars){
               FUN     = sample.int,
               size    = 2 * mutpars$nvecs,
               replace = FALSE)
-
-    
+  
+  
   # Auxiliary function: make a single mutation
-  bestmut <- function(pos, Pop, f, x.best){
+  bestmut <- function(pos, Pop, phi, x.best){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
     if (nrow(diffs) == 1) {
-      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
+      wdiffsum <- phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
-      wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
+      wdiffsum <- colSums(phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
     return(x.best + wdiffsum)
   }
   #individual best
   x.best <- X[env$J == min(env$J), ]
-
+  
   #use only one base vector if there is more than one "best"
   if(is.matrix(x.best)){
     x.best <- x.best[sample.int(nrow(x.best), size = 1), ]
   }
-
+  
   # Apply mutation
   M <- lapply(R, 
               FUN    = bestmut, 
               Pop    = X, 
-              f      = mutpars$f,
+              phi    = mutpars$phi,
               x.best = x.best)
   
   return(matrix(data  = unlist(M), 

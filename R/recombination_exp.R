@@ -7,9 +7,9 @@
 #' recombination. \code{recombination_exp()} understands the following 
 #' fields in \code{recpars}:
 #' \itemize{
-#'    \item \code{cr} : component-wise probability of selection as a cut-point.
+#'    \item \code{rho} : component-wise probability of selection as a cut-point.
 #'    \cr
-#'    Accepts numeric value \code{0 < cr <= 1}.
+#'    Accepts numeric value \code{0 < rho <= 1}.
 #' }
 #' 
 #' @section References:
@@ -31,8 +31,8 @@ recombination_exp <- function(X, M, recpars) {
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "cr"),
-                          is_within(recpars$cr, 0, 1))
+                          assertthat::has_name(recpars, "rho"),
+                          is_within(recpars$rho, 0, 1))
   # ==========
   
   # Start points for mutation: for each row, a value between 1 and length(x),
@@ -43,20 +43,20 @@ recombination_exp <- function(X, M, recpars) {
   
   # End points for mutation: for each row, a value between mut.start and 
   # (mut.start + length(x) - 1), exponentially distributed
-  probs <- recpars$cr^(1:ncol(X) - 1) - recpars$cr^(1:ncol(X))
-  mut.end    <- mut.start + sample(x    = 1:ncol(X) - 1,
-                                   size = nrow(X),
-                                   replace = TRUE,
-                                   prob = probs / sum(probs))
+  probs   <- recpars$rho ^ (1:ncol(X) - 1) - recpars$rho ^ (1:ncol(X))
+  mut.end <- mut.start + sample(x       = 1:ncol(X) - 1,
+                                size    = nrow(X),
+                                replace = TRUE,
+                                prob    = probs / sum(probs))
   
   # Helper function for setting mutation indices: 
   # for each row wrap around the end of the vector, 
   # e.g., if n = 5, s = 3 and e = 6, returns z = [1, 0, 1, 1, 1] (pos 3,4,5,1)
   # e.g., if n = 5, s = 1 and e = 1, returns z = [1, 0, 0, 0, 0] (pos 1)
   setfun <- function(n, s, e) {
-    z<-numeric(n)
+    z <- numeric(n)
     z[(s - 1):(e - 1) %% n + 1] <- 1
-    z
+    return(z)
   }
   
   # Recombination matrix - using mapply() to apply over multiple indexed objects
@@ -67,5 +67,5 @@ recombination_exp <- function(X, M, recpars) {
                 SIMPLIFY = TRUE))
   
   # Return recombined population
-  return(R*M + (1 - R)*X)
+  return(R * M + (1 - R) * X)
 }

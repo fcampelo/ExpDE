@@ -71,7 +71,7 @@ recombination_blxAlphaBeta <- function(X, M, recpars) {
   # Get best parent indicator matrix
   X.is.best <- matrix(rep(f.X <= f.M,
                           times = ncol(X)),
-                      ncol = ncol(X),
+                      ncol  = ncol(X),
                       byrow = FALSE)
   
   # Get infimum and supremum values, and interval lengths

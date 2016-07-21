@@ -14,7 +14,7 @@
 #' mutation. \code{mutation_current_to_pbest()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
-#'    \item \code{f} : scaling factor for difference vector(s).\cr
+#'    \item \code{phi} : scaling factor for difference vector(s).\cr
 #'    Accepts numeric vectors of size 1 or \code{nvecs}.
 #'    \item \code{p} : either the number of "best" vectors to use (if given as a 
 #'    positive integer) or the proportion of the population to use as "best"
@@ -41,7 +41,7 @@
 #' @export
 
 mutation_current_to_pbest <- function(X, mutpars){
-
+  
   # Get access to variables in the calling environment
   env <- parent.frame()
   
@@ -50,14 +50,14 @@ mutation_current_to_pbest <- function(X, mutpars){
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   
   assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f),
+                          assertthat::has_name(mutpars, "phi"),
+                          is.numeric(mutpars$phi),
                           is.numeric(mutpars$p), 
                           is_within(mutpars$p, 0, nrow(X), strict = TRUE))
   
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
-
+  if (length(mutpars$phi) == 1) mutpars$phi <- rep(mutpars$phi, 
+                                                   mutpars$nvecs)
+  
   if (is_within(mutpars$p, 0, 1, strict = TRUE)){
     mutpars$p <- ceiling(mutpars$p * nrow(X))
   }
@@ -74,22 +74,22 @@ mutation_current_to_pbest <- function(X, mutpars){
               i       = 1:nrow(X),
               MoreArgs = list(ibest),
               SIMPLIFY = FALSE)
-
-    
+  
+  
   # Auxiliary function: make a single mutation
-  pbestmut <- function(pos, Pop, f){
+  pbestmut <- function(pos, Pop, phi){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
     return(Pop[pos[2], ] + 
-             colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])))
+             colSums(phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])))
   }
-
+  
   # Apply mutation
   M <- lapply(R, 
               FUN    = pbestmut, 
               Pop    = X, 
-              f      = mutpars$f)
+              phi    = mutpars$phi)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

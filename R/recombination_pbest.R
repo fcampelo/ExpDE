@@ -7,9 +7,9 @@
 #' recombination. \code{recombination_pbest()} understands the following 
 #' fields in \code{recpars}:
 #' \itemize{
-#'    \item \code{cr} : component-wise probability of using the value in 
+#'    \item \code{rho} : component-wise probability of using the value in 
 #'                      \code{M}.\cr
-#'                      Accepts numeric value \code{0 < cr <= 1}.
+#'                      Accepts numeric value \code{0 < rho <= 1}.
 #'}
 #'
 #' @section Warning:
@@ -43,8 +43,8 @@ recombination_pbest <- function(X, M, recpars) {
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "cr"),
-                          is_within(recpars$cr, 0, 1),
+                          assertthat::has_name(recpars, "rho"),
+                          is_within(recpars$rho, 0, 1),
                           all(assertthat::has_name(env, 
                                                    c("t", "stopcrit", "J"))),
                           assertthat::has_name(env$stopcrit, "maxiter"))

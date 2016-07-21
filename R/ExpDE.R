@@ -29,7 +29,7 @@
 #' \code{mutpars} receives a list object with name field \code{mutpars$name} 
 #' (containing the name of the function to be called, e.g., 
 #' \code{name = "mutation_rand"}) as well as whatever parameters that function 
-#' may require/accept (e.g., \code{mutpars$f = 0.7}, \code{mutpars$nvecs = 2}, 
+#' may require/accept (e.g., \code{mutpars$phi = 0.7}, \code{mutpars$nvecs = 2}, 
 #' etc.). See the specific documentation of each function for details. 
 #' 
 #' Some examples are provided in the \code{Examples} section below.
@@ -61,7 +61,7 @@
 #' \code{recpars} receives a list object with name field \code{recpars$name} 
 #' (containing the name of the function to be called, e.g., 
 #' \code{name = "recombination_bin"}) as well as whatever parameters that 
-#' function may require/accept (e.g., \code{recpars$cr = 0.8}, 
+#' function may require/accept (e.g., \code{recpars$rho = 0.8}, 
 #' \code{recpars$minchange = TRUE}, etc.). See the specific documentation of 
 #' each function for details. 
 #' 
@@ -83,9 +83,9 @@
 #' 
 #' \itemize{
 #'    \item \code{"stop_maxiter"} (requires additional field 
-#'      \code{stopcrit$maxiter = ?} with the maximum number of iterations).
+#'      \code{stopcrit$maxiter} with the maximum number of iterations).
 #'    \item \code{"stop_maxeval"} (requires additional field 
-#'      \code{stopcrit$maxevals = ?} with the maximum number of function calls).
+#'      \code{stopcrit$maxevals} with the maximum number of function calls).
 #'  }
 #'  
 #'  See \code{\link{check_stop_criteria}} for details.
@@ -157,14 +157,14 @@
 #'         (\email{moisesufop@@gmail.com})
 #'
 #' @examples
-#' # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
+#' # Basic DE/rand/1/bin with population 100, F = 0.8 and CR = 0.5
 #' popsize  <- 100
-#' mutpars  <- list(name = "mutation_rand", f = 0.8)
-#' recpars  <- list(name = "recombination_bin", cr = 0.5, minchange = TRUE)
-#' selpars  <- list(name = "selection_standard")
+#' mutpars  <- list(name  = "mutation_rand", phi = 0.8)
+#' recpars  <- list(name  = "recombination_bin", rho = 0.5, minchange = TRUE)
+#' selpars  <- list(name  = "selection_standard")
 #' stopcrit <- list(names = "stop_maxiter", maxiter = 100)
 #' probpars <- list(name  = "sphere",
-#'                 xmin = rep(-5.12,10), xmax = rep(5.12,10))
+#'                  xmin  = rep(-5.12,10), xmax = rep(5.12,10))
 #' seed <- NULL
 #' showpars <- list(show.iters = "numbers", showevery = 1)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
@@ -172,18 +172,18 @@
 #'
 #' # DE/wgi/1/blxAlpha
 #' recpars  <- list(name = "recombination_blxAlphaBeta", alpha = 0.1, beta = 0.1)
-#' mutpars  <- list(name = "mutation_wgi", f = 0.8)
+#' mutpars  <- list(name = "mutation_wgi", phi = 0.8)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
 #' # DE/best/1/sbx
-#' recpars  <- list(name = "recombination_sbx", eta = 10)
-#' mutpars  <- list(name = "mutation_best", f = 0.6, nvecs = 1)
+#' recpars  <- list(name = "recombination_sbx", phi = 10)
+#' mutpars  <- list(name = "mutation_best", phi = 0.6, nvecs = 1)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #'
 #' # DE/best/1/eigen/bin
 #' recpars  <- list(name = "recombination_eigen", 
 #'                  othername = "recombination_bin", 
-#'                  cr = 0.5, minchange = TRUE)
+#'                  rho = 0.5, minchange = TRUE)
 #' showpars <- list(show.iters = "dots", showevery = 10)
 #' stopcrit <- list(names = "stop_maxeval", maxevals = 10000)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed = 1234)
@@ -197,9 +197,9 @@
 
 ExpDE <- function(popsize,
                   mutpars  = list(name  = "mutation_rand",
-                                  f     = 0.2),
+                                  phi   = 0.2),
                   recpars  = list(name  = "recombination_bin",
-                                  cr    = 0.8, 
+                                  rho   = 0.8, 
                                   nvecs = 1),
                   selpars  = list(name  = "standard"),
                   stopcrit,

@@ -26,9 +26,9 @@ recombination_arith <- function(X, M, ...) {
   
   lambda <- matrix(rep(stats::runif(nrow(X)),
                        ncol(X)),
-                   ncol = ncol(X),
+                   ncol  = ncol(X),
                    byrow = FALSE)
   
   # Return recombined population
-  return(X*lambda + M*(1 - lambda))
+  return(X * lambda + M * (1 - lambda))
 }

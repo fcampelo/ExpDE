@@ -8,8 +8,8 @@
 #' recombination. \code{recombination_sbx()} understands the following field in 
 #' \code{recpars}:
 #' \itemize{
-#'    \item \code{eta} : spread factor.\cr
-#'    Accepts numeric value \code{eta > 0}.
+#'    \item \code{phi} : spread factor.\cr
+#'    Accepts numeric value \code{phi > 0}.
 #'  }
 #'    
 #'
@@ -37,15 +37,15 @@ recombination_sbx <- function(X, M, recpars) {
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "eta"),
-                          is.numeric(recpars$eta),
-                          recpars$eta > 0)
+                          assertthat::has_name(recpars, "phi"),
+                          is.numeric(recpars$phi),
+                          recpars$phi > 0)
   # ==========
   R <- randM(X)
   S <- R <= 0.5
 
   #Define beta parameters
-  mexp <- (1 / (recpars$eta + 1))
+  mexp <- (1 / (recpars$phi + 1))
   beta <- S * ((2 * R) ^ mexp) + (!S) * ((2 * (1 - R)) ^ mexp)
   
   # Return recombined population
