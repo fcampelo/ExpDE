@@ -145,7 +145,7 @@ this parameter:
 
 \itemize{
    \item \code{probpars$name}, the name of the function that represents the 
-   problem to be solved.
+     problem to be solved.
    \item \code{probpars$xmin}, a vector containing the lower bounds of all 
      optimization variables (i.e., a vector of length M, where M is the 
      dimension of the problem).
@@ -153,17 +153,9 @@ this parameter:
      optimization variables.
 }
 
-This list can also contain the following optional arguments
-\itemize{
-   \item \code{probpars$matrixEval}, indicates what kind of input is expected 
-   by the function provided in \code{probpars$name}. Valid entries are 
-   \code{"vector"}, \code{"colMatrix"} and \code{"rowMatrix"}. 
-   Defaults to \code{probpars$matrixEval = "rowMatrix"}
-}
-
-\strong{Important}: the objective function routine must receive either a 
-vector or a matrix of vectors to be evaluated in the form of an input 
-parameter named either "x" or "X" or "Pop" (any one of the three is allowed).
+\strong{Important}: the objective function routine must receive a matrix of 
+row vectors to be evaluated in the form of an input parameter named either 
+"x" or "X" or "Pop" (any one of the three is allowed).
 }
 
 \section{Random Seed}{
