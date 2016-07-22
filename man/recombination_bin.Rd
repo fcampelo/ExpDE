@@ -26,8 +26,8 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_bin()} understands the following fields in 
 \code{recpars}:
 \itemize{
-   \item \code{rho} : component-wise probability of using the value in 
-                      \code{M}.\cr
+   \item \code{cr} : component-wise probability of using the value in 
+                     \code{M}.\cr
                      Accepts numeric value \code{0 < cr <= 1}.
    \item \code{minchange} : logical flag to force each new candidate solution 
                             to inherit at least one component from its 

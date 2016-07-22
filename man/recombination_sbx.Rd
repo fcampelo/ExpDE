@@ -27,8 +27,8 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_sbx()} understands the following field in 
 \code{recpars}:
 \itemize{
-   \item \code{phi} : spread factor.\cr
-   Accepts numeric value \code{phi > 0}.
+   \item \code{eta} : spread factor.\cr
+   Accepts numeric value \code{eta > 0}.
  }
 }
 

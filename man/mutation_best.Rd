@@ -23,7 +23,7 @@ The \code{mutpars} parameter contains all parameters required to define the
 mutation. \code{mutation_best()} understands the following fields in 
 \code{mutpars}:
 \itemize{
-   \item \code{phi} : scaling factor for difference vector(s).\cr
+   \item \code{f} : scaling factor for difference vector(s).\cr
    Accepts numeric vectors of size 1 or \code{nvecs}.
    \item \code{nvecs} : number of difference vectors to use.\cr 
        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr

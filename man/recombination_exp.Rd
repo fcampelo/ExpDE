@@ -26,9 +26,9 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_exp()} understands the following 
 fields in \code{recpars}:
 \itemize{
-   \item \code{rho} : component-wise probability of selection as a cut-point.
+   \item \code{cr} : component-wise probability of selection as a cut-point.
    \cr
-   Accepts numeric value \code{0 < rho <= 1}.
+   Accepts numeric value \code{0 < cr <= 1}.
 }
 }
 

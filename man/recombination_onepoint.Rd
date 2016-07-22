@@ -4,7 +4,7 @@
 \alias{recombination_onepoint}
 \title{One-point recombination for DE}
 \usage{
-recombination_onepoint(X, M, recpars = list(k = NULL))
+recombination_onepoint(X, M, recpars = list(K = NULL))
 }
 \arguments{
 \item{X}{population matrix (original)}
@@ -26,9 +26,9 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_onepoint()} understands the following 
 fields in \code{recpars}:
 \itemize{
-   \item \code{k} : cut point for crossover.\cr
-   Accepts integer value \code{0 <= k < n}, where \code{n} is the 
-   dimension of the problem; Use \code{k = 0} or \code{k = NULL} for randomly 
+   \item \code{K} : cut point for crossover.\cr
+   Accepts integer value \code{0 <= K < n}, where \code{n} is the 
+   dimension of the problem; Use \code{K = 0} or \code{K = NULL} for randomly 
    choosing a position for each pair of points.\cr
    Defaults to \code{NULL}.
 }

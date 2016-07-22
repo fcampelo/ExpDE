@@ -4,7 +4,7 @@
 \alias{recombination_npoint}
 \title{n-point recombination for DE}
 \usage{
-recombination_npoint(X, M, recpars = list(k = NULL))
+recombination_npoint(X, M, recpars = list(N = NULL))
 }
 \arguments{
 \item{X}{population matrix (original)}
@@ -27,9 +27,9 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_npoint()} understands the following 
 fields in \code{recpars}:
 \itemize{
-   \item \code{k} : number of cut points for crossover.\cr
-   Accepts integer value \code{0 <= k < n}, where \code{n} is the 
-   dimension of the problem; Use \code{k = 0} or \code{k = NULL} for randomly 
+   \item \code{N} : cut number points for crossover.\cr
+   Accepts integer value \code{0 <= N < n}, where \code{n} is the 
+   dimension of the problem; Use \code{N = 0} or \code{N = NULL} for randomly 
    choosing a number of cut points.\cr
    Defaults to \code{NULL}.
 }

@@ -8,9 +8,9 @@
 #' recombination. \code{recombination_npoint()} understands the following 
 #' fields in \code{recpars}:
 #' \itemize{
-#'    \item \code{k} : number of cut points for crossover.\cr
-#'    Accepts integer value \code{0 <= k < n}, where \code{n} is the 
-#'    dimension of the problem; Use \code{k = 0} or \code{k = NULL} for randomly 
+#'    \item \code{N} : cut number points for crossover.\cr
+#'    Accepts integer value \code{0 <= N < n}, where \code{n} is the 
+#'    dimension of the problem; Use \code{N = 0} or \code{N = NULL} for randomly 
 #'    choosing a number of cut points.\cr
 #'    Defaults to \code{NULL}.
 #'}
@@ -29,30 +29,29 @@
 #' 
 #' @export
 
-recombination_npoint <- function(X, M, recpars = list(k = NULL)) {
+recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
   
   # ========== Error catching and default value definitions
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           is.matrix(M), is.numeric(M),
                           assertthat::are_equal(dim(X), dim(M)),
-                          is.null(recpars$k) || 
-                            (assertthat::is.count(recpars$k) && 
-                               is_within(recpars$k, 0, ncol(X) - 1)))
+                          is.null(recpars$N) || 
+                            (assertthat::is.count(recpars$N) && is_within(recpars$N, 0, ncol(X) - 1)))
   # ========== 
   
   # Define the number of cut points for each recombination pair.
-  if (is.null(recpars$k) || recpars$k == 0) {
-    recpars$k <- sample.int(n       = ncol(X) - 1, 
+  if (is.null(recpars$N) || recpars$N == 0) {
+    recpars$N <- sample.int(n       = ncol(X) - 1, 
                             size    = nrow(X),
                             replace = TRUE)  
   } else {
-    recpars$k <- rep(x = recpars$k, 
+    recpars$N <- rep(x = recpars$N, 
                      times = nrow(X))
   }
   
   
   # Generate random cut points
-  cutlist <-  lapply(recpars$k, 
+  cutlist <-  lapply(recpars$N, 
                      FUN = function(x,n){
                        sort(sample.int(n       = n,
                                        size    = x,
@@ -73,8 +72,8 @@ recombination_npoint <- function(X, M, recpars = list(k = NULL)) {
   }
   
   # Assemble recombination matrix
-  R <- t(vapply(X         = cutlist,
-                FUN       = makemask,
+  R <- t(vapply(X   = cutlist,
+                FUN = makemask,
                 FUN.VALUE = logical(ncol(X)),
                 x = X))
   

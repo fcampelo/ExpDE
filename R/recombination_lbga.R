@@ -49,7 +49,7 @@ recombination_lbga <- function(X, M, ...) {
   # Get best parent indicator matrix
   X.is.best <- matrix(rep(f.X <= f.M,
                           times = ncol(X)),
-                      ncol  = ncol(X),
+                      ncol = ncol(X),
                       byrow = FALSE)
   
   
@@ -59,22 +59,22 @@ recombination_lbga <- function(X, M, ...) {
   
   # Set recombination parameters.
   eps <- 1e-15
-  Lambda <- (C2 - C1) / matrix(rep(sqrt(rowSums((C1 - C2) ^ 2)) + eps, ncol(X)),
-                               ncol  = ncol(X),
+  Lambda <- (C2 - C1) / matrix(rep(sqrt(rowSums((C1 - C2) ^ 2))+ eps, ncol(X)),
+                               ncol = ncol(X),
                                byrow = FALSE)
   
   
   mr <- matrix(stats::runif(nrow(X) * 16), 
                ncol = 16) <= 1 / 16
   
-  ms <- matrix(rep((2 ^ -(0:15)), 
+  ms <- matrix(rep((2^-(0:15)), 
                    times = nrow(X)), 
                ncol  = 16, 
                byrow = TRUE)
   
   delta <- matrix(rep(rowSums(mr * ms), 
                      times = ncol(X)), 
-                 ncol  = ncol(X),
+                 ncol = ncol(X),
                  byrow = FALSE)
   
   # Return recombined population

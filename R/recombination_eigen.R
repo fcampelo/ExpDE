@@ -42,7 +42,7 @@ recombination_eigen <- function(X, M, recpars) {
   Q <- eigen(stats::cov(X))$vectors
 
   # Project vectors in X and M onto basis Q
-  Xq <- t(sapply(1:(2 * nrow(X)), 
+  Xq <- t(sapply(1:(2*nrow(X)), 
                  FUN = function(i,A,B){t(t(A) %*% B[i, ])}, 
                  A   = Q, 
                  B   = rbind(X, M)))

@@ -4,7 +4,7 @@
 \alias{recombination_mmax}
 \title{Min Max Arithmetical recombination for DE}
 \usage{
-recombination_mmax(X, M, recpars = list(rho = NULL))
+recombination_mmax(X, M, recpars = list(lambda = NULL))
 }
 \arguments{
 \item{X}{population matrix (original)}
@@ -34,12 +34,12 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_pbest()} understands the following 
 fields in \code{recpars}:
 \itemize{
-   \item \code{rho} : Recombination multiplier.\cr
-                      Optional. Defaults to \code{NULL}
-                      Accepts numeric value \code{0 < rho < 1} or 
-                      \code{NULL} (in which case a random value is 
-                      independently used for each variable of each 
-                      recombination pair).
+   \item \code{lambda} : Recombination multiplier.\cr
+                         Optional. Defaults to \code{NULL}
+                         Accepts numeric value \code{0 < lambda < 1} or 
+                         \code{NULL} (in which case a random value is 
+                         independently used for each variable of each 
+                         recombination pair).
 }
 }
 

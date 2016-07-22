@@ -26,8 +26,8 @@ The \code{recpars} parameter contains all parameters required to define the
 recombination. \code{recombination_geo()} understands the following 
 fields in \code{recpars}:
 \itemize{
-   \item \code{rho} : exponent for geometrical recombination.\cr
-   Accepts numeric value \code{0 <= rho <= 1} or \code{NULL} (in which 
+   \item \code{alpha} : exponent for geometrical recombination.\cr
+   Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which 
    case a random value is chosen for each recombination).
 }
 }

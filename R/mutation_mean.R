@@ -7,7 +7,7 @@
 #' mutation. \code{mutation_mean()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
-#'    \item \code{phi} : scaling factor for difference vector(s).\cr
+#'    \item \code{f} : scaling factor for difference vector(s).\cr
 #'    Accepts numeric vectors of size 1 or \code{nvecs}.
 #'    \item \code{nvecs} : number of difference vectors to use.\cr 
 #'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
@@ -34,15 +34,15 @@ mutation_mean <- function(X, mutpars){
   env <- parent.frame()
   
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  
+ 
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           assertthat::is.count(mutpars$nvecs),
                           mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "phi"),
-                          is.numeric(mutpars$phi))
+                          assertthat::has_name(mutpars, "f"),
+                          is.numeric(mutpars$f))
   
-  if (length(mutpars$phi) == 1) mutpars$phi <- rep(mutpars$phi, 
-                                                   mutpars$nvecs)
+  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
+                                               mutpars$nvecs)
   # ==========
   
   # Define basis vector (mean)
@@ -57,14 +57,14 @@ mutation_mean <- function(X, mutpars){
   
   
   # Auxiliary function: make a single mutation
-  wgimut <- function(pos, Pop, x.basis, phi){
+  wgimut <- function(pos, Pop, x.basis, f){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
     if (nrow(diffs) == 1) {
-      wdiffsum <- phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
+      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
-      wdiffsum <- colSums(phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
+      wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
     return(x.basis + wdiffsum)
   }
@@ -74,7 +74,7 @@ mutation_mean <- function(X, mutpars){
               FUN     = wgimut, 
               Pop     = X, 
               x.basis = x.basis,
-              phi     = mutpars$phi)
+              f       = mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

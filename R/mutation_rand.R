@@ -7,7 +7,7 @@
 #' mutation. \code{mutation_rand()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
-#'    \item \code{phi} : scaling factor for difference vector(s).\cr
+#'    \item \code{f} : scaling factor for difference vector(s).\cr
 #'    Accepts numeric vectors of size 1 or \code{nvecs}.
 #'    \item \code{nvecs} : number of difference vectors to use.\cr 
 #'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
@@ -27,18 +27,18 @@
 #' @export
 
 mutation_rand <- function(X, mutpars){
-  
+
   # ========== Error catching and default value definitions
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           assertthat::is.count(mutpars$nvecs),
                           mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "phi"),
-                          is.numeric(mutpars$phi))
+                          assertthat::has_name(mutpars, "f"),
+                          is.numeric(mutpars$f))
   
-  if (length(mutpars$phi) == 1) mutpars$phi <- rep(mutpars$phi, 
-                                                   mutpars$nvecs)
+  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
+                                               mutpars$nvecs)
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
@@ -47,18 +47,18 @@ mutation_rand <- function(X, mutpars){
               FUN     = sample.int,
               size    = 1 + 2 * mutpars$nvecs,
               replace = FALSE)
-  
-  
+
+    
   # Auxiliary function: make a single mutation
-  randmut <- function(pos, Pop, phi){
+  randmut <- function(pos, Pop, f){
     Xr1   <- Pop[pos[1], ]
     diffs <- matrix(pos[-1],
                     ncol  = 2,
                     byrow = TRUE)
     if (nrow(diffs) == 1) {
-      wdiffsum <- phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
+      wdiffsum <- f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])
     } else {
-      wdiffsum <- colSums(phi * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
+      wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
     return(Xr1 + wdiffsum)
   }
@@ -67,7 +67,7 @@ mutation_rand <- function(X, mutpars){
   M <- lapply(R, 
               FUN = randmut, 
               Pop = X, 
-              phi = mutpars$phi)
+              f   = mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 
