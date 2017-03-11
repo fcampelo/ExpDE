@@ -19,4 +19,3 @@ values of each point in the population.
 \description{
 Evaluates the DE population on a given objective function.
 }
-

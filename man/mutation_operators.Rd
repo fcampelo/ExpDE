@@ -12,4 +12,3 @@ Character vector with the names of all mutation operators
 \description{
 List all available mutation operators in the ExpDE package
 }
-

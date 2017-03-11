@@ -36,7 +36,7 @@ mutation. \code{mutation_mean()} understands the following fields in
 K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
 Practical Approach to Global Optimization", Springer 2005
 }
+
 \author{
 Felipe Campelo (\email{fcampelo@ufmg.br})
 }
-

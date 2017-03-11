@@ -54,7 +54,7 @@ J. Zhang, A.C. Sanderson,
 "JADE: Adaptive differential evolution with optional external archive". 
 IEEE Transactions on Evolutionary Computation 13:945-958, 2009
 }
+
 \author{
 Felipe Campelo (\email{fcampelo@ufmg.br})
 }
-

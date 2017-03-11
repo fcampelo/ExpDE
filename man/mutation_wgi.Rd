@@ -37,11 +37,16 @@ mutation. \code{mutation_wgi()} understands the following fields in
 
 \section{References}{
 
-Martin Kreutz, Bernhard Sendhoff, Christian Igel, 
-"EALib: A C++ class library for evolutionary algorithms". 
-Technical Report: http://shark-project.sourceforge.net/2.2.1/doc/EALibManual/EALib.pdf
+D. Arnold,
+"Weighted multirecombination evolution strategies". 
+Theoretical Computer Science 361(1): 18-37, 2006.
+
+T. Glasmachers, C. Igel,
+"Uncertainty handling in model selection for support vector machines". 
+Proc. International Conference on Parallel Problem Solving from Nature 
+(PPSN'08), 185-194, 2008.
 }
+
 \author{
 Felipe Campelo (\email{fcampelo@ufmg.br})
 }
-

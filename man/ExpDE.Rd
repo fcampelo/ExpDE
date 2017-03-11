@@ -187,6 +187,7 @@ fields:
      to \code{1}.
  }
 }
+
 \examples{
 # DE/rand/1/bin with population 40, F = 0.8 and CR = 0.5
 popsize  <- 100
@@ -220,14 +221,13 @@ stopcrit <- list(names = "stop_maxeval", maxevals = 10000)
 ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed = 1234)
 
 }
-\author{
-Felipe Campelo (\email{fcampelo@ufmg.br}) and Moises Botelho 
-        (\email{moisesufop@gmail.com})
-}
 \references{
 F. Campelo, M. Botelho, "Experimental Investigation of Recombination 
 Operators for Differential Evolution", Genetic and Evolutionary 
 Computation Conference, July 20-24, 2016, Denver/CO. 
 DOI: 10.1145/2908812.2908852
 }
-
+\author{
+Felipe Campelo (\email{fcampelo@ufmg.br}) and Moises Botelho 
+        (\email{moisesufop@gmail.com})
+}

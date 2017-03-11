@@ -44,7 +44,7 @@ of population \code{X} (\code{J}) in the parent environment (using
 K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
 Practical Approach to Global Optimization", Springer 2005
 }
+
 \author{
 Felipe Campelo (\email{fcampelo@ufmg.br})
 }
-

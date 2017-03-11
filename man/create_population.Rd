@@ -17,4 +17,3 @@ A matrix containing the population for the ExpDE
 \description{
 Creates a new population for the ExpDE framework
 }
-

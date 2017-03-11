@@ -13,4 +13,3 @@ Character vector with the names of all recombination operator
 \description{
 List all available recombination operators in the ExpDE package
 }
-
