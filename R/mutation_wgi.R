@@ -1,10 +1,13 @@
-#' /best mutation for DE
+#' /wgi mutation for DE
 #' 
-#' Implements the "/best/nvecs" mutation for the ExpDE framework
+#' Implements the "/wgi/nvecs" mutation (weighted global intermediate) for the 
+#' ExpDE framework. This variant is based on a recombination strategy known as
+#' "weighted global intermediate recombination" (see the References section for 
+#' details)
 #' 
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
-#' mutation. \code{mutation_best()} understands the following fields in 
+#' mutation. \code{mutation_wgi()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
 #'    \item \code{f} : scaling factor for difference vector(s).\cr
@@ -14,30 +17,32 @@
 #'        Defaults to 1.
 #' }
 #' 
-#' @section Warning:
-#' This routine will search for the performance vector 
-#' of population \code{X} (\code{J}) in the parent environment (using 
-#' \code{parent.frame()}. This variable must be defined for 
-#' \code{mutation_best()} to work. 
-#' 
 #' @param X population matrix
-#' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
+#' @param mutpars mutation parameters (see \code{Mutation parameters} for 
+#' details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
 #' @author Felipe Campelo (\email{fcampelo@@ufmg.br})
 #' 
 #' @section References:
-#' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
-#' Practical Approach to Global Optimization", Springer 2005
+#' D. Arnold,
+#' "Weighted multirecombination evolution strategies". 
+#' Theoretical Computer Science 361(1): 18-37, 2006.
+#' 
+#' T. Glasmachers, C. Igel,
+#' "Uncertainty handling in model selection for support vector machines". 
+#' Proc. International Conference on Parallel Problem Solving from Nature 
+#' (PPSN'08), 185-194, 2008.
 #' 
 #' @export
 
-mutation_best <- function(X, mutpars){
+mutation_wgi <- function(X, mutpars){
 
+  # ========== Error catching and default value definitions
+  
   # Get access to variables in the calling environment
   env <- parent.frame()
   
-  # ========== Error catching and default value definitions
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   
   assertthat::assert_that(is.matrix(X), is.numeric(X),
@@ -45,21 +50,30 @@ mutation_best <- function(X, mutpars){
                           mutpars$nvecs < (nrow(X)/2 - 2),
                           assertthat::has_name(mutpars, "f"),
                           is.numeric(mutpars$f))
-  
+
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
   # ==========
   
+  # Set weights
+  w <- log(nrow(X) + 1) - log(1:nrow(X))
+  W <- matrix(rep(w / sum(w), times = ncol(X)),
+              nrow  = nrow(X),
+              byrow = FALSE)
+  
+  # Define basis vector (weighted global intermediate)
+  x.basis  <- colSums(X[order(env$J), ] * W)
+  
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- lapply(X       = rep(nrow(X), 
-                            times = nrow(X)),
+  R <- lapply(X = rep(nrow(X), 
+                      times = nrow(X)),
               FUN     = sample.int,
               size    = 2 * mutpars$nvecs,
               replace = FALSE)
 
     
   # Auxiliary function: make a single mutation
-  bestmut <- function(pos, Pop, f, x.best){
+  wgimut <- function(pos, Pop, x.basis, f){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
@@ -68,22 +82,15 @@ mutation_best <- function(X, mutpars){
     } else {
       wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
-    return(x.best + wdiffsum)
+    return(x.basis + wdiffsum)
   }
-  #individual best
-  x.best <- X[env$J == min(env$J), ]
-
-  #use only one base vector if there is more than one "best"
-  if(is.matrix(x.best)){
-    x.best <- x.best[sample.int(nrow(x.best), size = 1), ]
-  }
-
+  
   # Apply mutation
   M <- lapply(R, 
-              FUN    = bestmut, 
-              Pop    = X, 
-              f      = mutpars$f,
-              x.best = x.best)
+              FUN     = wgimut, 
+              Pop     = X, 
+              x.basis = x.basis,
+              f       = mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

@@ -36,12 +36,12 @@ print_progress <- function(){
   if(!any("showevery" == names(pars)))  pars$showevery  <- 1
   if(!any("show.plot" == names(pars)))  pars$show.plot  <- FALSE
   
-  #   tmp <- assert_that(
-  #     is.count(pars$showevery),
-  #     any(pars$show.iters == c("dots", "numbers", "none")),
-  #     length(pars$show.iters) == 1,
-  #     length(pars$showevery) == 1,
-  #     is.flag(pars$show.plot))
+  assertthat::assert_that(
+    assertthat::is.count(pars$showevery),
+    any(pars$show.iters == c("dots", "numbers", "none")),
+    length(pars$show.iters) == 1,
+    length(pars$showevery) == 1,
+    assertthat::is.flag(pars$show.plot))
   # ==========
   
   if (pars$show.iters != "none"){

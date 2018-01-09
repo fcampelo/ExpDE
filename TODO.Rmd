@@ -1,10 +1,13 @@
 ---
 title: "TODO"
 author: "Felipe Campelo"
-date: "March 22, 2016"
+date: "April 9 2016"
 output: html_document
 ---
 
+- add standard alpha and beta values to BLX-alpha-beta
+- Document new mutation operators (like in the paper)
+- check error message for is_within() (see, for instance, recombination\_onepoint)  
 - Add flag _record.everything_ to _ExpDE()_ (to return the whole history of the 
 optimization, incl. intermediate populations)
 - Consider expressing candidate solutions as lists (useful to encapsulate 
@@ -13,3 +16,4 @@ meta-info about each vector in the population).
     e.g., for RCGAs or other extensions)
 - think about using a standard notation for parameters in all recombination 
     operators (is it interesting or will it generate more confusion?)
+- There is a problem in the absence of verification of variables of the function, maxevals and maxiter, if they are numeric. Please look at this. Att, Valmor Ricardi Junior

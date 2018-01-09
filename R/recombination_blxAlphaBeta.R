@@ -3,6 +3,14 @@
 #' Implements the "/blxAlphaBeta" (Blend Alpha Beta) recombination for the ExpDE 
 #' framework
 #' 
+#' This routine also implements two special cases: 
+#' \itemize{
+#'  \item BLX-alpha recombination (\code{blxAlpha}), by setting 
+#'    \code{recpars$alpha = recpars$beta}); 
+#'  \item Flat recombination (\code{flat}), by setting 
+#'    \code{recpars$alpha = recpars$beta = 0})
+#' }
+#' 
 #' @section Recombination Parameters:
 #' The \code{recpars} parameter contains all parameters required to define the 
 #' recombination. \code{recombination_blxAlpha()} understands the following 
@@ -38,31 +46,16 @@ recombination_blxAlphaBeta <- function(X, M, recpars) {
   env <- parent.frame()
 
   # ========== Error catching and default value definitions
-  if (!("alpha" %in% names(recpars))){
-    stop("recombination_blxAlphaBeta() requires field alpha in recpars")
-  }
-  if (!("beta" %in% names(recpars))){
-    stop("recombination_blxAlphaBeta() requires field beta in recpars")
-  }
-  if(!is.numeric(recpars$alpha)){
-    stop("recombination_blxAlphaBeta() requires a numeric recpars$alpha")
-  }
-  if(!is.numeric(recpars$beta)){
-    stop("recombination_blxAlphaBeta() requires a numeric recpars$beta")
-  }
-  if(!(0 <= recpars$alpha & recpars$alpha <= 0.5)){
-    stop("recombination_blxAlphaBeta() requires 0 <= recpars$alpha <= 0.5")
-  }
-  if(!(0 <= recpars$beta & recpars$beta <= 0.5)){
-    stop("recombination_blxAlphaBeta() requires 0 <= recpars$beta <= 0.5")
-  }
-  if (!identical(dim(X), dim(M))) {
-    stop("recombination_blxAphaBeta() requires dim(X) == dim(M)")
-  }
-  if (!all(c("J", "probpars", "nfe") %in% names(env))){
-    stop("recombination_blxAphaBeta() requires calling environment to contain 
-         variables J, nfe and probpars")
-  }
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          all(assertthat::has_name(recpars, 
+                                                   c("alpha", "beta"))),
+                          is.numeric(recpars$alpha), is.numeric(recpars$beta),
+                          is_within(recpars$alpha, 0, 0.5),
+                          is_within(recpars$beta, 0, 0.5),
+                          all(assertthat::has_name(env, 
+                                                   c("J", "probpars", "nfe"))))
   # ==========
   
   # Performance values of the current population (X)

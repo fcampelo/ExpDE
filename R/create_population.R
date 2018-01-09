@@ -13,7 +13,14 @@ create_population <- function(popsize,      # population size
                               probpars)     # list of named problem parameters
 {
   #Generate population of individuals within the standardized space x \in (0,1)
+ 
   
+  # ========== Error catching and default value definitions
+  assertthat::assert_that(assertthat::is.count(popsize),
+                          is.list(probpars),
+                          "xmax" %in% names(probpars))
+  # ==========
+   
   # get problem dimension
   prob.dim <- length(probpars$xmax)
   

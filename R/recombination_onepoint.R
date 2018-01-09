@@ -31,20 +31,13 @@
 recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
 
   # ========== Error catching and default value definitions
-  if (!("K" %in% names(recpars))) {
-    recpars$K <- NULL
-  }
-  if (!is.null(recpars$K)) {
-    if(!(0 <= recpars$K & recpars$K < ncol(X))){
-      stop("recombination_onepoint() requires 0 <= recpars$K < n")
-    }
-    if(!(all(recpars$K == floor(recpars$K)))) {
-      stop("recombination_onepoint() requires an integer value for K")
-    }
-  }
-  if (!identical(dim(X), dim(M))) {
-    stop("recombination_exp() requires dim(X) == dim(M)")
-  }
+
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          assertthat::has_name(recpars, "K"),
+                          is.null(recpars$K) || 
+                            (assertthat::is.count(recpars$K) && is_within(recpars$K, 0, ncol(X) - 1)))
   # ========== 
   
   # Perform recombination (depending on the value of recpars$K)

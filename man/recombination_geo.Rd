@@ -4,7 +4,7 @@
 \alias{recombination_geo}
 \title{Geometric recombination for DE}
 \usage{
-recombination_geo(X, M, recpars = list(alpha = 0.5))
+recombination_geo(X, M, recpars)
 }
 \arguments{
 \item{X}{population matrix (original)}
@@ -28,8 +28,7 @@ fields in \code{recpars}:
 \itemize{
    \item \code{alpha} : exponent for geometrical recombination.\cr
    Accepts numeric value \code{0 <= alpha <= 1} or \code{NULL} (in which 
-   case a random value is chosen for each recombination).\cr
-   Defaults to \code{alpha = 0.5}.
+   case a random value is chosen for each recombination).
 }
 }
 

@@ -27,15 +27,11 @@ recombination_wright <- function(X, M, ...) {
   
   # Get access to variables in the calling environment
   env <- parent.frame()
-
-  if (!identical(dim(X), dim(M))) {
-    stop("recombination_wright() requires dim(X) == dim(M)")
-  }
-  if (!all(c("J", "probpars", "nfe") %in% names(env))){
-    stop("recombination_wright() requires calling environment to contain 
-         variables J, nfe and probpars")
-  }
   
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          all(assertthat::has_name(env, c("J", "probpars", "nfe"))))
   # ==========
   
   # Performance values of the current population (X)

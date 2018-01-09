@@ -34,16 +34,12 @@
 recombination_sbx <- function(X, M, recpars) {
 
   # ========== Error catching and default value definitions
-  if (!("eta" %in% names(recpars))){
-    stop("recombination_sbx() requires field eta in recpars")
-  }
-  if (recpars$eta <= 0) {
-    stop("recombination_sbx() requires numeric  recpars$eta > 0")
-  }
-  if (!identical(dim(X),dim(M))) {
-    stop("recombination_sbx() requires dim(X) == dim(M)")
-  }
-
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          assertthat::has_name(recpars, "eta"),
+                          is.numeric(recpars$eta),
+                          recpars$eta > 0)
   # ==========
   R <- randM(X)
   S <- R <= 0.5

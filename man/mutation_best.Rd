@@ -31,9 +31,20 @@ mutation. \code{mutation_best()} understands the following fields in
 }
 }
 
+\section{Warning}{
+
+This routine will search for the performance vector 
+of population \code{X} (\code{J}) in the parent environment (using 
+\code{parent.frame()}. This variable must be defined for 
+\code{mutation_best()} to work.
+}
+
 \section{References}{
 
 K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
 Practical Approach to Global Optimization", Springer 2005
 }
 
+\author{
+Felipe Campelo (\email{fcampelo@ufmg.br})
+}

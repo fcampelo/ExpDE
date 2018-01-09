@@ -21,6 +21,15 @@ Matrix \code{U} containing the recombined population
 Implements the "/blxAlphaBeta" (Blend Alpha Beta) recombination for the ExpDE 
 framework
 }
+\details{
+This routine also implements two special cases: 
+\itemize{
+ \item BLX-alpha recombination (\code{blxAlpha}), by setting 
+   \code{recpars$alpha = recpars$beta}); 
+ \item Flat recombination (\code{flat}), by setting 
+   \code{recpars$alpha = recpars$beta = 0})
+}
+}
 \section{Recombination Parameters}{
 
 The \code{recpars} parameter contains all parameters required to define the 

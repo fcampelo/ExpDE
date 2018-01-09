@@ -16,8 +16,14 @@
 #' current version accepts the following options:
 #' 
 #' \itemize{
-#'    \item \code{\link{mutation_rand}}
 #'    \item \code{\link{mutation_best}}
+#'    \item \code{\link{mutation_rand}}
+#'    \item \code{\link{mutation_mean}}
+#'    \item \code{\link{mutation_none}}
+#'    \item \code{\link{mutation_current_to_pbest}} (incl. special case
+#'          \code{current-to-best})
+#'    \item \code{\link{mutation_wgi}}
+#'    
 #' }
 #' 
 #' \code{mutpars} receives a list object with name field \code{mutpars$name} 
@@ -36,16 +42,16 @@
 #' \itemize{
 #'    \item \code{\link{recombination_arith}}   
 #'    \item \code{\link{recombination_bin}}
-#'    \item \code{\link{recombination_blxAlpha}}
-#'    \item \code{\link{recombination_blxAlphaBeta}}
+#'    \item \code{\link{recombination_blxAlphaBeta}} (incl. special cases 
+#'          \code{blxAlpha} and \code{flat})
 #'    \item \code{\link{recombination_eigen}}
 #'    \item \code{\link{recombination_exp}}
-#'    \item \code{\link{recombination_flat}}
 #'    \item \code{\link{recombination_geo}}
 #'    \item \code{\link{recombination_lbga}}
 #'    \item \code{\link{recombination_linear}}
 #'    \item \code{\link{recombination_mmax}}
 #'    \item \code{\link{recombination_npoint}}
+#'    \item \code{\link{recombination_none}}
 #'    \item \code{\link{recombination_onepoint}}
 #'    \item \code{\link{recombination_pbest}}
 #'    \item \code{\link{recombination_sbx}}
@@ -91,7 +97,7 @@
 #' 
 #' \itemize{
 #'    \item \code{probpars$name}, the name of the function that represents the 
-#'      problem to be solved.
+#'    problem to be solved.
 #'    \item \code{probpars$xmin}, a vector containing the lower bounds of all 
 #'      optimization variables (i.e., a vector of length M, where M is the 
 #'      dimension of the problem).
@@ -99,9 +105,17 @@
 #'      optimization variables.
 #' }
 #' 
-#' \strong{Important}: the objective function routine must receive a matrix of 
-#' row vectors to be evaluated in the form of an input parameter named either 
-#' "x" or "X" or "Pop" (any one of the three is allowed).
+#' This list can also contain the following optional arguments
+#' \itemize{
+#'    \item \code{probpars$matrixEval}, indicates what kind of input is expected 
+#'    by the function provided in \code{probpars$name}. Valid entries are 
+#'    \code{"vector"}, \code{"colMatrix"} and \code{"rowMatrix"}. 
+#'    Defaults to \code{probpars$matrixEval = "rowMatrix"}
+#' }
+#' 
+#' \strong{Important}: the objective function routine must receive either a 
+#' vector or a matrix of vectors to be evaluated in the form of an input 
+#' parameter named either "x" or "X" or "Pop" (any one of the three is allowed).
 #' 
 #' @section Random Seed:
 #' The \code{seed} argument receives the desired seed for the PRNG. This value 
@@ -155,9 +169,10 @@
 #' showpars <- list(show.iters = "numbers", showevery = 1)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars, seed, showpars)
 #'
-#' # DE/rand/2/blxAlpha
-#' recpars  <- list(name = "recombination_blxAlpha", alpha = 0.1)
-#' mutpars  <- list(name = "mutation_rand", f = 0.8, nvecs = 2)
+#'
+#' # DE/wgi/1/blxAlpha
+#' recpars  <- list(name = "recombination_blxAlphaBeta", alpha = 0.1, beta = 0.1)
+#' mutpars  <- list(name = "mutation_wgi", f = 0.8)
 #' ExpDE(popsize, mutpars, recpars, selpars, stopcrit, probpars)
 #' 
 #' # DE/best/1/sbx
@@ -176,30 +191,26 @@
 #' @references 
 #' F. Campelo, M. Botelho, "Experimental Investigation of Recombination 
 #' Operators for Differential Evolution", Genetic and Evolutionary 
-#' Computation Conference, Denver/CO, July 2016 (Accepted).
+#' Computation Conference, July 20-24, 2016, Denver/CO. 
+#' DOI: 10.1145/2908812.2908852
 #' @export
 
 ExpDE <- function(popsize,
-                  mutpars  = list(name = "mutation_rand",
-                                  f    = 0.2),
+                  mutpars  = list(name  = "mutation_rand",
+                                  f     = 0.2),
                   recpars  = list(name  = "recombination_bin",
                                   cr    = 0.8, 
                                   nvecs = 1),
-                  selpars  = list(name = "standard"),
+                  selpars  = list(name  = "standard"),
                   stopcrit,
                   probpars,
-                  seed = NULL,
+                  seed     = NULL,
                   showpars = list(show.iters = "none"))
 {
   # ========== Error catching and default value definitions
-  # Check seed
-  stopifnot(is.null(seed) || seed > 0,
-            is.null(seed) || is.numeric(seed),
-            is.null(seed) || seed == floor(seed))
-  
-  if (is.null(seed)) {seed <- as.numeric(Sys.time())}
-  set.seed(seed)
-  
+  assertthat::assert_that(is.null(seed) || seed > 0,
+                          is.null(seed) || is.numeric(seed),
+                          is.null(seed) || seed == floor(seed))
   # ==========
   
   # Generate initial population

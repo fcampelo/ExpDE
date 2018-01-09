@@ -1,10 +1,10 @@
-#' /best mutation for DE
+#' /mean mutation for DE
 #' 
-#' Implements the "/best/nvecs" mutation for the ExpDE framework
+#' Implements the "/mean/nvecs" mutation for the ExpDE framework
 #' 
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
-#' mutation. \code{mutation_best()} understands the following fields in 
+#' mutation. \code{mutation_mean()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
 #'    \item \code{f} : scaling factor for difference vector(s).\cr
@@ -13,12 +13,6 @@
 #'        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
 #'        Defaults to 1.
 #' }
-#' 
-#' @section Warning:
-#' This routine will search for the performance vector 
-#' of population \code{X} (\code{J}) in the parent environment (using 
-#' \code{parent.frame()}. This variable must be defined for 
-#' \code{mutation_best()} to work. 
 #' 
 #' @param X population matrix
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
@@ -32,14 +26,15 @@
 #' 
 #' @export
 
-mutation_best <- function(X, mutpars){
-
+mutation_mean <- function(X, mutpars){
+  
+  # ========== Error catching and default value definitions
+  
   # Get access to variables in the calling environment
   env <- parent.frame()
   
-  # ========== Error catching and default value definitions
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  
+ 
   assertthat::assert_that(is.matrix(X), is.numeric(X),
                           assertthat::is.count(mutpars$nvecs),
                           mutpars$nvecs < (nrow(X)/2 - 2),
@@ -50,16 +45,19 @@ mutation_best <- function(X, mutpars){
                                                mutpars$nvecs)
   # ==========
   
+  # Define basis vector (mean)
+  x.basis  <- colMeans(X)
+  
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
-  R <- lapply(X       = rep(nrow(X), 
-                            times = nrow(X)),
+  R <- lapply(X = rep(nrow(X), 
+                      times = nrow(X)),
               FUN     = sample.int,
               size    = 2 * mutpars$nvecs,
               replace = FALSE)
-
-    
+  
+  
   # Auxiliary function: make a single mutation
-  bestmut <- function(pos, Pop, f, x.best){
+  wgimut <- function(pos, Pop, x.basis, f){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
@@ -68,22 +66,15 @@ mutation_best <- function(X, mutpars){
     } else {
       wdiffsum <- colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ]))
     }
-    return(x.best + wdiffsum)
+    return(x.basis + wdiffsum)
   }
-  #individual best
-  x.best <- X[env$J == min(env$J), ]
-
-  #use only one base vector if there is more than one "best"
-  if(is.matrix(x.best)){
-    x.best <- x.best[sample.int(nrow(x.best), size = 1), ]
-  }
-
+  
   # Apply mutation
   M <- lapply(R, 
-              FUN    = bestmut, 
-              Pop    = X, 
-              f      = mutpars$f,
-              x.best = x.best)
+              FUN     = wgimut, 
+              Pop     = X, 
+              x.basis = x.basis,
+              f       = mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

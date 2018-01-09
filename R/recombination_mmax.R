@@ -44,23 +44,13 @@ recombination_mmax <- function(X, M, recpars = list(lambda = NULL)) {
   env <- parent.frame()
   
   # ========== Error catching and default value definitions
-  if (!identical(dim(X), dim(M))) {
-    stop("recombination_mmax() requires dim(X) == dim(M)")
-  }
-  if (!all(c("probpars", "nfe") %in% names(env))){
-    stop("recombination_mmax() requires calling environment to contain 
-         variables nfe and probpars")
-  }
-  if ("lambda" %in% names(recpars)){
-    if(!is.null(recpars$lambda)){
-      if(!is.numeric(recpars$lambda) || 
-         !(0 < recpars$lambda & recpars$lambda < 1) ||
-         length(recpars$lambda) != 1){
-        stop("recombination_mmax() requires recpars$lambda to be either NULL 
-                or a single value between 0 and 1")
-      }
-    }
-  } else recpars$lambda <- NULL
+  
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          is.null(recpars$lambda) || is_within(recpars$lambda, 0, 1),
+                          all(assertthat::has_name(env, 
+                                                   c("probpars", "nfe"))))
   # ==========
   
   # Define lambda factors

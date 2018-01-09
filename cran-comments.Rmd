@@ -1,10 +1,14 @@
-## Resubmission
-This is a resubmission
+## Changes and notes
+* Minor update:
+    * Added options `mutation_current_to_pbest` (includes special case `current-to-best`), `mutation_mean` and `mutation_wgi`(weighted global intermediate) to the algorithm. 
+    * Other minor fixes
 
 ## Test environments
-* local: OS X 10.11.4 (El Capitan), R 3.2.2, x86_64-apple-darwin14.5.0 (64-bit)
-* travis-ci: Ubuntu 12.04 LTS Server Edition 64 bit
-* win-builder (devel and release)
+* macOS High Sierra 10.13.2 (local installation), R 3.4.2 (2017-09-28)
+* Ubuntu 14.04.5 LTS (travis-ci v 3.1.0), R 3.4.2
+* win-builder (release and devel)
 
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+R CMD check results
+0 errors | 0 warnings | 0 notes
+R CMD check succeeded

@@ -32,18 +32,15 @@
 recombination_bin <- function(X, M, recpars) {
 
   # ========== Error catching and default value definitions
-  if (!("cr" %in% names(recpars))){
-    stop("recombination_bin() requires field cr in recpars")
-  }
-  if (!(0 < recpars$cr & recpars$cr <= 1)) {
-    stop("recombination_bin() requires numeric 0 < recpars$cr <= 1")
-  }
-  if (!identical(dim(X),dim(M))) {
-    stop("recombination_bin() requires dim(X) == dim(M)")
-  }
-  if (!("minchange" %in% names(recpars))){
-    recpars$minchange <- TRUE
-  }
+  if (!assertthat::has_name(recpars, "minchange")) recpars$minchange <- TRUE
+  
+  assertthat::assert_that(is.matrix(X), is.numeric(X),
+                          is.matrix(M), is.numeric(M),
+                          assertthat::are_equal(dim(X), dim(M)),
+                          assertthat::has_name(recpars, "cr"),
+                          is.numeric(recpars$cr),
+                          is_within(recpars$cr, 0, 1),
+                          assertthat::is.flag(recpars$minchange))
   # ==========
   
   # Recombination matrix
