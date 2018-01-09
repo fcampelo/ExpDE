@@ -7,7 +7,7 @@ Imports: assertthat (>= 0.2.0)
 Suggests: smoof,  
           cec2013
 Date: 2018-01-09
-Url: http://github.com/fcampelo/ExpDE
+URL: http://github.com/fcampelo/ExpDE
 Authors@R: c(
                 person("Felipe", "Campelo", email = "fcampelo@ufmg.br", 
                        role = c("aut", "cre")),

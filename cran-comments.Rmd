@@ -5,8 +5,8 @@
 
 ## Test environments
 * macOS High Sierra 10.13.2 (local installation), R 3.4.2 (2017-09-28)
-* Ubuntu 14.04.5 LTS (travis-ci v 3.1.0), R 3.4.2
-* win-builder (release and devel)
+* Ubuntu 14.04.5 LTS (travis-ci v3.4.0), R version 3.4.2 (2017-01-27)
+* win-builder with options release (R-3.4.3) and devel (to be R-3.5.0)
 
 ## R CMD check results
 R CMD check results
