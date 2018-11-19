@@ -121,7 +121,7 @@
 #' The \code{seed} argument receives the desired seed for the PRNG. This value 
 #' can be set for reproducibility purposes. The value of this parameter defaults 
 #' to NULL, in which case the seed is arbitrarily set using 
-#' \code{as.numeric(Sys.time())}.
+#' \code{.Random.seed}.
 #'
 #' @section Showpars:
 #' \code{showpars} is a list containing parameters that control the printed
@@ -207,10 +207,15 @@ ExpDE <- function(popsize,
                   seed     = NULL,
                   showpars = list(show.iters = "none"))
 {
-  # ========== Error catching and default value definitions
-  assertthat::assert_that(is.null(seed) || seed > 0,
-                          is.null(seed) || is.numeric(seed),
-                          is.null(seed) || seed == floor(seed))
+  #  ========== Error catching and default value definitions 
+  if (is.null(seed)) {
+    if (!exists(".Random.seed")) stats::runif(1)
+    seed <- .Random.seed
+  } else {
+    assertthat::assert_that(assertthat::is.count(seed))
+    set.seed(seed)               # set PRNG seed
+  }
+  
   # ==========
   
   # Generate initial population
@@ -284,6 +289,7 @@ ExpDE <- function(popsize,
               Fx    = J,
               Xbest = X[1,],
               Fbest = J[1],
+              seed = seed,
               nfe   = nfe,
               iter  = t))
 }

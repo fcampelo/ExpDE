@@ -171,7 +171,7 @@ parameter named either "x" or "X" or "Pop" (any one of the three is allowed).
 The \code{seed} argument receives the desired seed for the PRNG. This value 
 can be set for reproducibility purposes. The value of this parameter defaults 
 to NULL, in which case the seed is arbitrarily set using 
-\code{as.numeric(Sys.time())}.
+\code{.Random.seed}.
 }
 
 \section{Showpars}{
