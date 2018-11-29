@@ -9,21 +9,25 @@
 #' 
 #' @export
 
-create_population <- function(popsize,      # population size
-                              probpars)     # list of named problem parameters
+#create_population <- function(popsize,      # population size
+#                              probpars)     # list of named problem parameters
+create_population <- function(L)
 {
   #Generate population of individuals within the standardized space x \in (0,1)
- 
+  popsize  <- L$popsize
+  probpars <- L$probpars 
   
   # ========== Error catching and default value definitions
   assertthat::assert_that(assertthat::is.count(popsize),
                           is.list(probpars),
                           "xmax" %in% names(probpars))
   # ==========
-   
+  
+  
   # get problem dimension
   prob.dim <- length(probpars$xmax)
   
-  return (matrix(stats::runif(n = popsize * prob.dim), 
-                 nrow = popsize))
+  L$X <- matrix(stats::runif(n = popsize * prob.dim), 
+                nrow = popsize)
+  return (L)
 }

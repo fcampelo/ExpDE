@@ -207,30 +207,45 @@ ExpDE <- function(popsize,
                   seed     = NULL,
                   showpars = list(show.iters = "none"))
 {
+  
+  ## Get all input parameters
+  #L <- as.list(sys.call())[-1]
+  L <- list()
+  L$popsize <- popsize
+  L$mutpars <- mutpars
+  L$recpars <- recpars
+  L$selpars <- selpars
+  L$probpars <- probpars
+  L$seed <- seed
+  L$showpars <- showpars
+  
   #  ========== Error catching and default value definitions 
-  if (is.null(seed)) {
+  if (is.null(L$seed)) {
     if (!exists(".Random.seed")) stats::runif(1)
-    seed <- .Random.seed
+    L$seed <- .Random.seed
   } else {
     assertthat::assert_that(assertthat::is.count(seed))
-    set.seed(seed)               # set PRNG seed
+    set.seed(L$seed)               # set PRNG seed
   }
   
   # ==========
   
   # Generate initial population
-  X <- create_population(popsize  = popsize,
-                         probpars = probpars)
+  L <- create_population(L)
+  X <- L$X
+  
+  #X <- create_population(popsize  = popsize,
+  #                     probpars = probpars)
 
   # Evaluate the initial population
-  J <- evaluate_population(probpars = probpars,
+  J <- evaluate_population(probpars = L$probpars,
                            Pop      = X)
 
   # Prepare for iterative cycle:
   keep.running  <- TRUE     # stop criteria flag
   t             <- 0        # counter: iterations
   nfe           <- popsize  # counter: number of function evaluations
-
+  
 
   # Iterative cycle
   while(keep.running){
@@ -241,6 +256,7 @@ ExpDE <- function(popsize,
     G <- NA * J
 
     # Mutation
+    #call perform_mutation
     M <- do.call(mutpars$name,
                  args = list(X       = X,
                              mutpars = mutpars))
@@ -261,7 +277,7 @@ ExpDE <- function(popsize,
     # Some recombination operators evaluate the 'offspring' solutions, so only
     # the 'unevaluated' ones need to be dealt with here.
     toeval <- is.na(G)
-    G[toeval] <- evaluate_population(probpars = probpars,
+    G[toeval] <- evaluate_population(probpars = L$probpars,
                                      Pop      = U[toeval, ])
     nfe <- nfe + sum(toeval)
 
@@ -283,13 +299,15 @@ ExpDE <- function(popsize,
     print_progress()
   }
 
-  X <- denormalize_population(probpars, X[order(J), ])
+  X <- denormalize_population(L$probpars, X[order(J), ])
   J <- sort(J)
+  L$nfe <- nfe
+  L$t <- t
   return(list(X     = X,
               Fx    = J,
               Xbest = X[1,],
               Fbest = J[1],
-              seed = seed,
-              nfe   = nfe,
-              iter  = t))
+              seed = L$seed,
+              nfe   = L$nfe,
+              iter  = L$t))
 }
