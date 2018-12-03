@@ -1,4 +1,4 @@
-perform_mutation(L){
+perform_mutation <- function(L){
   mutpars <- L$mutpars
   
   # ========== Error catching and default value definitions
@@ -15,6 +15,7 @@ perform_mutation(L){
   
   L$M <-       do.call(mutpars$name,
                        args = list(X       = L$X,
+                                   J       = L$J,
                                    mutpars = mutpars))
   L$mutpars <- mutpars
   return(L)

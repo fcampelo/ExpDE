@@ -26,23 +26,16 @@
 #' 
 #' @export
 
-mutation_mean <- function(X, mutpars){
+mutation_mean <- function(X, J, mutpars){
   
   # ========== Error catching and default value definitions
   
   # Get access to variables in the calling environment
-  env <- parent.frame()
-  
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
+  # env <- parent.frame()
+  #if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          assertthat::is.count(mutpars$nvecs),
-                          mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f))
+  assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))
   
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
   # ==========
   
   # Define basis vector (mean)

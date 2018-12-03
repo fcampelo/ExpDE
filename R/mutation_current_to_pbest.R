@@ -40,23 +40,16 @@
 #' 
 #' @export
 
-mutation_current_to_pbest <- function(X, mutpars){
+mutation_current_to_pbest <- function(X, J, mutpars){
 
   # Get access to variables in the calling environment
-  env <- parent.frame()
+  #env <- parent.frame()
   
   # ========== Error catching and default value definitions
+  #if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f),
-                          is.numeric(mutpars$p), 
+  assertthat::assert_that(is.numeric(mutpars$p), 
                           is_within(mutpars$p, 0, nrow(X), strict = TRUE))
-  
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
 
   if (is_within(mutpars$p, 0, 1, strict = TRUE)){
     mutpars$p <- ceiling(mutpars$p * nrow(X))
@@ -64,7 +57,7 @@ mutation_current_to_pbest <- function(X, mutpars){
   # ==========
   
   # Indices to the p-best vectors
-  ibest <- order(env$J)[1:mutpars$p]
+  ibest <- order(J)[1:mutpars$p]
   
   # Matrix indices for mutation (x_{pbest}, x_{r1}, x_{r2})
   R <- mapply(FUN     = function(x, i, ibest) {c(sample.int(ibest, 1), i, 

@@ -209,15 +209,9 @@ ExpDE <- function(popsize,
 {
   
   ## Get all input parameters
+  # for debug:
+  L <- as.list(environment())  
   #L <- as.list(sys.call())[-1]
-  L <- list()
-  L$popsize <- popsize
-  L$mutpars <- mutpars
-  L$recpars <- recpars
-  L$selpars <- selpars
-  L$probpars <- probpars
-  L$seed <- seed
-  L$showpars <- showpars
   
   #  ========== Error catching and default value definitions 
   if (is.null(L$seed)) {
@@ -240,6 +234,7 @@ ExpDE <- function(popsize,
   # Evaluate the initial population
   J <- evaluate_population(probpars = L$probpars,
                            Pop      = X)
+  L$J <- J
 
   # Prepare for iterative cycle:
   keep.running  <- TRUE     # stop criteria flag
@@ -257,9 +252,11 @@ ExpDE <- function(popsize,
 
     # Mutation
     #call perform_mutation
-    M <- do.call(mutpars$name,
-                 args = list(X       = X,
-                             mutpars = mutpars))
+    L <- perform_mutation(L)
+    M <- L$M
+    # M <- do.call(mutpars$name,
+    #              args = list(X       = X,
+    #                          mutpars = mutpars))
 
 
     # Recombination
