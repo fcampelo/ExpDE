@@ -15,14 +15,9 @@
 #' 
 #' @export
 
-recombination_arith <- function(X, M, ...) {
-  
-  # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)))
-  
-  # ==========
+recombination_arith <- function(L, ...) {
+  X       = L$X
+  M       = L$M
   
   lambda <- matrix(rep(stats::runif(nrow(X)),
                        ncol(X)),

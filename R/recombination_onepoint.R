@@ -28,14 +28,13 @@
 #' 
 #' @export
 
-recombination_onepoint <- function(X, M, recpars = list(K = NULL)) {
-
+recombination_onepoint <- function(L, recpars = list(K = NULL)) {
+  X       = L$X
+  M       = L$M
+  
   # ========== Error catching and default value definitions
 
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "K"),
+  assertthat::assert_that(assertthat::has_name(recpars, "K"),
                           is.null(recpars$K) || 
                             (assertthat::is.count(recpars$K) && is_within(recpars$K, 0, ncol(X) - 1)))
   # ========== 

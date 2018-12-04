@@ -29,13 +29,12 @@
 #' 
 #' @export
 
-recombination_npoint <- function(X, M, recpars = list(N = NULL)) {
+recombination_npoint <- function(L, recpars = list(N = NULL)) {
+  X       = L$X
+  M       = L$M
   
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          is.null(recpars$N) || 
+  assertthat::assert_that(is.null(recpars$N) || 
                             (assertthat::is.count(recpars$N) && is_within(recpars$N, 0, ncol(X) - 1)))
   # ========== 
   

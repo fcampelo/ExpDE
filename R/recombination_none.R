@@ -12,13 +12,8 @@
 #' 
 #' @export
 
-recombination_none <- function(X, M, ...) {
-  
-  # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)))
-  # ==========
-  
+recombination_none <- function(L, ...) {
+  M       = L$M
   # Return unmodified mutant population
   return(M)
 }

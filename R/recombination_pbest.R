@@ -34,26 +34,22 @@
 #' 
 #' @export
 
-recombination_pbest <- function(X, M, recpars) {
+recombination_pbest <- function(L, recpars) {
+  X       = L$X
+  M       = L$M
 
-  # Get access to the variables in the calling environment
-  env <- parent.frame()
-  
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "cr"),
+  assertthat::assert_that(assertthat::has_name(recpars, "cr"),
                           is_within(recpars$cr, 0, 1),
-                          all(assertthat::has_name(env, 
+                          all(assertthat::has_name(L, 
                                                    c("t", "stopcrit", "J"))),
-                          assertthat::has_name(env$stopcrit, "maxiter"))
+                          assertthat::has_name(L$stopcrit, "maxiter"))
     # ==========
   
   # Extract relevant values from the parent environment
-  G    <- env$t
-  Gmax <- env$stopcrit$maxiter
-  J    <- env$J
+  G    <- L$t
+  Gmax <- L$stopcrit$maxiter
+  J    <- L$J
   
   # Sort X by performance (i.e., in ascending order of J)
   X <- X[order(J), ]

@@ -31,13 +31,12 @@
 #' 
 #' @export
 
-recombination_sbx <- function(X, M, recpars) {
+recombination_sbx <- function(L, recpars) {
+  X       = L$X
+  M       = L$M
 
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "eta"),
+  assertthat::assert_that(assertthat::has_name(recpars, "eta"),
                           is.numeric(recpars$eta),
                           recpars$eta > 0)
   # ==========

@@ -28,13 +28,12 @@
 #' 
 #' @export
 
-recombination_eigen <- function(X, M, recpars) {
+recombination_eigen <- function(L, recpars) {
+  X       = L$X
+  M       = L$M
 
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "othername"),
+  assertthat::assert_that(assertthat::has_name(recpars, "othername"),
                           recpars$othername != "recombination_eigen")
   # ==========
   
@@ -48,9 +47,18 @@ recombination_eigen <- function(X, M, recpars) {
                  B   = rbind(X, M)))
   
   # Perform base recombination method on projected vectors
+  # solution initial for perform_recombination
+  # Uq <- do.call(recpars$othername,
+  #               args = list(X       = Xq[1:nrow(X), ],
+  #                           M       = Xq[(nrow(X) + 1):nrow(Xq), ],
+  #                           recpars = recpars))
+  
+  Ltemp     <- L
+  Ltemp$X   <- Xq[1:nrow(X), ]
+  Ltemp$M   <- Xq[(nrow(X) + 1):nrow(Xq), ]
+  
   Uq <- do.call(recpars$othername,
-                args = list(X       = Xq[1:nrow(X), ],
-                            M       = Xq[(nrow(X) + 1):nrow(Xq), ],
+                args = list(Ltemp,
                             recpars = recpars))
   
   # Project resulting vectors back onto the original basis

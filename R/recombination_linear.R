@@ -23,16 +23,13 @@
 #' 
 #' @export
 
-recombination_linear <- function(X, M, ...) {
+recombination_linear <- function(L, ...) {
+  X       = L$X
+  M       = L$M
+  
   # ========== Error catching and default value definitions
   
-  # Get access to variables in the calling environment
-  env <- parent.frame()
-  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          all(assertthat::has_name(env, 
+  assertthat::assert_that(all(assertthat::has_name(L, 
                                                    c("J", "probpars", "nfe"))))
   
   # ==========
@@ -42,16 +39,16 @@ recombination_linear <- function(X, M, ...) {
   H3 <- -(0.5 * X) + (1.5 * M)
   
   # Evaluate trial offspring
-  f1 <- evaluate_population(probpars = env$probpars, 
+  f1 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H1)
   
-  f2 <- evaluate_population(probpars = env$probpars, 
+  f2 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H2)
   
-  f3 <- evaluate_population(probpars = env$probpars, 
+  f3 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H3)
   
-  env$nfe <- env$nfe + 3 * nrow(X)
+  L$nfe <- L$nfe + 3 * nrow(X)
   
   # Perform recombination
   fbest <- pmin(f1, f2, f3)
