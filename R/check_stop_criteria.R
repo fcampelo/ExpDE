@@ -36,11 +36,18 @@ check_stop_criteria <- function(){
 }
 
 # Stop criterion: maximum number of iterations
+##stop_maxiter <- function(env = parent.frame(n = 2)){
+##  return(env$t >= env$stopcrit$maxiter)
+##}
 stop_maxiter <- function(env = parent.frame(n = 2)){
-  return(env$t >= env$stopcrit$maxiter)
+  L <- env$L
+  return(L$t >= env$stopcrit$maxiter)
 }
+
 
 # Stop criterion: maximum number of objective function calls
 stop_maxeval <- function(env = parent.frame(n = 2)){
-  return(env$nfe >= env$stopcrit$maxevals)
+  L <- env$L
+  #return(env$nfe >= env$stopcrit$maxevals)
+  return(L$nfe >= env$stopcrit$maxevals)
 }

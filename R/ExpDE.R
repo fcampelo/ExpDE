@@ -228,78 +228,67 @@ ExpDE <- function(popsize,
   L <- create_population(L)
   X <- L$X
   
-  #X <- create_population(popsize  = popsize,
-  #                     probpars = probpars)
-
   # Evaluate the initial population
   J <- evaluate_population(probpars = L$probpars,
                            Pop      = X)
   L$J <- J
 
   # Prepare for iterative cycle:
-  keep.running  <- TRUE     # stop criteria flag
-  t             <- 0        # counter: iterations
-  nfe           <- popsize  # counter: number of function evaluations
+  keep.running      <- TRUE     # stop criteria flag
+  L$t               <- 0        # counter: iterations
+  L$nfe             <- popsize  # counter: number of function evaluations
   
 
   # Iterative cycle
   while(keep.running){
     # Update iteration counter
-    t <- t + 1          
+    L$t <- L$t + 1          
     
     # Reset candidate vector performance values
-    G <- NA * J
+    G <- NA * L$J
+    #G <- NA * J
 
     # Mutation
     #call perform_mutation
     L <- perform_mutation(L)
     M <- L$M
-    # M <- do.call(mutpars$name,
-    #              args = list(X       = X,
-    #                          mutpars = mutpars))
-
 
     # Recombination
-    U <- do.call(recpars$name,
-                 args = list(X       = X,
-                             M       = M,
-                             recpars = recpars))
+    L <- perform_recombination(L)
+    U <- L$U
     
     # Repair U
-    U <- matrix(pmax(0, pmin(U, 1)), 
-                byrow = FALSE, 
-                nrow  = nrow(U))
+    L$U <- matrix(pmax(0, pmin(U, 1)), 
+                  byrow = FALSE, 
+                  nrow  = nrow(U))
 
     # Evaluate U 
     # Some recombination operators evaluate the 'offspring' solutions, so only
     # the 'unevaluated' ones need to be dealt with here.
     toeval <- is.na(G)
     G[toeval] <- evaluate_population(probpars = L$probpars,
-                                     Pop      = U[toeval, ])
-    nfe <- nfe + sum(toeval)
+                                     Pop      = L$U[toeval, ]) 
+    
+    L$G <- G
+    L$nfe <- L$nfe + sum(toeval)
 
     # Selection
-    next.pop <- do.call(selpars$name,
-                        args = list(X = X,
-                                    U = U,
-                                    J = J,
-                                    G = G))
-
+    L <- perform_selection(L)
+    next.pop <- L$nextpop
+   
     # Stop criteria
     keep.running <- check_stop_criteria()
 
     # Compose next population
-    X <- next.pop$Xsel
-    J <- next.pop$Jsel
+    L$X <- next.pop$Xsel
+    L$J <- next.pop$Jsel
     
     # Echo progress
     print_progress()
   }
 
-  X <- denormalize_population(L$probpars, X[order(J), ])
-  J <- sort(J)
-  L$nfe <- nfe
-  L$t <- t
+  X <- denormalize_population(L$probpars, L$X[order(L$J), ])
+  J <- sort(L$J)
   return(list(X     = X,
               Fx    = J,
               Xbest = X[1,],
