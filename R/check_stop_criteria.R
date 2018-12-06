@@ -11,43 +11,45 @@
 #' @return logical flag indicating whether any stop condition has been reached.
 #' @export
 #' 
-check_stop_criteria <- function(){
-  
-  env   <- parent.frame()
+check_stop_criteria <- function(L){
   
   # ========== Error catching and default value definitions
-  assertthat::assert_that("stopcrit" %in% names(env),
-                          "names" %in% names(env$stopcrit))
+  assertthat::assert_that("stopcrit" %in% names(L),
+                          "names" %in% names(L$stopcrit))
 
-  crits <- env$stopcrit$names
+  crits <- L$stopcrit$names
   
-  assertthat::assert_that(("stop_maxiter" %in% crits && "maxiter" %in% names(env$stopcrit)) ||
-                          ("stop_maxeval" %in% crits && "maxevals" %in% names(env$stopcrit)))
+  assertthat::assert_that(("stop_maxiter" %in% crits && "maxiter" %in% names(L$stopcrit)) ||
+                          ("stop_maxeval" %in% crits && "maxevals" %in% names(L$stopcrit)))
   # ==========
   
   keep.running <- TRUE
   
+  #for (crit in crits){
+  #  keep.running <- keep.running * !(do.call(crit,
+  #                                           args = list()))
+  #}
+  
   for (crit in crits){
     keep.running <- keep.running * !(do.call(crit,
-                                             args = list()))
+                                             args = list(L)))
   }
   
   return(as.logical(keep.running))
 }
 
 # Stop criterion: maximum number of iterations
+
 ##stop_maxiter <- function(env = parent.frame(n = 2)){
 ##  return(env$t >= env$stopcrit$maxiter)
 ##}
-stop_maxiter <- function(env = parent.frame(n = 2)){
-  L <- env$L
-  return(L$t >= env$stopcrit$maxiter)
+stop_maxiter <- function(L){
+  return(L$t >= L$stopcrit$maxiter)
 }
 
 
 # Stop criterion: maximum number of objective function calls
-stop_maxeval <- function(env = parent.frame(n = 2)){
-  L <- env$L
+stop_maxeval <- function(L){
   #return(env$nfe >= env$stopcrit$maxevals)
-  return(L$nfe >= env$stopcrit$maxevals)
+  return(L$nfe >= L$stopcrit$maxevals)
 }

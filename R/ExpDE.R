@@ -277,14 +277,14 @@ ExpDE <- function(popsize,
     next.pop <- L$nextpop
    
     # Stop criteria
-    keep.running <- check_stop_criteria()
+    keep.running <- check_stop_criteria(L)
 
     # Compose next population
     L$X <- next.pop$Xsel
     L$J <- next.pop$Jsel
     
     # Echo progress
-    print_progress()
+    print_progress(L)
   }
 
   X <- denormalize_population(L$probpars, L$X[order(L$J), ])
@@ -293,7 +293,7 @@ ExpDE <- function(popsize,
               Fx    = J,
               Xbest = X[1,],
               Fbest = J[1],
-              seed = L$seed,
+              seed  = L$seed,
               nfe   = L$nfe,
               iter  = L$t))
 }

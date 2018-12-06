@@ -23,15 +23,15 @@
 #'
 #' @export
 #' 
-print_progress <- function(){
+print_progress <- function(L){
   
-  # Get access to the variables in the calling environment
-  env  <- parent.frame()
+  ## Get access to the variables in the calling environment
+  #env  <- parent.frame()
   
   # ========== Error catching and default value definitions
   #tmp <- assert_that(has_name(env, "showpars"))
-  pars <- env$showpars
-  
+  #pars <- env$showpars
+  pars <- L$showpars
   if(!any("show.iters" == names(pars))) pars$show.iters <- "numbers"
   if(!any("showevery" == names(pars)))  pars$showevery  <- 1
   if(!any("show.plot" == names(pars)))  pars$show.plot  <- FALSE
@@ -43,14 +43,14 @@ print_progress <- function(){
     length(pars$showevery) == 1,
     assertthat::is.flag(pars$show.plot))
   # ==========
-  L <- env$L
+  #L <- env$L
   if (pars$show.iters != "none"){
     #if (env$t == 1) cat("\nExpDE running: ")
     #if (env$t %% pars$showevery == 0){
     if (L$t == 1) cat("\nExpDE running: ")
     if (L$t %% pars$showevery == 0){
       if (pars$show.iters == "dots") cat(".")
-      if (pars$show.iters == "numbers") cat("\nIteration: ", env$t)
+      if (pars$show.iters == "numbers") cat("\nIteration: ", L$t)
     }
   }
 }
