@@ -4,6 +4,9 @@ perform_mutation <- function(L){
   # ========== Error catching and default value definitions
   if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   
+  assertthat::assert_that("X" %in% names(L),
+                          "J" %in% names(L))
+  
   assertthat::assert_that(is.matrix(L$X), is.numeric(L$X),
                           assertthat::is.count(mutpars$nvecs),
                           assertthat::has_name(mutpars, "f"),

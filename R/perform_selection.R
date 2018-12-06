@@ -2,6 +2,11 @@ perform_selection <- function(L) {
   selpars <- L$selpars
   
   # ========== Error catching and default value definitions
+  assertthat::assert_that("X" %in% names(L),
+                          "J" %in% names(L),
+                          "U" %in% names(L),
+                          "G" %in% names(L))
+  
   assertthat::assert_that(is.matrix(L$X), is.numeric(L$X),
                           is.matrix(L$U), is.numeric(L$U),
                           is.numeric(L$J), is.numeric(L$G),
