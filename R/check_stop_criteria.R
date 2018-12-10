@@ -25,11 +25,6 @@ check_stop_criteria <- function(L){
   
   keep.running <- TRUE
   
-  #for (crit in crits){
-  #  keep.running <- keep.running * !(do.call(crit,
-  #                                           args = list()))
-  #}
-  
   for (crit in crits){
     keep.running <- keep.running * !(do.call(crit,
                                              args = list(L)))
@@ -39,10 +34,6 @@ check_stop_criteria <- function(L){
 }
 
 # Stop criterion: maximum number of iterations
-
-##stop_maxiter <- function(env = parent.frame(n = 2)){
-##  return(env$t >= env$stopcrit$maxiter)
-##}
 stop_maxiter <- function(L){
   return(L$t >= L$stopcrit$maxiter)
 }
@@ -50,6 +41,5 @@ stop_maxiter <- function(L){
 
 # Stop criterion: maximum number of objective function calls
 stop_maxeval <- function(L){
-  #return(env$nfe >= env$stopcrit$maxevals)
   return(L$nfe >= L$stopcrit$maxevals)
 }

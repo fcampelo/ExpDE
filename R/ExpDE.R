@@ -210,8 +210,8 @@ ExpDE <- function(popsize,
   
   ## Get all input parameters
   # for debug:
-  L <- as.list(environment())  
-  #L <- as.list(sys.call())[-1]
+  #L <- as.list(environment())  
+  L <- as.list(sys.call())[-1]
   
   #  ========== Error catching and default value definitions 
   if (is.null(L$seed)) {

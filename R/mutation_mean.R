@@ -30,10 +30,6 @@ mutation_mean <- function(X, J, mutpars){
   
   # ========== Error catching and default value definitions
   
-  # Get access to variables in the calling environment
-  # env <- parent.frame()
-  #if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
- 
   assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))
   
   # ==========

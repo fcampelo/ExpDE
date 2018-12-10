@@ -42,11 +42,7 @@
 
 mutation_current_to_pbest <- function(X, J, mutpars){
 
-  # Get access to variables in the calling environment
-  #env <- parent.frame()
-  
   # ========== Error catching and default value definitions
-  #if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
   
   assertthat::assert_that(is.numeric(mutpars$p), 
                           is_within(mutpars$p, 0, nrow(X), strict = TRUE))

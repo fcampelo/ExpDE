@@ -23,6 +23,6 @@ perform_selection <- function(L) {
   
   
   
-  selpars <- selpars
+  L$selpars <- selpars
   return(L)
 }

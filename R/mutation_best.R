@@ -33,9 +33,6 @@
 #' @export
 
 mutation_best <- function(X, J, mutpars){
-
-  ## Get access to variables in the calling environment
-  ##env <- parent.frame()
   
   # ========== Error catching and default value definitions
   assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))
@@ -62,7 +59,6 @@ mutation_best <- function(X, J, mutpars){
     return(x.best + wdiffsum)
   }
   #individual best
-  #x.best <- X[env$J == min(env$J), ]
   x.best <- X[J == min(J), ]
 
   #use only one base vector if there is more than one "best"

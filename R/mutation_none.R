@@ -14,6 +14,6 @@
 #' 
 #' @export
 
-mutation_none <- function(X, mutpars){
+mutation_none <- function(X, J, mutpars){
   return(X)
 }
