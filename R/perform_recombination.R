@@ -11,6 +11,16 @@ perform_recombination <- function(L){
   
   # ==========  
   
+  # Check if uses the self-adaptive parameters
+  adapars <- L$adapars
+  
+  #temporary -> change to verify if use jade and use recombination_bin_jade
+  if(isTRUE(adapars$use)) {
+    if(identical(adapars$name, "jade")) {
+      recpars$name <- "recombination_bin_jade"
+    }
+  }
+  
   L$U <- do.call(recpars$name,
                  args = list(L,
                              recpars = recpars))

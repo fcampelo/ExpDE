@@ -15,11 +15,8 @@ perform_selection <- function(L) {
                           length(L$G) == nrow(L$U))
   # ========== 
   
-  L$nextpop <- do.call(selpars$name,
-                       args = list(X = L$X,
-                                   U = L$U, 
-                                   J = L$J,
-                                   G = L$G))
+  L <- do.call(selpars$name,
+               args = list(L))
   
   
   

@@ -196,12 +196,16 @@
 #' @export
 
 ExpDE <- function(popsize,
-                  mutpars  = list(name  = "mutation_rand",
-                                  f     = 0.2),
-                  recpars  = list(name  = "recombination_bin",
-                                  cr    = 0.8, 
-                                  nvecs = 1),
-                  selpars  = list(name  = "standard"),
+                  mutpars  = list(name     = "mutation_rand",
+                                  f        = 0.2),
+                  recpars  = list(name     = "recombination_bin",
+                                  cr       = 0.8, 
+                                  nvecs    = 1),
+                  selpars  = list(name     = "standard"),
+                  adapars  = list(use      = FALSE,
+                                  name     = "jade",
+                                  mu.cr    = 0.5,
+                                  mu.F     = 0.5),
                   stopcrit,
                   probpars,
                   seed     = NULL,
@@ -210,8 +214,8 @@ ExpDE <- function(popsize,
   
   ## Get all input parameters
   # for debug:
-  #L <- as.list(environment())  
-  L <- as.list(sys.call())[-1]
+  L <- as.list(environment())  
+  #L <- as.list(sys.call())[-1]
   
   #  ========== Error catching and default value definitions 
   if (is.null(L$seed)) {

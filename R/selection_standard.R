@@ -13,12 +13,18 @@
 #' 
 #' @export
 
-selection_standard <- function(X, U, J, G){
+selection_standard <- function(L){
+  X <- L$X
+  U <- L$U
+  J <- L$J
+  G <- L$G
   
   sel.vec       <- (G <= J)
   X[sel.vec, ]  <- U[sel.vec, ]
   J[sel.vec]    <- G[sel.vec]
   
-  return(list(Xsel = X, 
-              Jsel = J))
+  L$nextpop <- list(Xsel = X, 
+                    Jsel = J) 
+  
+  return(L)
 }
