@@ -9,15 +9,30 @@ jade <- function(L, adapars) {
                           is.numeric(adapars$mu.F))
   # ========== 
   
-  #Check if it is not the first iteration to update the mu.cr and mu.F
-  #if first iteration A <- c() S.cr <- c(), S.F <- c()
+  mean.cr <- adapars$mu.cr
+  mean.F  <- adapars$mu.F
+  
+  #Auxiliar function: Lehmer mean
+  meanL <- function(SF) {
+    return((sum(SF ^ 2)) / (sum(SF)))
+  }
+  
+  #Check if it is not the first iteration to update the mean.cr and mean.F
   if(identical(L$t, 1)) {
     L$files <- list(A    = c(),
                     S.cr = c(), 
                     S.F  = c())
   } else {
+    #Verify the files
+    assertthat::assert_that("A"    %in% names(adapars),
+                            "S.cr" %in% names(adapars),
+                            "S.F"  %in% names(adapars))
     
+    #To do: Randomly remove solutions from A so that |A| <= NP
     
+    #Updating of values
+    mean.cr <- (1 - c) * mean.cr + c * mean(adapars$S.cr)
+    mean.F  <- (1 - c) * mean.F  + c * meanL(adapars$S.F)
   }
   
   
@@ -25,10 +40,6 @@ jade <- function(L, adapars) {
   popsize  <- L$popsize
   probpars <- L$probpars 
   prob.dim <- length(probpars$xmax)
-  
-  mean.cr <- adapars$mu.cr
-  mean.F  <- adapars$mu.F
-  
   
   adapars$CRi <- matrix(stats::rnorm(n    = popsize * prob.dim, 
                                      mean = mean.cr, 

@@ -251,9 +251,11 @@ ExpDE <- function(popsize,
     # Reset candidate vector performance values
     G <- NA * L$J
     #G <- NA * J
+    
+    #Self-adaptative 
+    L <- perform_selfadaptive(L)
 
     # Mutation
-    #call perform_mutation
     L <- perform_mutation(L)
     M <- L$M
 
