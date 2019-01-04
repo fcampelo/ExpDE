@@ -15,8 +15,12 @@
 #' A.H. Wright, "Genetic Algorithms for Real Parameter Optimization",
 #' Proc. Foundations of Genetic Algorithms, 205-218, 1991.
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param ... optional parameters (unused)
 #' 
 #' @return Matrix \code{U} containing the recombined population

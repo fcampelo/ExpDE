@@ -16,8 +16,12 @@
 #' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
 #' Practical Approach to Global Optimization", Springer 2005
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 

@@ -2,8 +2,13 @@
 #' 
 #' Creates a new population for the ExpDE framework
 #' 
-#' @param popsize population size
-#' @param probpars list of named problem parameters (see \code{\link{ExpDE}}).
+#' @param L list with all important variables used in ExpDE.
+#' 
+#' @section Variable probpars:
+#' Population size.
+#' 
+#' @section Variable probpars:
+#' List of named problem parameters (see \code{\link{ExpDE}}).
 #' 
 #' @return A matrix containing the population for the ExpDE
 #' 

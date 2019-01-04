@@ -3,9 +3,7 @@
 #' Implements the "/none" recombination (i.e., no recombination performed) 
 #' for the ExpDE framework
 #' 
-#'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @param L list with all parameters for ExpDE framework 
 #' @param ... optional parameters (unused)
 #' 
 #' @return The same matrix \code{M} used as an input.

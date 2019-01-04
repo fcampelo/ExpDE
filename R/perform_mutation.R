@@ -1,3 +1,20 @@
+#' Perform mutation
+#' 
+#' Implements the control of mutation functions for the ExpDE framework
+#' 
+#' @section Mutation Parameters:
+#' The \code{mutpars} parameter contains all parameters required to define the 
+#' mutation. 
+#' 
+#' @param L list with all parameters for ExpDE framework
+#' 
+#' @return List \code{L} containing all updated parameters, including
+#' the mutated population \code{M}
+#' 
+#' @author Bruna Queiroz (\email{bsqueiroz98@@gmail.com})
+#' 
+#' @export
+
 perform_mutation <- function(L){
   mutpars <- L$mutpars
   

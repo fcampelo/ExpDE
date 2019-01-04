@@ -15,9 +15,8 @@
 #' @section Warning:
 #' This routine will search for the iterations counter (\code{t}), the maximum 
 #' number of iterations (\code{stopcrit$maxiter}), and the performance vector 
-#' of population \code{X} (\code{J}) in the parent environment (using 
-#' \code{parent.frame()}. These variables must be defined for 
-#' \code{recombination_pbest()} to work. 
+#' of population \code{X} (\code{J}) in list \code{L}.
+#' These variables must be defined for \code{recombination_pbest()} to work. 
 #'
 #' @section References:
 #' S.M. Islam, S. Das, S. Ghosh, S. Roy, P.N. Suganthan, "An Adaptive 
@@ -25,8 +24,12 @@
 #' Strategies for Global Numerical Optimization", IEEE. Trans. Systems, Man
 #' and Cybernetics - Part B 42(2), 482-500, 2012
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 

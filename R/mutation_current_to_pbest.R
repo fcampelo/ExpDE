@@ -23,11 +23,11 @@
 #' 
 #' @section Warning:
 #' This routine will search for the performance vector 
-#' of population \code{X} (\code{J}) in the parent environment (using 
-#' \code{parent.frame()}. This variable must be defined for 
-#' \code{mutation_current_to_pbest()} to work. 
+#' of population \code{X} (\code{J}) in the list \code{L}. This 
+#' variable must be defined for \code{mutation_best()} to work. 
 #' 
 #' @param X population matrix
+#' @param J performance vector for population \code{X}
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population

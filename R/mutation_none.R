@@ -8,6 +8,7 @@
 #' mutation. \code{mutation_none()} requires no fields in this parameter.
 #' 
 #' @param X population matrix
+#' @param J performance vector for population \code{X}
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return @return The same matrix \code{X} used as an input.

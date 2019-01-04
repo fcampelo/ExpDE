@@ -3,12 +3,19 @@
 #' Implements the standard selection (greedy) for the ExpDE framework
 #' 
 #'        
-#' @param X population matrix (original)
-#' @param U population matrix (recombined) 
-#' @param J performance vector for population \code{X}
-#' @param G performance vector for population \code{U}
+#' @section X: 
+#' Population matrix (original).
+#' @section U: 
+#' Population matrix (recombined). 
+#' @section J: 
+#' Performance vector for population \code{X}.
+#' @section G: 
+#' Performance vector for population \code{U}.
 #' 
-#' @return list object containing the selected population (\code{Xsel}) and 
+#' @param L list with all parameters for ExpDE framework
+#' 
+#' @return List \code{L} containing all updated parameters, including
+#' list object containing the selected population (\code{Xsel}) and 
 #' its corresponding performance values (\code{Jsel}).
 #' 
 #' @export

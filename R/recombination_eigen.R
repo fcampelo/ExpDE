@@ -19,8 +19,12 @@
 #' eigenvector-based crossover operator", IEEE Transactions on Evolutionary 
 #' Computation 19(1):31-49, 2015. 
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @param M:
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 

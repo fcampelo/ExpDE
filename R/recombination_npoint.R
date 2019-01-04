@@ -19,9 +19,13 @@
 #' L.J. Eshelman, R.A. Caruana, J.D. Schaffer (1989), "Biases in the crossover 
 #' landscape. In: Proceedings of the Third International Conference on Genetic 
 #' Algorithms, pp. 10-19, San Francisco, CA, USA.
-#'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 

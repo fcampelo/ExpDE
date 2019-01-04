@@ -2,11 +2,6 @@
 #' 
 #' Implements different stop criteria for the ExpDE framework
 #' 
-#' @section Warning:
-#' This routine accesses the parent environment used in the main function 
-#' \code{ExpDE()}, which means that changes made in the variables 
-#' contained in \code{env} WILL change the original values. DO NOT change 
-#' anything unless you're absolutely sure of what you're doing.
 #' 
 #' @return logical flag indicating whether any stop condition has been reached.
 #' @export
