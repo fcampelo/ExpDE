@@ -10,6 +10,7 @@
 recombination_operators <- function(){
   c("arith", 
   "bin",
+  "bin_jade",
   "blxAlphaBeta",
   "eigen",
   "exp",
