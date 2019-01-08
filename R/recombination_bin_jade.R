@@ -6,13 +6,13 @@ recombination_bin_jade <- function(L, recpars) {
   if (!assertthat::has_name(recpars, "minchange")) recpars$minchange <- TRUE
   
   assertthat::assert_that(assertthat::has_name(L$adapars, "CRi"),
-                          is.numeric(adapars$CRi),
-                          is_within(adapars$CRi, 0, 1),
+                          is.numeric(L$adapars$CRi),
+                          is_within(L$adapars$CRi, 0, 1),
                           assertthat::is.flag(recpars$minchange))
   # ==========
   
   # Recombination matrix
-  R <- randM(X) < adapars$CRi
+  R <- randM(X) < L$adapars$CRi
   
   if (recpars$minchange){
     indx    <- which(rowSums(R) == 0)

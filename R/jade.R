@@ -24,11 +24,19 @@ jade <- function(L, adapars) {
                     S.F  = c())
   } else {
     #Verify the files
-    assertthat::assert_that("A"    %in% names(adapars),
-                            "S.cr" %in% names(adapars),
-                            "S.F"  %in% names(adapars))
+    assertthat::assert_that("A"    %in% names(L$files),
+                            "S.cr" %in% names(L$files),
+                            "S.F"  %in% names(L$files))
     
-    #To do: Randomly remove solutions from A so that |A| <= NP
+    #Randomly remove solutions from A so that |A| <= NP
+    if(length(L$files$A) > length(L$X)) {
+      
+      rv        <- sample(1:length(L$files$A),
+                          length(L$files$A) - length(L$X), 
+                          replace = FALSE)
+      L$files$A <- L$files$A[-rv]
+    }
+    
     
     #Updating of values
     mean.cr <- (1 - c) * mean.cr + c * mean(adapars$S.cr)
@@ -50,6 +58,9 @@ jade <- function(L, adapars) {
                                       location = mean.F, 
                                       scale    = 0.1), 
                        nrow = popsize)
+  
+  adapars$mu.cr <- mean.cr
+  adapars$mu.F  <- mean.F
   
   return(adapars)
 }

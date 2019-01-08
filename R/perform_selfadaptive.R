@@ -1,7 +1,6 @@
 perform_selfadaptive <- function(L) {
-  adapars <- L$adapars
   
-  if(isTRUE(adapars$use)) {
+  if(isTRUE(L$adapars$use)) {
     
     # ========== Error catching and default value definitions
     assertthat::assert_that("name" %in% names(L$adapars))
@@ -10,7 +9,7 @@ perform_selfadaptive <- function(L) {
     #remember change this
     L$adapars <- do.call(adapars$name,
                          args = list(L,
-                                     adapars = adapars))
+                                     adapars = L$adapars))
   } 
   
   return(L)
