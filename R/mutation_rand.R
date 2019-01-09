@@ -27,7 +27,8 @@
 #' 
 #' @export
 
-mutation_rand <- function(X, J, mutpars){
+mutation_rand <- function(L, mutpars){
+  X <- L$X
 
   # ========== Error catching and default value definitions
   assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))

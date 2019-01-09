@@ -34,8 +34,7 @@ perform_mutation <- function(L){
   # ==========
   
   L$M <-       do.call(mutpars$name,
-                       args = list(X       = L$X,
-                                   J       = L$J,
+                       args = list(L       = L,
                                    mutpars = mutpars))
   L$mutpars <- mutpars
   return(L)

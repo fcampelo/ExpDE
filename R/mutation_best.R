@@ -19,8 +19,12 @@
 #' of population \code{X} (\code{J}) in the list \code{L}. This 
 #' variable must be defined for \code{mutation_best()} to work. 
 #' 
-#' @param X population matrix
-#' @param J performance vector for population \code{X}
+#' @Section X:
+#' Population matrix (original).
+#' @section J:
+#' Performance vector for population \code{X}.
+#' 
+#' @param L list with all parameters for ExpDE framework
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
@@ -32,7 +36,9 @@
 #' 
 #' @export
 
-mutation_best <- function(X, J, mutpars){
+mutation_best <- function(L, mutpars){
+  X <- L$X
+  J <- L$J
   
   # ========== Error catching and default value definitions
   assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))

@@ -14,8 +14,10 @@
 #'        Defaults to 1.
 #' }
 #' 
-#' @param X population matrix
-#' @param J performance vector for population \code{X}
+#' @Section X:
+#' Population matrix (original).
+#' 
+#' @param L list with all parameters for ExpDE framework
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
@@ -27,7 +29,8 @@
 #' 
 #' @export
 
-mutation_mean <- function(X, J, mutpars){
+mutation_mean <- function(L, mutpars){
+  X <- L$X
   
   # ========== Error catching and default value definitions
   

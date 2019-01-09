@@ -37,7 +37,9 @@
 #' 
 #' @export
 
-mutation_wgi <- function(X, J, mutpars){
+mutation_wgi <- function(L, mutpars){
+  X <- L$X
+  J <- L$J
 
   # ========== Error catching and default value definitions
   
