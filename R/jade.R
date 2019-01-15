@@ -1,22 +1,23 @@
-jade <- function(L, adapars) {
+#' @export
+jade <- function(L) {
   # ========== Error catching and default value definitions
   
-  assertthat::assert_that("popsize"  %in% names(L),
-                          "probpars" %in% names(L))
+  assertthat::assert_that("popsize"                %in% names(L),
+                          "probpars"               %in% names(L))
   
-  assertthat::assert_that(is.numeric(adapars$c),
-                          is.numeric(adapars$mu.cr),
-                          is.numeric(adapars$mu.F))
+  assertthat::assert_that(is.numeric(L$adapars$c),
+                          is.numeric(L$adapars$mu.cr),
+                          is.numeric(L$adapars$mu.F))
   # ========== 
   
-  mean.cr <- adapars$mu.cr
-  mean.F  <- adapars$mu.F
+  mean.cr <- L$adapars$mu.cr
+  mean.F  <- L$adapars$mu.F
   
   #Auxiliar function: Lehmer mean
   meanL <- function(SF) {
-    return((sum(SF ^ 2)) / (sum(SF)))
+   return((sum(SF ^ 2)) / (sum(SF)))
   }
-  
+
   #Check if it is not the first iteration to update the mean.cr and mean.F
   if(identical(L$t, 1)) {
     L$files <- list(A    = c(),
@@ -39,8 +40,9 @@ jade <- function(L, adapars) {
     
     
     #Updating of values
-    mean.cr <- (1 - c) * mean.cr + c * mean(adapars$S.cr)
-    mean.F  <- (1 - c) * mean.F  + c * meanL(adapars$S.F)
+    c <- L$adapars$c
+    mean.cr <- (1 - c) * mean.cr + c * mean(L$adapars$S.cr)
+    mean.F  <- (1 - c) * mean.F  + c * meanL(L$adapars$S.F)
   }
   
   
@@ -49,18 +51,19 @@ jade <- function(L, adapars) {
   probpars <- L$probpars 
   prob.dim <- length(probpars$xmax)
   
-  adapars$CRi <- matrix(stats::rnorm(n    = popsize * prob.dim, 
-                                     mean = mean.cr, 
-                                     sd   = 0.1), 
-                        nrow = popsize)
+  L$adapars$CRi <- matrix(stats::rnorm(n    = popsize * prob.dim, 
+                                       mean = mean.cr, 
+                                       sd   = 0.1), 
+                          nrow = popsize)
   
-  adapars$Fi <- matrix(stats::rcauchy(n        = popsize * prob.dim, 
-                                      location = mean.F, 
-                                      scale    = 0.1), 
-                       nrow = popsize)
+  L$adapars$Fi <- matrix(stats::rcauchy(n        = popsize * prob.dim, 
+                                        location = mean.F, 
+                                        scale    = 0.1), 
+                         nrow = popsize)
   
-  adapars$mu.cr <- mean.cr
-  adapars$mu.F  <- mean.F
+  L$adapars$mu.cr <- mean.cr
+  L$adapars$mu.F  <- mean.F
   
-  return(adapars)
+
+  return(L)
 }

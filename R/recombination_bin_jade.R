@@ -1,3 +1,4 @@
+#' @export
 recombination_bin_jade <- function(L, recpars) {
   X       = L$X
   M       = L$M
@@ -7,7 +8,6 @@ recombination_bin_jade <- function(L, recpars) {
   
   assertthat::assert_that(assertthat::has_name(L$adapars, "CRi"),
                           is.numeric(L$adapars$CRi),
-                          is_within(L$adapars$CRi, 0, 1),
                           assertthat::is.flag(recpars$minchange))
   # ==========
   

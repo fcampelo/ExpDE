@@ -9,6 +9,7 @@
 mutation_operators <- function(){
   c("best",
     "current-to-pbest",
+    "jade",
     "mean",
     "none",
     "rand",

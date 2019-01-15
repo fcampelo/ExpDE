@@ -24,9 +24,10 @@ perform_mutation <- function(L){
   assertthat::assert_that("X" %in% names(L),
                           "J" %in% names(L))
   
+  #To do: mutation_jade has no f
   assertthat::assert_that(is.matrix(L$X), is.numeric(L$X),
                           assertthat::is.count(mutpars$nvecs),
-                          assertthat::has_name(mutpars, "f"),
+                          assertthat::has_name(mutpars, "f"), 
                           is.numeric(mutpars$f))
   
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 

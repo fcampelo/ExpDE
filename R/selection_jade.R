@@ -1,3 +1,4 @@
+#' @export
 selection_jade <- function(L){
   # ========== Error catching and default value definitions
   assertthat::assert_that("files" %in% names(L),
@@ -26,8 +27,9 @@ selection_jade <- function(L){
   CRi     <- adapars$CRi
   
   #verify ????
+  #error
   S.cr <- c(files$S.cr, CRi[sel.vec])
-  S.F  <- c(files$S.F,  Fi[sel.vec])
+  S.F  <- c(files$S.F,  adapars$Fi[sel.vec])
   A    <- c(files$A,    X[!sel.vec,])
   
   L$files <- list(A    = A,

@@ -1,3 +1,4 @@
+#' @export
 perform_selfadaptive <- function(L) {
   
   if(isTRUE(L$adapars$use)) {
@@ -7,10 +8,10 @@ perform_selfadaptive <- function(L) {
     # ========== 
     
     #remember change this
-    L$adapars <- do.call(adapars$name,
-                         args = list(L,
-                                     adapars = L$adapars))
-  } 
+    #L <- do.call(L$adapars$name,
+    #            args = list(L))
+    L <- jade(L)
+    } 
   
   return(L)
   
