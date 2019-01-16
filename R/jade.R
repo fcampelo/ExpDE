@@ -41,8 +41,9 @@ jade <- function(L) {
     
     #Updating of values
     c <- L$adapars$c
-    mean.cr <- (1 - c) * mean.cr + c * mean(L$adapars$S.cr)
-    mean.F  <- (1 - c) * mean.F  + c * meanL(L$adapars$S.F)
+    
+    mean.cr <- (1 - c) * mean.cr + c * mean(L$files$S.cr)
+    mean.F  <- (1 - c) * mean.F  + c * meanL(L$files$S.F)
   }
   
   
