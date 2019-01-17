@@ -36,21 +36,24 @@ mutation_jade <- function(L, mutpars){
     Pop2  <- sample(x       = c(Pop, file), 
                     size    = length(Pop), 
                     replace = FALSE)
+    
     Pop2  <- matrix(data = Pop2,
                     nrow = nrow(Pop),
                     ncol = ncol(Pop))
     
-    return(Pop[pos[2], ] + 
-             colSums(f * (Pop[diffs[, 1], ] - Pop2[diffs[, 2], ]))) #erro para multiplicar
+    #To do:
+    #How to ensure that Pop[diffs[, 1], ] - Pop2[diffs[, 2], ] are different
+    #Verify the return
+    return(Pop[pos[2], ] +
+             colSums(f* (Pop[diffs[, 1], ] - Pop2[diffs[, 2], ]))) 
   }
-  #To do:
-  #how to ensure that Pop[diffs[, 1], ] - Pop2[diffs[, 2], ] are different
+  
   # Apply mutation
   M <- lapply(R, 
               FUN    = pbestmut, 
               Pop    = X,
               file   = L$files$A,
-              f      = mutpars$f)
+              f      = L$mutpars$f)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

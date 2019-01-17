@@ -1,5 +1,5 @@
 #' @export
-jade <- function(L) {
+selfadaptative_jade <- function(L) {
   # ========== Error catching and default value definitions
   
   assertthat::assert_that("popsize"                %in% names(L),
@@ -15,9 +15,9 @@ jade <- function(L) {
   
   #Auxiliar function: Lehmer mean
   meanL <- function(SF) {
-   return((sum(SF ^ 2)) / (sum(SF)))
+    return((sum(SF ^ 2)) / (sum(SF)))
   }
-
+  
   #Check if it is not the first iteration to update the mean.cr and mean.F
   if(identical(L$t, 1)) {
     L$files <- list(A    = c(),
@@ -65,6 +65,6 @@ jade <- function(L) {
   L$adapars$mu.cr <- mean.cr
   L$adapars$mu.F  <- mean.F
   
-
+  
   return(L)
 }

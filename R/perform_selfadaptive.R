@@ -7,10 +7,8 @@ perform_selfadaptive <- function(L) {
     assertthat::assert_that("name" %in% names(L$adapars))
     # ========== 
     
-    #remember change this
-    #L <- do.call(L$adapars$name,
-    #            args = list(L))
-    L <- jade(L)
+    L <- do.call(L$adapars$name,
+                args = list(L))
     } 
   
   return(L)

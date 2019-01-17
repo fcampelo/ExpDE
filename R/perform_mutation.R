@@ -30,6 +30,7 @@ perform_mutation <- function(L){
                           assertthat::has_name(mutpars, "f"), 
                           is.numeric(mutpars$f))
   
+  
   if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
                                                mutpars$nvecs)
   # ==========
