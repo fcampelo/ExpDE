@@ -14,11 +14,6 @@ perform_selection <- function(L) {
                           length(L$J) == nrow(L$X), 
                           length(L$G) == nrow(L$U))
   
-  # Check if uses the self-adaptive parameters
-  if(isTRUE(L$adapars$use)) {
-    assertthat::assert_that(identical(L$adapars$name, "selfadaptative_jade") &
-                            identical(L$selpars$name, "selection_jade"))
-  }
   # ========== 
   
   L <- do.call(selpars$name,
