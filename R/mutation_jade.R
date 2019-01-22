@@ -45,7 +45,7 @@ mutation_jade <- function(L, mutpars){
     #How to ensure that Pop[diffs[, 1], ] - Pop2[diffs[, 2], ] are different
     #Verify the return
     return(Pop[pos[2], ] +
-             colSums(f* (Pop[diffs[, 1], ] - Pop2[diffs[, 2], ]))) 
+             colSums(f[pos[2],] * (Pop[diffs[, 1], ] - Pop2[diffs[, 2], ]))) 
   }
   
   # Apply mutation
@@ -53,7 +53,7 @@ mutation_jade <- function(L, mutpars){
               FUN    = pbestmut, 
               Pop    = X,
               file   = L$files$A,
-              f      = L$mutpars$f)
+              f      = L$adapars$Fi)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 
