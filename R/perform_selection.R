@@ -1,3 +1,19 @@
+#' Perform selection
+#' 
+#' Implements the control of selection functions for the ExpDE framework
+#' 
+#' @section Selection Parameters:
+#' The \code{selpars} parameter contains all parameters required to define the 
+#' selection. 
+#' 
+#' @param L list with all parameters for ExpDE framework
+#' 
+#' @return List \code{L} containing all updated parameters, including
+#' the mutated population \code{M}
+#' 
+#' @author Bruna Queiroz (\email{bsqueiroz98@@gmail.com})
+#' 
+#' @export
 perform_selection <- function(L) {
   selpars <- L$selpars
   

@@ -1,3 +1,45 @@
+#' JADE parameter adaptation method for DE
+#' 
+#' Implements the JADE method with external archive for the ExpDE 
+#' framework
+#' 
+#' @section JADE Parameters:
+#' The \code{adapars} parameter contains all parameters required for parameter adaptation. 
+#' \code{selfadaptive_jade()} understands the following 
+#' fields in \code{adapars}:
+#' \itemize{
+#'    \item \code{mu.cr} : mean of normal distribution for calculating crossover
+#'                         probability (CRi).
+#'    \item \code{mu.F} : location parameter of the Cauchy distribution for calculating
+#'                        mutation factors (Fi). 
+#'    \item \code{c} : control the rate of parameter adaptation.
+#'    \item \code{CRi} : crossover probability of each individual in population.
+#'    \item \code{Fi} : mutation factor od each individual in population.
+#'    \item \code{A} : optional archive, set of archived inferior solutions of the 
+#'                      population.
+#'    \item \code{S.cr} : set of all successful crossover probabilitie's CRi's at a 
+#'                        geneation.
+#'    \item \code{S.F} : set of all successful mutation factors in generation.
+#' }
+#' 
+#' @section Warning:
+#'  The implementation of JADE considers the mutation strategy "DE/current-to-p-best"
+#'  and recombination strategy "DE/bin".
+#'  The name of the operators for recombination, mutation and selection must be 
+#'  the corresponding to the JADE method in the definition of parameters. \code{
+#'  mutation_jade, recombination_bin and selection_jade}.
+#'  
+#'
+#' @section References:
+#' J. Zhang, A.C. Sanderson, 
+#' "JADE: Adaptive differential evolution with optional external archive". 
+#' IEEE Transactions on Evolutionary Computation 13:945-958, 2009
+#'
+#' 
+#' @param L list with all parameters for ExpDE framework
+#' 
+#' @return List \code{L} containing all updated parameters.
+#' 
 #' @export
 selfadaptative_jade <- function(L) {
   # ========== Error catching and default value definitions

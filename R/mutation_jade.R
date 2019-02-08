@@ -1,5 +1,52 @@
+#' /current-to-pbest mutation for adaptive DE
+#' 
+#' Implements the "/current-to-pbest" mutation with changes to the use
+#' of the JADE self-adaptation method
+#' 
+#' This routine also implements one special case: 
+#' \itemize{
+#'  \item current-to-best mutation (\code{current_to_best}), by setting 
+#'    \code{mutpars$p = 1}); 
+#'  \item Flat recombination (\code{flat}), by setting 
+#'    \code{recpars$alpha = recpars$beta = 0})
+#' }
+#' @section Mutation Parameters:
+#' The \code{mutpars} parameter contains all parameters required to define the 
+#' mutation. \code{mutation_jade()} understands the following fields in 
+#' \code{mutpars}:
+#' \itemize{
+#'    \item \code{p} : either the number of "best" vectors to use (if given as a 
+#'    positive integer) or the proportion of the population to use as "best"
+#'    vectors (if 0 < p < 1). \cr
+#' }
+#' \code{adapars}:
+#' \itemize{
+#'    \item \code{Fi} : set of scaling factor of each individual for difference
+#'     vector(s). 
+#' }
+#' 
+#' @section Warning:
+#' This routine will search for the performance vector 
+#' of population \code{X} (\code{J}) in the list \code{L}. This 
+#' variable must be defined for \code{mutation_jade()} to work. 
+#' 
+#' @Section X:
+#' Population matrix (original).
+#' @section J:
+#' Performance vector for population \code{X}.
+#' 
+#' @param L list with all parameters for ExpDE framework
+#' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
+#' 
+#' @return Matrix \code{M} containing the mutated population
+#' @author Felipe Campelo (\email{fcampelo@@ufmg.br})
+#' 
+#' @section References:
+#' J. Zhang, A.C. Sanderson, 
+#' "JADE: Adaptive differential evolution with optional external archive". 
+#' IEEE Transactions on Evolutionary Computation 13:945-958, 2009
+#' 
 #' @export
-# /current-to-pbest mutation for Adaptative DE
 
 mutation_jade <- function(L, mutpars){
   X <- L$X
@@ -43,7 +90,7 @@ mutation_jade <- function(L, mutpars){
     
     #To do:
     #How to ensure that Pop[diffs[, 1], ] - Pop2[diffs[, 2], ] are different
-    #Verify the return
+    
     return(Pop[pos[2], ] +
              colSums(f[pos[2],] * (Pop[diffs[, 1], ] - Pop2[diffs[, 2], ]))) 
   }

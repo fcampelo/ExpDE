@@ -134,6 +134,13 @@
 #'      frequently the routine echoes something to the terminal. Defaults 
 #'      to \code{1}.
 #'  }
+#' @section In Construction:
+#' This package contains functions for use of routines with self
+#' adaptive parameters methods. For now, there is only the implementation of 
+#' JADE method. To use it, you must define \code{adapars$use = TRUE} and 
+#' define parameters in accordance with the documentation of
+#' \code{selfadaptive_jade}.
+#'    
 #' 
 #' @param popsize population size
 #' @param mutpars list of named mutation parameters.
@@ -142,6 +149,7 @@
 #'    See \code{Recombination parameters} for details.
 #' @param selpars list of named selection parameters.
 #'    See \code{Selection parameters} for details.
+#' @param adapars list of named self adaptive parameters.
 #' @param stopcrit list of named stop criteria parameters. 
 #'    See \code{Stop criteria} for details.
 #' @param probpars list of named problem parameters.
