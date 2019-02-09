@@ -4,7 +4,7 @@
 \alias{print_progress}
 \title{Print progress of DE}
 \usage{
-print_progress()
+print_progress(L)
 }
 \description{
 Echoes the progress of DE to the terminal

@@ -16,8 +16,12 @@
 #' K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
 #' Practical Approach to Global Optimization", Springer 2005
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 
@@ -25,13 +29,12 @@
 #' 
 #' @export
 
-recombination_exp <- function(X, M, recpars) {
+recombination_exp <- function(L, recpars) {
+  X       = L$X
+  M       = L$M
   
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "cr"),
+  assertthat::assert_that(assertthat::has_name(recpars, "cr"),
                           is_within(recpars$cr, 0, 1))
   # ==========
   

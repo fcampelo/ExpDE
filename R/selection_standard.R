@@ -3,31 +3,35 @@
 #' Implements the standard selection (greedy) for the ExpDE framework
 #' 
 #'        
-#' @param X population matrix (original)
-#' @param U population matrix (recombined) 
-#' @param J performance vector for population \code{X}
-#' @param G performance vector for population \code{U}
+#' @section X: 
+#' Population matrix (original).
+#' @section U: 
+#' Population matrix (recombined). 
+#' @section J: 
+#' Performance vector for population \code{X}.
+#' @section G: 
+#' Performance vector for population \code{U}.
 #' 
-#' @return list object containing the selected population (\code{Xsel}) and 
+#' @param L list with all parameters for ExpDE framework
+#' 
+#' @return List \code{L} containing all updated parameters, including
+#' list object containing the selected population (\code{Xsel}) and 
 #' its corresponding performance values (\code{Jsel}).
 #' 
 #' @export
 
-selection_standard <- function(X, U, J, G){
-  
-  # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(U), is.numeric(U),
-                          is.numeric(J), is.numeric(G),
-                          assertthat::are_equal(dim(X), dim(U)),
-                          length(J) == nrow(X), 
-                          length(G) == nrow(U))
-  # ========== 
+selection_standard <- function(L){
+  X <- L$X
+  U <- L$U
+  J <- L$J
+  G <- L$G
   
   sel.vec       <- (G <= J)
   X[sel.vec, ]  <- U[sel.vec, ]
   J[sel.vec]    <- G[sel.vec]
   
-  return(list(Xsel = X, 
-              Jsel = J))
+  L$nextpop <- list(Xsel = X, 
+                    Jsel = J) 
+  
+  return(L)
 }

@@ -4,12 +4,10 @@
 \alias{recombination_sbx}
 \title{/sbx recombination for DE}
 \usage{
-recombination_sbx(X, M, recpars)
+recombination_sbx(L, recpars)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
@@ -41,5 +39,15 @@ operator for real-coded genetic algorithms: an experimental study",
 International Journal of Intelligent Systems 18(3) 309-338, 2003.\cr
 K. Deb, R.B. Agrawal, "Simulated binary crossover for continuous search 
 space", Complex Systems (9):115-148, 1995.
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

@@ -4,10 +4,10 @@
 \alias{mutation_mean}
 \title{/mean mutation for DE}
 \usage{
-mutation_mean(X, mutpars)
+mutation_mean(L, mutpars)
 }
 \arguments{
-\item{X}{population matrix}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{mutpars}{mutation parameters (see \code{Mutation parameters} for details)}
 }
@@ -29,6 +29,11 @@ mutation. \code{mutation_mean()} understands the following fields in
        Accepts \code{1 <= nvecs <= (nrow(X)/2 - 2)}\cr
        Defaults to 1.
 }
+}
+
+\section{X}{
+
+Population matrix (original).
 }
 
 \section{References}{

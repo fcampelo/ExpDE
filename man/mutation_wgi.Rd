@@ -4,13 +4,15 @@
 \alias{mutation_wgi}
 \title{/wgi mutation for DE}
 \usage{
-mutation_wgi(X, mutpars)
+mutation_wgi(L, mutpars)
 }
 \arguments{
-\item{X}{population matrix}
-
 \item{mutpars}{mutation parameters (see \code{Mutation parameters} for 
 details)}
+
+\item{X}{population matrix}
+
+\item{J}{performance vector for population \code{X}}
 }
 \value{
 Matrix \code{M} containing the mutated population

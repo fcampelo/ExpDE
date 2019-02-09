@@ -18,6 +18,7 @@
 #' }
 #' 
 #' @param X population matrix
+#' @param J performance vector for population \code{X}
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for 
 #' details)
 #' 
@@ -36,23 +37,14 @@
 #' 
 #' @export
 
-mutation_wgi <- function(X, mutpars){
+mutation_wgi <- function(L, mutpars){
+  X <- L$X
+  J <- L$J
 
   # ========== Error catching and default value definitions
   
-  # Get access to variables in the calling environment
-  env <- parent.frame()
+  assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))
   
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          assertthat::is.count(mutpars$nvecs),
-                          mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f))
-
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
   # ==========
   
   # Set weights
@@ -62,7 +54,7 @@ mutation_wgi <- function(X, mutpars){
               byrow = FALSE)
   
   # Define basis vector (weighted global intermediate)
-  x.basis  <- colSums(X[order(env$J), ] * W)
+  x.basis  <- colSums(X[order(J), ] * W)
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
   R <- lapply(X = rep(nrow(X), 

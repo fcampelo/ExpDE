@@ -4,12 +4,14 @@
 \alias{mutation_rand}
 \title{/rand mutation for DE}
 \usage{
-mutation_rand(X, mutpars)
+mutation_rand(L, mutpars)
 }
 \arguments{
+\item{mutpars}{mutation parameters (see \code{Mutation parameters} for details)}
+
 \item{X}{population matrix}
 
-\item{mutpars}{mutation parameters (see \code{Mutation parameters} for details)}
+\item{J}{performance vector for population \code{X}}
 }
 \value{
 Matrix \code{M} containing the mutated population

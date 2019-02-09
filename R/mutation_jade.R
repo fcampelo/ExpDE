@@ -1,6 +1,7 @@
-#' /current-to-pbest mutation for DE
+#' /current-to-pbest mutation for adaptive DE
 #' 
-#' Implements the "/current-to-pbest" mutation for the ExpDE framework
+#' Implements the "/current-to-pbest" mutation with changes to the use
+#' of the JADE self-adaptation method
 #' 
 #' This routine also implements one special case: 
 #' \itemize{
@@ -11,20 +12,23 @@
 #' }
 #' @section Mutation Parameters:
 #' The \code{mutpars} parameter contains all parameters required to define the 
-#' mutation. \code{mutation_current_to_pbest()} understands the following fields in 
+#' mutation. \code{mutation_jade()} understands the following fields in 
 #' \code{mutpars}:
 #' \itemize{
-#'    \item \code{f} : scaling factor for difference vector(s).\cr
-#'    Accepts numeric vectors of size 1 or \code{nvecs}.
 #'    \item \code{p} : either the number of "best" vectors to use (if given as a 
 #'    positive integer) or the proportion of the population to use as "best"
-#'    vectors (if 0 < p < 1).
+#'    vectors (if 0 < p < 1). \cr
+#' }
+#' \code{adapars}:
+#' \itemize{
+#'    \item \code{Fi} : set of scaling factor of each individual for difference
+#'     vector(s). 
 #' }
 #' 
 #' @section Warning:
 #' This routine will search for the performance vector 
 #' of population \code{X} (\code{J}) in the list \code{L}. This 
-#' variable must be defined for \code{mutation_best()} to work. 
+#' variable must be defined for \code{mutation_jade()} to work. 
 #' 
 #' @section X:
 #' Population matrix (original).
@@ -44,15 +48,15 @@
 #' 
 #' @export
 
-mutation_current_to_pbest <- function(L, mutpars){
+mutation_jade <- function(L, mutpars){
   X <- L$X
   J <- L$J
-
+  
   # ========== Error catching and default value definitions
   
   assertthat::assert_that(is.numeric(mutpars$p), 
                           is_within(mutpars$p, 0, nrow(X), strict = TRUE))
-
+  
   if (is_within(mutpars$p, 0, 1, strict = TRUE)){
     mutpars$p <- ceiling(mutpars$p * nrow(X))
   }
@@ -69,22 +73,34 @@ mutation_current_to_pbest <- function(L, mutpars){
               i       = 1:nrow(X),
               MoreArgs = list(ibest),
               SIMPLIFY = FALSE)
-
-    
+  
+  
   # Auxiliary function: make a single mutation
-  pbestmut <- function(pos, Pop, f){
+  pbestmut <- function(pos, Pop, file, f){
     diffs <- matrix(pos,
                     ncol  = 2,
                     byrow = TRUE)
-    return(Pop[pos[2], ] + 
-             colSums(f * (Pop[diffs[, 1], ] - Pop[diffs[, 2], ])))
+    Pop2  <- sample(x       = c(Pop, file), 
+                    size    = length(Pop), 
+                    replace = FALSE)
+    
+    Pop2  <- matrix(data = Pop2,
+                    nrow = nrow(Pop),
+                    ncol = ncol(Pop))
+    
+    #To do:
+    #How to ensure that Pop[diffs[, 1], ] - Pop2[diffs[, 2], ] are different
+    
+    return(Pop[pos[2], ] +
+             colSums(f[pos[2],] * (Pop[diffs[, 1], ] - Pop2[diffs[, 2], ]))) 
   }
-
+  
   # Apply mutation
   M <- lapply(R, 
               FUN    = pbestmut, 
-              Pop    = X, 
-              f      = mutpars$f)
+              Pop    = X,
+              file   = L$files$A,
+              f      = L$adapars$Fi)
   
   return(matrix(data  = unlist(M), 
                 nrow  = nrow(X), 

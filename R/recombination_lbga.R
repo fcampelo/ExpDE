@@ -15,36 +15,36 @@
 #' Competing Subpopulations", Proc. Parallel Problem Solving from Nature 
 #' (PPSN III), 199-208, 1994.
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param ... optional parameters (unused)
 #' 
 #' @return Matrix \code{U} containing the recombined population
 #' 
 #' @export
 
-recombination_lbga <- function(X, M, ...) {
+recombination_lbga <- function(L, ...) {
+  X       = L$X
+  M       = L$M
   # ========== Error catching and default value definitions
-  
-  # Get access to variables in the calling environment
-  env <- parent.frame()
-  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          all(assertthat::has_name(env, 
+
+  assertthat::assert_that(all(assertthat::has_name(L, 
                                                    c("J", "probpars", "nfe"))))
   # ==========
   
   # Performance values of the current population (X)
-  f.X <- env$J
+  f.X <- L$J
   
   #Evaluate population M
-  f.M <- evaluate_population(probpars = env$probpars, 
+  f.M <- evaluate_population(probpars = L$probpars, 
                              Pop      = M)
   
   # Update NFE counter in calling environment
-  env$nfe <- env$nfe + nrow(M)
+  L$nfe <- L$nfe + nrow(M)
   
   # Get best parent indicator matrix
   X.is.best <- matrix(rep(f.X <= f.M,

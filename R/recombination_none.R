@@ -3,22 +3,15 @@
 #' Implements the "/none" recombination (i.e., no recombination performed) 
 #' for the ExpDE framework
 #' 
-#'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @param L list with all parameters for ExpDE framework 
 #' @param ... optional parameters (unused)
 #' 
 #' @return The same matrix \code{M} used as an input.
 #' 
 #' @export
 
-recombination_none <- function(X, M, ...) {
-  
-  # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)))
-  # ==========
-  
+recombination_none <- function(L, ...) {
+  M       = L$M
   # Return unmodified mutant population
   return(M)
 }

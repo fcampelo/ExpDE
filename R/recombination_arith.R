@@ -7,22 +7,21 @@
 #' operator for real-coded genetic algorithms: an experimental study", 
 #' International Journal of Intelligent Systems 18(3) 309-338, 2003.
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M:
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework
 #' @param ... optional parameters (unused)
 #' 
 #' @return Matrix \code{U} containing the recombined population
 #' 
 #' @export
 
-recombination_arith <- function(X, M, ...) {
-  
-  # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)))
-  
-  # ==========
+recombination_arith <- function(L, ...) {
+  X       = L$X
+  M       = L$M
   
   lambda <- matrix(rep(stats::runif(nrow(X)),
                        ncol(X)),

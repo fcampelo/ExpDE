@@ -4,12 +4,10 @@
 \alias{recombination_wright}
 \title{Heuristic Wright recombination for DE}
 \usage{
-recombination_wright(X, M, ...)
+recombination_wright(L, ...)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{...}{optional parameters (unused)}
 }
@@ -33,5 +31,15 @@ operator for real-coded genetic algorithms: an experimental study",
 International Journal of Intelligent Systems 18(3) 309-338, 2003.\cr
 A.H. Wright, "Genetic Algorithms for Real Parameter Optimization",
 Proc. Foundations of Genetic Algorithms, 205-218, 1991.
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

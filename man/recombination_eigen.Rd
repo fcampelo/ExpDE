@@ -4,15 +4,15 @@
 \alias{recombination_eigen}
 \title{/eigen recombination for DE}
 \usage{
-recombination_eigen(X, M, recpars)
+recombination_eigen(L, recpars)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
+
+\item{M:}{Population matrix (mutated).}
 }
 \value{
 Matrix \code{U} containing the recombined population
@@ -39,5 +39,10 @@ in \code{recpars}:
 Shu-Mei Guo e Chin-Chang Yang, "Enhancing differential evolution utilizing 
 eigenvector-based crossover operator", IEEE Transactions on Evolutionary 
 Computation 19(1):31-49, 2015.
+}
+
+\section{X}{
+
+Population matrix (original).
 }
 

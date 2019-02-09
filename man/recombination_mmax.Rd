@@ -4,12 +4,10 @@
 \alias{recombination_mmax}
 \title{Min Max Arithmetical recombination for DE}
 \usage{
-recombination_mmax(X, M, recpars = list(lambda = NULL))
+recombination_mmax(L, recpars = list(lambda = NULL))
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
@@ -51,5 +49,15 @@ International Journal of Intelligent Systems 18(3):309-338, 2003.\cr
 F Herrera, M. Lozano,  J.L. Verdegay, "Tuning fuzzy logic controllers by 
 genetic algorithms.", International Journal of Approximate Reasoning 
 12(3):299-315, 1995. \cr
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

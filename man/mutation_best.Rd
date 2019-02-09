@@ -4,10 +4,10 @@
 \alias{mutation_best}
 \title{/best mutation for DE}
 \usage{
-mutation_best(X, mutpars)
+mutation_best(L, mutpars)
 }
 \arguments{
-\item{X}{population matrix}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{mutpars}{mutation parameters (see \code{Mutation parameters} for details)}
 }
@@ -34,9 +34,18 @@ mutation. \code{mutation_best()} understands the following fields in
 \section{Warning}{
 
 This routine will search for the performance vector 
-of population \code{X} (\code{J}) in the parent environment (using 
-\code{parent.frame()}. This variable must be defined for 
-\code{mutation_best()} to work.
+of population \code{X} (\code{J}) in the list \code{L}. This 
+variable must be defined for \code{mutation_best()} to work.
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{J}{
+
+Performance vector for population \code{X}.
 }
 
 \section{References}{

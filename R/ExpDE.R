@@ -134,6 +134,13 @@
 #'      frequently the routine echoes something to the terminal. Defaults 
 #'      to \code{1}.
 #'  }
+#' @section In Construction:
+#' This package contains functions for use of routines with self
+#' adaptive parameters methods. For now, there is only the implementation of 
+#' JADE method. To use it, you must define \code{adapars$use = TRUE} and 
+#' define parameters in accordance with the documentation of
+#' \code{selfadaptive_jade}.
+#'    
 #' 
 #' @param popsize population size
 #' @param mutpars list of named mutation parameters.
@@ -142,6 +149,7 @@
 #'    See \code{Recombination parameters} for details.
 #' @param selpars list of named selection parameters.
 #'    See \code{Selection parameters} for details.
+#' @param adapars list of named self adaptive parameters.
 #' @param stopcrit list of named stop criteria parameters. 
 #'    See \code{Stop criteria} for details.
 #' @param probpars list of named problem parameters.
@@ -196,100 +204,110 @@
 #' @export
 
 ExpDE <- function(popsize,
-                  mutpars  = list(name  = "mutation_rand",
-                                  f     = 0.2),
-                  recpars  = list(name  = "recombination_bin",
-                                  cr    = 0.8, 
-                                  nvecs = 1),
-                  selpars  = list(name  = "standard"),
+                  mutpars  = list(name     = "mutation_rand",
+                                  f        = 0.2),
+                  recpars  = list(name     = "recombination_bin",
+                                  cr       = 0.8, 
+                                  nvecs    = 1),
+                  selpars  = list(name     = "standard"),
+                  adapars  = list(use      = FALSE,
+                                  name     = "jade",
+                                  mu.cr    = 0.5,
+                                  mu.F     = 0.5),
                   stopcrit,
                   probpars,
                   seed     = NULL,
                   showpars = list(show.iters = "none"))
 {
+  
+  ## Get all input parameters
+  # for debug:
+  L <- as.list(environment())  
+  #L <- as.list(sys.call())[-1]
+  
   #  ========== Error catching and default value definitions 
-  if (is.null(seed)) {
+  if (is.null(L$seed)) {
     if (!exists(".Random.seed")) stats::runif(1)
-    seed <- .Random.seed
+    L$seed <- .Random.seed
   } else {
     assertthat::assert_that(assertthat::is.count(seed))
-    set.seed(seed)               # set PRNG seed
+    set.seed(L$seed)               # set PRNG seed
   }
   
   # ==========
   
   # Generate initial population
-  X <- create_population(popsize  = popsize,
-                         probpars = probpars)
-
+  L <- create_population(L)
+  X <- L$X
+  
   # Evaluate the initial population
-  J <- evaluate_population(probpars = probpars,
+  J <- evaluate_population(probpars = L$probpars,
                            Pop      = X)
+  L$J <- J
 
   # Prepare for iterative cycle:
-  keep.running  <- TRUE     # stop criteria flag
-  t             <- 0        # counter: iterations
-  nfe           <- popsize  # counter: number of function evaluations
-
+  keep.running      <- TRUE     # stop criteria flag
+  L$t               <- 0        # counter: iterations
+  L$nfe             <- popsize  # counter: number of function evaluations
+  
 
   # Iterative cycle
   while(keep.running){
     # Update iteration counter
-    t <- t + 1          
+    L$t <- L$t + 1          
     
     # Reset candidate vector performance values
-    G <- NA * J
+    G <- NA * L$J
+    #G <- NA * J
+    
+    #Self-adaptative 
+    L <- perform_selfadaptive(L)
 
     # Mutation
-    M <- do.call(mutpars$name,
-                 args = list(X       = X,
-                             mutpars = mutpars))
-
+    L <- perform_mutation(L)
+    M <- L$M
 
     # Recombination
-    U <- do.call(recpars$name,
-                 args = list(X       = X,
-                             M       = M,
-                             recpars = recpars))
+    L <- perform_recombination(L)
+    U <- L$U
     
     # Repair U
-    U <- matrix(pmax(0, pmin(U, 1)), 
-                byrow = FALSE, 
-                nrow  = nrow(U))
+    L$U <- matrix(pmax(0, pmin(U, 1)), 
+                  byrow = FALSE, 
+                  nrow  = nrow(U))
 
     # Evaluate U 
     # Some recombination operators evaluate the 'offspring' solutions, so only
     # the 'unevaluated' ones need to be dealt with here.
     toeval <- is.na(G)
-    G[toeval] <- evaluate_population(probpars = probpars,
-                                     Pop      = U[toeval, ])
-    nfe <- nfe + sum(toeval)
+    G[toeval] <- evaluate_population(probpars = L$probpars,
+                                     Pop      = L$U[toeval, ]) 
+    
+    L$G <- G
+    L$nfe <- L$nfe + sum(toeval)
 
     # Selection
-    next.pop <- do.call(selpars$name,
-                        args = list(X = X,
-                                    U = U,
-                                    J = J,
-                                    G = G))
-
+    L <- perform_selection(L)
+    next.pop <- L$nextpop
+   
     # Stop criteria
-    keep.running <- check_stop_criteria()
+    keep.running <- check_stop_criteria(L)
 
     # Compose next population
-    X <- next.pop$Xsel
-    J <- next.pop$Jsel
+    L$X <- next.pop$Xsel
+    L$J <- next.pop$Jsel
     
     # Echo progress
-    print_progress()
+    print_progress(L)
   }
 
-  X <- denormalize_population(probpars, X[order(J), ])
-  J <- sort(J)
+  X <- denormalize_population(L$probpars, L$X[order(L$J), ])
+  J <- sort(L$J)
   return(list(X     = X,
               Fx    = J,
               Xbest = X[1,],
               Fbest = J[1],
-              seed = seed,
-              nfe   = nfe,
-              iter  = t))
+              seed  = L$seed,
+              nfe   = L$nfe,
+              iter  = L$t))
 }

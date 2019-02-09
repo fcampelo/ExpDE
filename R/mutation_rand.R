@@ -15,6 +15,7 @@
 #' }
 #' 
 #' @param X population matrix
+#' @param J performance vector for population \code{X}
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
@@ -26,19 +27,11 @@
 #' 
 #' @export
 
-mutation_rand <- function(X, mutpars){
+mutation_rand <- function(L, mutpars){
+  X <- L$X
 
   # ========== Error catching and default value definitions
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          assertthat::is.count(mutpars$nvecs),
-                          mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f))
-  
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
+  assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)

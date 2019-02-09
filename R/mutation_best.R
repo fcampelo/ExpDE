@@ -16,11 +16,15 @@
 #' 
 #' @section Warning:
 #' This routine will search for the performance vector 
-#' of population \code{X} (\code{J}) in the parent environment (using 
-#' \code{parent.frame()}. This variable must be defined for 
-#' \code{mutation_best()} to work. 
+#' of population \code{X} (\code{J}) in the list \code{L}. This 
+#' variable must be defined for \code{mutation_best()} to work. 
 #' 
-#' @param X population matrix
+#' @section X:
+#' Population matrix (original).
+#' @section J:
+#' Performance vector for population \code{X}.
+#' 
+#' @param L list with all parameters for ExpDE framework
 #' @param mutpars mutation parameters (see \code{Mutation parameters} for details)
 #' 
 #' @return Matrix \code{M} containing the mutated population
@@ -32,22 +36,12 @@
 #' 
 #' @export
 
-mutation_best <- function(X, mutpars){
-
-  # Get access to variables in the calling environment
-  env <- parent.frame()
+mutation_best <- function(L, mutpars){
+  X <- L$X
+  J <- L$J
   
   # ========== Error catching and default value definitions
-  if (!("nvecs" %in% names(mutpars))) mutpars$nvecs <- 1
-  
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          assertthat::is.count(mutpars$nvecs),
-                          mutpars$nvecs < (nrow(X)/2 - 2),
-                          assertthat::has_name(mutpars, "f"),
-                          is.numeric(mutpars$f))
-  
-  if (length(mutpars$f) == 1) mutpars$f <- rep(mutpars$f, 
-                                               mutpars$nvecs)
+  assertthat::assert_that(mutpars$nvecs < (nrow(X)/2 - 2))
   # ==========
   
   # Matrix indices for mutation (r1 != r2 != r3 != ... != rn)
@@ -71,7 +65,7 @@ mutation_best <- function(X, mutpars){
     return(x.best + wdiffsum)
   }
   #individual best
-  x.best <- X[env$J == min(env$J), ]
+  x.best <- X[J == min(J), ]
 
   #use only one base vector if there is more than one "best"
   if(is.matrix(x.best)){

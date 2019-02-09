@@ -17,8 +17,12 @@
 #' operator for real-coded genetic algorithms: an experimental study", 
 #' International Journal of Intelligent Systems 18(3) 309-338, 2003.
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 
@@ -26,13 +30,12 @@
 #' 
 #' @export
 
-recombination_geo <- function(X, M, recpars) {
+recombination_geo <- function(L, recpars) {
 
+  X       = L$X
+  M       = L$M
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "alpha"),
+  assertthat::assert_that(assertthat::has_name(recpars, "alpha"),
                           is.null(recpars$alpha) || is_within(recpars$alpha, 0, 1))
   # ==========
   

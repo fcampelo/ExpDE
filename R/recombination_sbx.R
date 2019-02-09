@@ -22,8 +22,12 @@
 #' K. Deb, R.B. Agrawal, "Simulated binary crossover for continuous search 
 #' space", Complex Systems (9):115-148, 1995.
 #' 
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 
@@ -31,13 +35,12 @@
 #' 
 #' @export
 
-recombination_sbx <- function(X, M, recpars) {
+recombination_sbx <- function(L, recpars) {
+  X       = L$X
+  M       = L$M
 
   # ========== Error catching and default value definitions
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          assertthat::has_name(recpars, "eta"),
+  assertthat::assert_that(assertthat::has_name(recpars, "eta"),
                           is.numeric(recpars$eta),
                           recpars$eta > 0)
   # ==========

@@ -4,12 +4,10 @@
 \alias{recombination_blxAlphaBeta}
 \title{Blend Alpha Beta recombination for DE}
 \usage{
-recombination_blxAlphaBeta(X, M, recpars)
+recombination_blxAlphaBeta(L, recpars)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
@@ -52,5 +50,15 @@ fields in \code{recpars}:
 F. Herrera, M. Lozano, A. M. Sanchez, "A taxonomy for the crossover
 operator for real-coded genetic algorithms: an experimental study", 
 International Journal of Intelligent Systems 18(3) 309-338, 2003.
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

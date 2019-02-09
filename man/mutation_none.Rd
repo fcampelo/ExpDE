@@ -4,10 +4,10 @@
 \alias{mutation_none}
 \title{NULL mutation for DE}
 \usage{
-mutation_none(X, mutpars)
+mutation_none(L, mutpars)
 }
 \arguments{
-\item{X}{population matrix}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{mutpars}{mutation parameters (see \code{Mutation parameters} for details)}
 }

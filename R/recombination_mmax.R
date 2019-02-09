@@ -29,8 +29,12 @@
 #' genetic algorithms.", International Journal of Approximate Reasoning 
 #' 12(3):299-315, 1995. \cr
 #'
-#' @param X population matrix (original)
-#' @param M population matrix (mutated) 
+#' @section X:
+#' Population matrix (original).
+#' @section M: 
+#' Population matrix (mutated).
+#' 
+#' @param L list with all parameters for ExpDE framework 
 #' @param recpars recombination parameters (see \code{Recombination parameters} 
 #' for details)
 #' 
@@ -38,18 +42,14 @@
 #' 
 #' @export
 
-recombination_mmax <- function(X, M, recpars = list(lambda = NULL)) {
-  
-  # Get access to variables in the calling environment
-  env <- parent.frame()
+recombination_mmax <- function(L, recpars = list(lambda = NULL)) {
+  X       = L$X
+  M       = L$M
   
   # ========== Error catching and default value definitions
   
-  assertthat::assert_that(is.matrix(X), is.numeric(X),
-                          is.matrix(M), is.numeric(M),
-                          assertthat::are_equal(dim(X), dim(M)),
-                          is.null(recpars$lambda) || is_within(recpars$lambda, 0, 1),
-                          all(assertthat::has_name(env, 
+  assertthat::assert_that(is.null(recpars$lambda) || is_within(recpars$lambda, 0, 1),
+                          all(assertthat::has_name(L, 
                                                    c("probpars", "nfe"))))
   # ==========
   
@@ -69,19 +69,19 @@ recombination_mmax <- function(X, M, recpars = list(lambda = NULL)) {
   H4 <- pmax(X, M)
   
   # Evaluate trial offspring
-  f1 <- evaluate_population(probpars = env$probpars, 
+  f1 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H1)
   
-  f2 <- evaluate_population(probpars = env$probpars, 
+  f2 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H2)
   
-  f3 <- evaluate_population(probpars = env$probpars, 
+  f3 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H3)
   
-  f4 <- evaluate_population(probpars = env$probpars, 
+  f4 <- evaluate_population(probpars = L$probpars, 
                             Pop      = H4)
   
-  env$nfe <- env$nfe + 4 * nrow(X)
+  L$nfe <- L$nfe + 4 * nrow(X)
   
   # Get 'winning' offspring
   fbest <- pmin(f1, f2, f3, f4)
