@@ -6,7 +6,8 @@
 \usage{
 ExpDE(popsize, mutpars = list(name = "mutation_rand", f = 0.2),
   recpars = list(name = "recombination_bin", cr = 0.8, nvecs = 1),
-  selpars = list(name = "standard"), stopcrit, probpars, seed = NULL,
+  selpars = list(name = "standard"), adapars = list(use = FALSE, name =
+  "jade", mu.cr = 0.5, mu.F = 0.5), stopcrit, probpars, seed = NULL,
   showpars = list(show.iters = "none"))
 }
 \arguments{
@@ -20,6 +21,8 @@ See \code{Recombination parameters} for details.}
 
 \item{selpars}{list of named selection parameters.
 See \code{Selection parameters} for details.}
+
+\item{adapars}{list of named self adaptive parameters.}
 
 \item{stopcrit}{list of named stop criteria parameters. 
 See \code{Stop criteria} for details.}
@@ -186,6 +189,15 @@ fields:
      frequently the routine echoes something to the terminal. Defaults 
      to \code{1}.
  }
+}
+
+\section{In Construction}{
+
+This package contains functions for use of routines with self
+adaptive parameters methods. For now, there is only the implementation of 
+JADE method. To use it, you must define \code{adapars$use = TRUE} and 
+define parameters in accordance with the documentation of
+\code{selfadaptive_jade}.
 }
 
 \examples{

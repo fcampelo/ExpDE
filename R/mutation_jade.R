@@ -30,7 +30,7 @@
 #' of population \code{X} (\code{J}) in the list \code{L}. This 
 #' variable must be defined for \code{mutation_jade()} to work. 
 #' 
-#' @Section X:
+#' @section X:
 #' Population matrix (original).
 #' @section J:
 #' Performance vector for population \code{X}.

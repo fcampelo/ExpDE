@@ -4,12 +4,10 @@
 \alias{recombination_pbest}
 \title{p-Best recombination for DE}
 \usage{
-recombination_pbest(X, M, recpars)
+recombination_pbest(L, recpars)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
@@ -36,9 +34,8 @@ fields in \code{recpars}:
 
 This routine will search for the iterations counter (\code{t}), the maximum 
 number of iterations (\code{stopcrit$maxiter}), and the performance vector 
-of population \code{X} (\code{J}) in the parent environment (using 
-\code{parent.frame()}. These variables must be defined for 
-\code{recombination_pbest()} to work.
+of population \code{X} (\code{J}) in list \code{L}.
+These variables must be defined for \code{recombination_pbest()} to work.
 }
 
 \section{References}{
@@ -47,5 +44,15 @@ S.M. Islam, S. Das, S. Ghosh, S. Roy, P.N. Suganthan, "An Adaptive
 Differential Evolution Algorithm With Novel Mutation and Crossover 
 Strategies for Global Numerical Optimization", IEEE. Trans. Systems, Man
 and Cybernetics - Part B 42(2), 482-500, 2012
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

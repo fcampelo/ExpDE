@@ -4,12 +4,10 @@
 \alias{recombination_npoint}
 \title{n-point recombination for DE}
 \usage{
-recombination_npoint(X, M, recpars = list(N = NULL))
+recombination_npoint(L, recpars = list(N = NULL))
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
@@ -40,5 +38,15 @@ fields in \code{recpars}:
 L.J. Eshelman, R.A. Caruana, J.D. Schaffer (1989), "Biases in the crossover 
 landscape. In: Proceedings of the Third International Conference on Genetic 
 Algorithms, pp. 10-19, San Francisco, CA, USA.
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

@@ -4,12 +4,10 @@
 \alias{recombination_none}
 \title{NULL recombination for DE}
 \usage{
-recombination_none(X, M, ...)
+recombination_none(L, ...)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{...}{optional parameters (unused)}
 }

@@ -48,8 +48,8 @@ selfadaptative_jade <- function(L) {
                           "probpars"               %in% names(L))
   
   assertthat::assert_that(identical(L$mutpars$name, "mutation_jade") & 
-                          identical(L$selpars$name, "selection_jade")&
-                          identical(L$recpars$name, "recombination_bin_jade"))
+                            identical(L$selpars$name, "selection_jade")&
+                            identical(L$recpars$name, "recombination_bin_jade"))
   
   assertthat::assert_that(is.numeric(L$adapars$c),
                           is.numeric(L$adapars$mu.cr),

@@ -4,12 +4,10 @@
 \alias{create_population}
 \title{Create population}
 \usage{
-create_population(popsize, probpars)
+create_population(L)
 }
 \arguments{
-\item{popsize}{population size}
-
-\item{probpars}{list of named problem parameters (see \code{\link{ExpDE}}).}
+\item{L}{list with all important variables used in ExpDE.}
 }
 \value{
 A matrix containing the population for the ExpDE
@@ -17,3 +15,11 @@ A matrix containing the population for the ExpDE
 \description{
 Creates a new population for the ExpDE framework
 }
+\section{Variable probpars}{
+
+Population size.
+
+
+List of named problem parameters (see \code{\link{ExpDE}}).
+}
+

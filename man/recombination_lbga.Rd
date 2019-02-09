@@ -4,12 +4,10 @@
 \alias{recombination_lbga}
 \title{Linear BGA recombination for DE}
 \usage{
-recombination_lbga(X, M, ...)
+recombination_lbga(L, ...)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{...}{optional parameters (unused)}
 }
@@ -34,5 +32,15 @@ International Journal of Intelligent Systems 18(3) 309-338, 2003.\cr
 D. Schlierkamp-voosen , H. Muhlenbein, "Strategy Adaptation by 
 Competing Subpopulations", Proc. Parallel Problem Solving from Nature 
 (PPSN III), 199-208, 1994.
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

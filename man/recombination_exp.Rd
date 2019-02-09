@@ -4,12 +4,10 @@
 \alias{recombination_exp}
 \title{Exponential recombination for DE}
 \usage{
-recombination_exp(X, M, recpars)
+recombination_exp(L, recpars)
 }
 \arguments{
-\item{X}{population matrix (original)}
-
-\item{M}{population matrix (mutated)}
+\item{L}{list with all parameters for ExpDE framework}
 
 \item{recpars}{recombination parameters (see \code{Recombination parameters} 
 for details)}
@@ -36,5 +34,15 @@ fields in \code{recpars}:
 
 K. Price, R.M. Storn, J.A. Lampinen, "Differential Evolution: A 
 Practical Approach to Global Optimization", Springer 2005
+}
+
+\section{X}{
+
+Population matrix (original).
+}
+
+\section{M}{
+ 
+Population matrix (mutated).
 }
 

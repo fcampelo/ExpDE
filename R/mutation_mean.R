@@ -14,7 +14,7 @@
 #'        Defaults to 1.
 #' }
 #' 
-#' @Section X:
+#' @section X:
 #' Population matrix (original).
 #' 
 #' @param L list with all parameters for ExpDE framework
