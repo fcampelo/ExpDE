@@ -1,6 +1,5 @@
 # ExpDE
 <!-- badges: start -->
-[![Build Status](https://travis-ci.org/fcampelo/ExpDE.png?branch=master)](https://travis-ci.org/fcampelo/ExpDE) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ExpDE)](https://cran.r-project.org/package=ExpDE)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/ExpDE)](https://cran.r-project.org/package=ExpDE)
 [![R-CMD-check](https://github.com/fcampelo/ExpDE/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fcampelo/ExpDE/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
