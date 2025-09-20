@@ -1,7 +1,10 @@
 # ExpDE
+<!-- badges: start -->
 [![Build Status](https://travis-ci.org/fcampelo/ExpDE.png?branch=master)](https://travis-ci.org/fcampelo/ExpDE) [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/ExpDE)](https://cran.r-project.org/package=ExpDE)
 [![CRAN Downloads](http://cranlogs.r-pkg.org/badges/ExpDE)](https://cran.r-project.org/package=ExpDE)
-
+[![R-CMD-check](https://github.com/fcampelo/ExpDE/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/fcampelo/ExpDE/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+  
 ExpDE is a modular implementation of the Differential Evolution metaheuristic, which aims at providing a platform for the experimental investigation of the effect of different recombination / mutation / selection operators.
 
 ## Installation
@@ -26,7 +29,6 @@ Full usage instructions and examples can be found in the documentation of `ExpDE
 
 ### Differential mutation
 - Best (`mutation_best`)
-- Current-to-pbest (`mutation_current_to_pbest` - includes special case `current-to-best`)
 - Mean (`mutation_mean`)
 - Rand (`mutation_rand`)
 - Weighted global intermediate (`mutation_wgi`)

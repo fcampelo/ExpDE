@@ -4,10 +4,16 @@
 \alias{ExpDE}
 \title{Experimental Differential Evolution - ExpDE}
 \usage{
-ExpDE(popsize, mutpars = list(name = "mutation_rand", f = 0.2),
+ExpDE(
+  popsize,
+  mutpars = list(name = "mutation_rand", f = 0.2),
   recpars = list(name = "recombination_bin", cr = 0.8, nvecs = 1),
-  selpars = list(name = "standard"), stopcrit, probpars, seed = NULL,
-  showpars = list(show.iters = "none"))
+  selpars = list(name = "standard"),
+  stopcrit,
+  probpars,
+  seed = NULL,
+  showpars = list(show.iters = "none")
+)
 }
 \arguments{
 \item{popsize}{population size}
@@ -60,8 +66,6 @@ current version accepts the following options:
    \item \code{\link{mutation_rand}}
    \item \code{\link{mutation_mean}}
    \item \code{\link{mutation_none}}
-   \item \code{\link{mutation_current_to_pbest}} (incl. special case
-         \code{current-to-best})
    \item \code{\link{mutation_wgi}}
    
 }

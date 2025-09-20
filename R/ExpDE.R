@@ -20,8 +20,6 @@
 #'    \item \code{\link{mutation_rand}}
 #'    \item \code{\link{mutation_mean}}
 #'    \item \code{\link{mutation_none}}
-#'    \item \code{\link{mutation_current_to_pbest}} (incl. special case
-#'          \code{current-to-best})
 #'    \item \code{\link{mutation_wgi}}
 #'    
 #' }
