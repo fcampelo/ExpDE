@@ -30,68 +30,94 @@ get_experimental_parameters <- function(ID){
   output$desired.power <- sample(0.75 + 0.05 * (0:3), size = 1)
   
   # Mutation operators
-  mutations <- list(
-    mutation_best = paste0('mutpars = list(name = "mutation_best", f = ', signif(stats::runif(1, min = .1, max = 2), 2), ")"),
-    mutation_rand = paste0('mutpars = list(name = "mutation_rand", f = ', signif(stats::runif(1, min = .1, max = 2), 2), ")"),
-    mutation_mean = paste0('mutpars = list(name = "mutation_mean", f = ', signif(stats::runif(1, min = .1, max = 2), 2), ")"),
-    mutation_wgi = paste0('mutpars = list(name = "mutation_wgi", f = ', signif(stats::runif(1, min = .1, max = 2), 2), ")")
+  # As list
+  mutlist <- list(
+    list(alias = "Best", 
+         name = "mutation_best", 
+         f = signif(stats::runif(1, min = .1, max = 2), 2)),
+    list(alias = "Rand", 
+         name = "mutation_rand", 
+         f = signif(stats::runif(1, min = .1, max = 2), 2)),
+    list(alias = "Mean", 
+         name = "mutation_mean", 
+         f = signif(stats::runif(1, min = .1, max = 2), 2)),
+    list(alias = "WGI", 
+         name = "mutation_wgi", 
+         f = signif(stats::runif(1, min = .1, max = 2), 2))
   )
   
-  mutidx <- sample.int(n       = length(mutations), 
-                       size    = 2, 
+  # As text:
+  mutations <- c(
+    paste0("Mutation: Best(F = ", mutlist[[1]]$f, "). "),
+    paste0("Mutation: Rand(F = ", mutlist[[2]]$f, "). "),
+    paste0("Mutation: Mean(F = ", mutlist[[3]]$f, "). "),
+    paste0("Mutation: WGI(F = ", mutlist[[4]]$f, "). ")
+  )
+  
+  mutidx <- sample.int(n       = length(mutlist), 
+                       size    = 3, 
                        replace = FALSE)
-  output$mutation <- list(mutations[[mutidx[1]]],
-                          mutations[[mutidx[2]]])
+  output$mutation_type <- mutlist[mutidx]
+  mut_print <- paste0(mutations[mutidx], "Use mutpars = output$mutation_type[[", seq_along(mutidx), "]]")
   
   
-  recombinations = list(
-    recombination_arith = paste0('recpars = list(name = "recombination_arith")'), 
-    recombination_bin = paste0('recpars = list(name = "recombination_bin", cr = ', 
-                               signif(stats::runif(1, min = .25, max = .75), 2), ")"), 
-    recombination_blxAlphaBeta = paste0('recpars = list(name = "recombination_blxAlphaBeta", alpha = ', 
-                                        signif(stats::runif(1, .1, .4), 2),
-                                        ", beta = ",
-                                        signif(stats::runif(1, .1, .4), 2), ")"), 
-    recombination_exp = paste0('recpars = list(name = "recombination_exp", cr = ',
-                               signif(stats::runif(1, min = .25, max = .75), 2), ")"), 
-    recombination_geo = paste0('recpars = list(name = "recombination_geo", alpha = ',
-                               signif(stats::runif(1, min = .25, max = .75), 2), ")"), 
-    recombination_lbga = paste0('recpars = list(name = "recombination_lbga")'), 
-    recombination_linear = paste0('recpars = list(name = "recombination_linear")'), 
-    recombination_mmax = paste0('recpars = list(name = "recombination_mmax")'), 
-    recombination_npoint = paste0('recpars = list(name = "recombination_npoint")'), 
-    recombination_onepoint = paste0('recpars = list(name = "recombination_onepoint")'), 
-    recombination_pbest = paste0('recpars = list(name = "recombination_pbest", cr = ',
-                                 signif(stats::runif(1, min = .25, max = .75), 2),")"), 
-    recombination_wright = paste0('recpars = list(name = "recombination_wright")'))
+  ## Recombination operators
+  # As list:
+  reclist = list(
+    list(alias = "Arithmetic", name = "recombination_arith"), 
+    list(alias = "Binomial", name = "recombination_bin", 
+         cr = signif(stats::runif(1, min = .25, max = .75), 2)), 
+    list(alias = "BLX", name = "recombination_blxAlphaBeta", 
+         alpha = signif(stats::runif(1, .1, .4), 2),
+         beta = signif(stats::runif(1, .1, .4), 2)), 
+    list(alias = "Exponential", name = "recombination_exp", 
+         cr = signif(stats::runif(1, min = .25, max = .75), 2)), 
+    list(alias = "Geometric", name = "recombination_geo", 
+         alpha = signif(stats::runif(1, min = .25, max = .75), 2)), 
+    list(alias = "LBGA", name = "recombination_lbga"), 
+    list(alias = "Linear", name = "recombination_linear"), 
+    list(alias = "Nmax", name = "recombination_mmax"), 
+    list(alias = "N-point", name = "recombination_npoint"), 
+    list(alias = "1-point", name = "recombination_onepoint"), 
+    list(alias = "p-Best", name = "recombination_pbest", 
+         cr = signif(stats::runif(1, min = .25, max = .75), 2)), 
+    list(alias = "Wright", name = "recombination_wright"))
+  
+  
+  # As text:
+  recombinations = c(
+    paste0("Recomb: Arith(). "), 
+    paste0("Recomb: Bin(CR = ", reclist[[2]]$cr, '). '), 
+    paste0("Recomb: BLX(alpha = ", reclist[[3]]$alpha, ', beta = ', reclist[[3]]$beta, "). "), 
+    paste0("Recomb: Exp(CR = ", reclist[[4]]$cr, "). "), 
+    paste0("Recomb: Geo(alpha = ", reclist[[5]]$alpha, "). "), 
+    paste0("Recomb: LBGA(). "), 
+    paste0("Recomb: Linear(). "), 
+    paste0("Recomb: Nmax(). "),
+    paste0("Recomb: Npoint(). "), 
+    paste0("Recomb: Onepoint(). "), 
+    paste0("Recomb: pBest(CR = ", reclist[[11]]$cr, "). "), 
+    paste0("Recomb: Wright(). "))
   
   recidx <- sample.int(n       = length(recombinations), 
-                       size    = sample(c(3,4), 1), 
+                       size    = sample(c(3,5), 1), 
                        replace = FALSE)
   
-  output$recombination <- vector("list", length(recidx))
-  for (i in seq_along(recidx)) {
-    output$recombination[[i]] <- recombinations[[recidx[i]]]
-  }
+  output$recomb_type <- reclist[recidx]
+  rec_print <- paste0(recombinations[recidx], "Use recpars = output$recomb_type[[", seq_along(recidx), "]]")
   
   message("Desired statistical parameters for your experimental design:")
-  message("Significance level (alpha): ", output$alpha)
-  message("Minimally relevant effect size (MRES): ", output$mres)
-  message("Desired statistical power at MRES (desired power): ", output$desired.power)
+  message("Significance level (alpha): alpha = ", output$alpha)
+  message("Minimally relevant effect size (MRES): d* = ", output$mres)
+  message("Desired statistical power for MRES (desired power): (1-beta)* = ", output$desired.power)
   message("============================================================")
   message("Factors and levels for your experiment:")
   message("Factor (1) : mutation type")
   message("Levels to investigate:")
-  for(i in seq_along(output$mutation)){
-    print(unname(output$mutation[[i]]), quote = FALSE)
-  }
-  
+  print(mut_print, quote = FALSE, width = 10)
   message("Factor (2) : recombination type")
   message("Levels to investigate:")
-  
-  for(i in seq_along(output$recombination)){
-    print(unname(output$recombination[[i]]), quote = FALSE)
-  }
+  print(rec_print, quote = FALSE, width = 10)
   
   invisible(output)
   
