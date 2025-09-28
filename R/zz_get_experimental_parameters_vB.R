@@ -9,7 +9,7 @@
 #' design and execution of the experiment.
 #' 
 
-get_experimental_parameters <- function(ID){
+get_experimental_parameters_activity_versionB <- function(ID){
   
   # ========== Error catching 
   assertthat::assert_that(assertthat::is.count(ID))
@@ -28,6 +28,9 @@ get_experimental_parameters <- function(ID){
   
   # Desired power level
   output$desired.power <- sample(0.75 + 0.05 * (0:3), size = 1)
+  
+  # number of repetitions for each combination of levels
+  output$nruns <- sample(c(10, 15, 25, 30, 50), size = 1)
   
   # Mutation operators
   # As list
@@ -110,6 +113,7 @@ get_experimental_parameters <- function(ID){
   message("Significance level (alpha): alpha = ", output$alpha)
   message("Minimally relevant effect size (MRES): d* = ", output$mres)
   message("Desired statistical power for MRES (desired power): (1-beta)* = ", output$desired.power)
+  message("Number of repeated runs for each combination of levels: nruns = ", output$nruns)
   message("============================================================")
   message("Factors and levels for your experiment:")
   message("Factor (1) : mutation type")
