@@ -4,3 +4,4 @@
 ^.*\.md$
 ^.*\.yml$
 ^\.github$
+^CRAN-SUBMISSION$

@@ -6,7 +6,7 @@ Depends: R (>= 4.4.0)
 Imports: assertthat (>= 0.2.0)
 Suggests: smoof
 Date: 2025-09-20
-URL: http://github.com/fcampelo/ExpDE
+URL: https://github.com/fcampelo/ExpDE
 Authors@R: c(
                 person("Felipe", "Campelo", email = "f.campelo@bristol.ac.uk", 
                        role = c("aut", "cre")),
