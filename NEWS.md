@@ -1,9 +1,9 @@
 # ExpDE 0.2.0
 * Maintenance update
 * Removed mutation_current_to_pbest (which was essentially unused)
-* added function `get_experimental_parameters()`, which can be used to 
-    generate a random factorial experiment for students to learn best practices 
-    for the statistical comparisons of optimisation heuristics.
+* added functions which to generate random  experiments (aimed at allowing 
+  students to practice the statistical comparisons of optimisation heuristics. 
+  Check ?ExpDE2 for details.
 * Minor updates to documentation
 
 # ExpDE 0.1.4
