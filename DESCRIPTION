@@ -8,11 +8,11 @@ Suggests: smoof
 Date: 2025-09-20
 URL: http://github.com/fcampelo/ExpDE
 Authors@R: c(
-                person("Felipe", "Campelo", email = "fcampelo@ufmg.br", 
+                person("Felipe", "Campelo", email = "f.campelo@bristol.ac.uk", 
                        role = c("aut", "cre")),
                 person("Moises", "Botelho", email = "moisesbotelho@ufmg.br", 
                        role = "aut"))
-Maintainer: Felipe Campelo <fcampelo@ufmg.br>
+Maintainer: Felipe Campelo <f.campelo@bristol.ac.uk>
 Description: Modular implementation of the Differential Evolution algorithm for
     experimenting with different types of operators.
 License: GPL-2
