@@ -1,3 +1,8 @@
+# ExpDE 0.2.1
+* Maintenance update: minor bug fix in the new experimental routines
+(rare problem cases in `gen_methods`, simplification of the test problems
+in `gen_problems`)
+
 # ExpDE 0.2.0
 * Maintenance update
 * Removed mutation_current_to_pbest (which was essentially unused)
