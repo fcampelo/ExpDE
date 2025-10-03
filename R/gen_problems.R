@@ -25,9 +25,9 @@ gen_problems <- function(ID, nprobs,echo=TRUE){
   # set PRNG seed
   set.seed(ID)
   
-  available_probs <- c("rastrigin", "sphere", "rosenbrock")
-  minvals         <- c(-8, -200, -30)
-  maxvals         <- c(8, 200, 30)
+  available_probs <- c("rastrigin", "sphere")
+  minvals         <- c(-2, -20)
+  maxvals         <- c(2, 20)
   maxrange        <- maxvals - minvals
   
   output <- vector("list", nprobs)
@@ -35,7 +35,7 @@ gen_problems <- function(ID, nprobs,echo=TRUE){
   
   for(i in seq_along(output)){
     idx <- sample.int(length(available_probs), 1)
-    dim <- sample(5:50, 1)
+    dim <- sample(5:20, 1)
     output[[i]]$ProblemName <- paste0("Prob.", ID, ".", i)
     output[[i]]$name <- available_probs[idx]
     output[[i]]$xmin <- trunc(minvals[idx] + .5 * stats::runif(dim) * maxrange[idx])

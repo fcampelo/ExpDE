@@ -31,7 +31,9 @@ gen_methods <- function(ID, echo = TRUE){
     output[[i]]$mutpars    <- gen_mutpars()
     output[[i]]$recpars    <- gen_recpars()
     output[[i]]$selpars    <- list(name = "selection_standard")
-    output[[i]]$stopcrit   <- list(names = "stop_maxeval", maxevals = 10000)
+    output[[i]]$stopcrit   <- list(names = c("stop_maxeval", "stop_maxiter"),
+                                   maxevals = 10000,
+                                   maxiter = 10000 / output[[i]]$popsize)
     output[[i]]$showpars   <- list(show.iters = "none")
   }
   
