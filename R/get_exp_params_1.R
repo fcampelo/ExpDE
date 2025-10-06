@@ -26,7 +26,7 @@ get_exp_params_1 <- function(ID, echo = TRUE){
   output <- list()
   
   # Minimally relevant effect sizes
-  output$mres   <- sample(x = .05 * (5:15), size = 1)
+  output$mres   <- sample(x = .05 * (10:20), size = 1)
   
   # Desired significance
   output$alpha <- sample(0.01 * (1:5), size = 1)
