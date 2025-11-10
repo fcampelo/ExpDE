@@ -15,8 +15,7 @@ gen_recpars <- function(idx = NULL){
     list(alias = "Nmax", name = "recombination_mmax"), 
     list(alias = "N-point", name = "recombination_npoint"), 
     list(alias = "p-Best", name = "recombination_pbest", 
-         cr = signif(stats::runif(1, min = .25, max = .75), 2)), 
-    list(alias = "Wright", name = "recombination_wright"))
+         cr = signif(stats::runif(1, min = .25, max = .75), 2)))
   
   # As text:
   recombinations = c(
@@ -29,8 +28,7 @@ gen_recpars <- function(idx = NULL){
     paste0("Recomb: Linear(). "), 
     paste0("Recomb: Nmax(). "),
     paste0("Recomb: Npoint(). "), 
-    paste0("Recomb: pBest(CR = ", reclist[[11]]$cr, "). "), 
-    paste0("Recomb: Wright(). "))
+    paste0("Recomb: pBest(CR = ", reclist[[10]]$cr, "). "))
   
   if(is.null(idx)) idx <- sample.int(length(reclist), 1)
   
