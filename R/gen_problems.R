@@ -35,7 +35,7 @@ gen_problems <- function(ID, nprobs,echo=TRUE){
   
   for(i in seq_along(output)){
     idx <- sample.int(length(available_probs), 1)
-    dim <- sample(5:20, 1)
+    dim <- sample(10:20, 1)
     output[[i]]$ProblemName <- paste0("Prob.", ID, ".", i)
     output[[i]]$name <- available_probs[idx]
     output[[i]]$xmin <- trunc(minvals[idx] + .5 * stats::runif(dim) * maxrange[idx])

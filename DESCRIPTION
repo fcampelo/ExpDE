@@ -1,7 +1,7 @@
 Package: ExpDE
 Type: Package
 Title: Modular Differential Evolution for Experimenting with Operators
-Version: 0.3.0
+Version: 0.3.1
 Depends: R (>= 4.4.0)
 Imports: assertthat (>= 0.2.0)
 Suggests: smoof
