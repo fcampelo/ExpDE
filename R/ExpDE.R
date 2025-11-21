@@ -207,8 +207,8 @@ ExpDE <- function(popsize,
 {
   #  ========== Error catching and default value definitions 
   if (is.null(seed)) {
-    if (!exists(".Random.seed")) stats::runif(1)
-    seed <- .Random.seed
+    # if (!exists(".Random.seed")) stats::runif(1)
+    # seed <- .Random.seed
   } else {
     assertthat::assert_that(assertthat::is.count(seed))
     set.seed(seed)               # set PRNG seed
