@@ -27,13 +27,13 @@ gen_methods <- function(ID, echo = TRUE){
   
   for (i in seq_along(output)){
     output[[i]]$MethodName <- paste0("DE.", ID, ".", LETTERS[i])
-    output[[i]]$popsize    <- sample(c(50, 100, 150, 200), 1)
+    output[[i]]$popsize    <- sample(5*(5:10), 1)
     output[[i]]$mutpars    <- gen_mutpars()
     output[[i]]$recpars    <- gen_recpars()
     output[[i]]$selpars    <- list(name = "selection_standard")
     output[[i]]$stopcrit   <- list(names = c("stop_maxeval", "stop_maxiter"),
-                                   maxevals = 1000,
-                                   maxiter = 1000 / output[[i]]$popsize)
+                                   maxevals = 500,
+                                   maxiter = floor(500 / output[[i]]$popsize))
     output[[i]]$showpars   <- list(show.iters = "none")
   }
   

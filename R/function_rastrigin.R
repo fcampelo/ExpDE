@@ -14,5 +14,5 @@ rastfun <- function(x, multiplier = 1){
     f <- f + (x[k] ^ 2 - A * cos(2 * pi * x[k]));
   }
 
-  return (multiplier * f);
+  return (1 + multiplier * f);
 }

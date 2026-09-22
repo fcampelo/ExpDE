@@ -3,5 +3,5 @@ sphere <- function(x, multiplier = 1){
     f <- sqrt(rowSums(x^2))
   } else f <- sqrt(sum(x^2))
   
-  return(multiplier * f)
+  return(1 + multiplier * f)
 }
